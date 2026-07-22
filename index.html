@@ -270,7 +270,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
 .kgnode:hover circle{filter:brightness(1.12);}
 .kglbl{font-size:9px;fill:var(--m);font-family:'DM Sans',sans-serif;}
 /* TABS */
-.tabs-bar{display:flex;border-bottom:1px solid var(--b);overflow-x:auto;}
+.tabs-bar{display:flex;border-bottom:1px solid var(--b);overflow-x:auto;position:sticky;top:0;background:#fff;z-index:20;box-shadow:0 2px 6px rgba(0,0,0,.06);}
 .tab{padding:8px 13px;font-size:12.5px;font-weight:500;color:var(--m);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;}
 .tab:hover{color:var(--n);}
 .tab.on{color:var(--r);border-bottom-color:var(--r);font-weight:600;}
@@ -591,7 +591,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
 .ask-next-lbl{font-size:10px;color:var(--m);font-weight:700;text-transform:uppercase;letter-spacing:.5px;width:100%;margin-bottom:2px;}
 .ask-nxt-btn{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1.5px solid var(--b);border-radius:6px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--n);cursor:pointer;transition:all .15s;}
 .ask-nxt-btn:hover{border-color:var(--n);background:#fff;}
-/* v23 — Risk driver / decision summary components (reused by Profile Risk Assessment) */
+/* v23 — Risk driver / decision summary components (reused by Investigative Profile) */
 /* Decision Summary */
 .ds-card{background:var(--n);border-radius:12px;padding:22px 24px;margin-bottom:16px;position:relative;overflow:hidden;}
 .ds-card::after{content:'';position:absolute;right:-40px;bottom:-40px;width:180px;height:180px;background:var(--r);opacity:.06;border-radius:50%;}
@@ -968,8 +968,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
   .entity-row-hd{flex-wrap:wrap!important;gap:6px!important;}
   .excl-item{flex-wrap:wrap!important;gap:6px!important;font-size:12px!important;}
 
-  /* Signal Insight Page — sticky header */
-  .insight-hero{padding:13px 13px 10px!important;margin-bottom:12px!important;}
+  /* Signal Insight Page — sticky tab bar only (not full header) */
+  .insight-hero{padding:13px 13px!important;margin-bottom:10px!important;}
+  .insight-nav{margin-bottom:12px!important;}
   .insight-hero .sh{gap:9px!important;}
   .insight-hero .flex.g6.wrap{width:100%!important;}
   .insight-hero .flex.g6.wrap .btn,.insight-hero .flex.g6.wrap .ask-cta{flex:1 1 auto!important;font-size:11.5px!important;padding:7px 10px!important;white-space:nowrap;}
@@ -1032,7 +1033,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
   <div class="sb-nav">
     <div class="nv on" onclick="P('home')" id="nv-home"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>Home</div>
     <div class="nv" onclick="P('ask')" id="nv-ask"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7z" clip-rule="evenodd"/></svg>Ask Tempo</div>
-    <div class="nv" onclick="P('ps')" id="nv-ps"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>Profile Risk Assessment</div>
+    <div class="nv" onclick="P('ps')" id="nv-ps"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>Investigative Profile</div>
 
     <div class="nv" onclick="P('mon')" id="nv-mon"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"/></svg>Signal Monitor<span class="nv-c">3</span></div>
     <div class="nv" onclick="P('watch')" id="nv-watch"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>Watchlist</div>
@@ -1107,7 +1108,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;">
    <div style="flex:1;min-width:140px;background:var(--bg);border-radius:7px;padding:9px;"><div style="font-size:11px;font-weight:700;color:var(--bl);margin-bottom:3px;">Ask Tempo</div><div style="font-size:11.5px;color:var(--m);">Mulai dari pertanyaan, lalu arahkan ke workflow yang tepat.</div></div>
-   <div style="flex:1;min-width:140px;background:var(--bg);border-radius:7px;padding:9px;"><div style="font-size:11px;font-weight:700;color:var(--n);margin-bottom:3px;">Profile Risk Assessment</div><div style="font-size:11.5px;color:var(--m);">Pahami profil, isu, struktur, dan sinyal risiko entitas secara menyeluruh.</div></div>
+   <div style="flex:1;min-width:140px;background:var(--bg);border-radius:7px;padding:9px;"><div style="font-size:11px;font-weight:700;color:var(--n);margin-bottom:3px;">Investigative Profile</div><div style="font-size:11.5px;color:var(--m);">Pahami profil, isu, struktur, dan sinyal risiko entitas secara menyeluruh.</div></div>
    <div style="flex:1;min-width:140px;background:var(--bg);border-radius:7px;padding:9px;"><div style="font-size:11px;font-weight:700;color:var(--am);margin-bottom:3px;">Signal Monitor</div><div style="font-size:11.5px;color:var(--m);">Track how a strategic issue is evolving and what requires attention now.</div></div>
    <div style="flex:1;min-width:140px;background:var(--bg);border-radius:7px;padding:9px;"><div style="font-size:11px;font-weight:700;color:var(--gr);margin-bottom:3px;">Generated Reports</div><div style="font-size:11.5px;color:var(--m);">Ubah hasil analisis menjadi dokumen siap dibagikan ke stakeholder.</div></div>
   </div>
@@ -1180,7 +1181,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
     </div>
     <div style="padding:7px 9px;background:var(--bg);border-radius:6px;cursor:pointer;" onclick="P('rep');showSV('rep','home')">
      <div style="font-size:12px;font-weight:600;color:var(--n);">Aguan — Executive Profile</div>
-     <div style="display:flex;gap:5px;align-items:center;margin-top:3px;"><span class="bx bn" style="font-size:10px;">Profile Risk Assessment</span><span class="status-share">Ready to Share</span></div>
+     <div style="display:flex;gap:5px;align-items:center;margin-top:3px;"><span class="bx bn" style="font-size:10px;">Investigative Profile</span><span class="status-share">Ready to Share</span></div>
     </div>
    </div>
   </div>
@@ -1207,7 +1208,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
  </div>
 </div>
 
-<!-- PROFILE RISK ASSESSMENT -->
+<!-- INVESTIGATIVE PROFILE -->
 <div class="pg" id="page-ps">
  <style>
  .daopt{background:#fff;border:1.5px solid var(--b);border-radius:6px;padding:8px 11px;margin-bottom:5px;cursor:pointer;}.daopt:hover,.daopt.on{border-color:var(--n);}
@@ -1288,7 +1289,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
  <!-- ═══════════ SEARCH / LANDING ═══════════ -->
  <div class="sv on" id="ps-search">
   <div style="max-width:580px;margin:0 auto;text-align:center;padding:38px 20px 26px;">
-   <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--n);margin-bottom:7px;">Profile Risk Assessment</div>
+   <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--n);margin-bottom:7px;">Investigative Profile</div>
    <div style="font-size:13.5px;color:var(--m);margin-bottom:22px;">Cari perusahaan, orang, atau institusi untuk membangun profil risiko menyeluruh.</div>
    <div style="display:flex;gap:9px;margin-bottom:12px;">
     <input class="fi" id="ps-in" style="flex:1;border-radius:7px;padding:11px 14px;font-size:14px;border-width:2px;" placeholder="e.g. PT Waskita Karya, Aguan, Gojek..." oninput="chkPS(this.value)">
@@ -1303,21 +1304,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
    <div class="hint m6">Quick search:</div>
    <div class="chips" style="justify-content:center;">
     <div class="chip" onclick="fillPS('PT Waskita Karya')">PT Waskita Karya</div>
+    <div class="chip" onclick="fillPS('PT Freeport Indonesia')">PT Freeport Indonesia</div>
     <div class="chip" onclick="fillPS('Aguan')">Aguan</div>
     <div class="chip" onclick="fillPS('IKN Nusantara')">IKN Nusantara</div>
-    <div class="chip" onclick="fillPS('Gojek')">Gojek</div>
    </div>
   </div>
   <div style="max-width:580px;margin:0 auto;"><div class="divr"></div>
    <div class="ser m10" style="font-size:14px;font-weight:600;color:var(--n);">Recent Profiles</div>
-   <div class="scr-item m8" onclick="showSV('ps','result')"><div class="si-sc" style="background:var(--r);">⚠</div><div><div class="si-nm">PT Waskita Karya</div><div class="si-mt"><span class="bx bh">Critical Review Required</span><span>Company</span></div></div><div style="font-size:11.5px;color:var(--m);">May 3, 2025</div></div>
+   <div class="scr-item m8" onclick="loadEntityProfile('waskita')"><div class="si-sc" style="background:var(--r);">⚠</div><div><div class="si-nm">PT Waskita Karya</div><div class="si-mt"><span class="bx bh">Critical Review Required</span><span>Company</span></div></div><div style="font-size:11.5px;color:var(--m);">May 3, 2025</div></div>
+   <div class="scr-item m8" onclick="loadEntityProfile('freeport')"><div class="si-sc" style="background:var(--am);">◐</div><div><div class="si-nm">PT Freeport Indonesia</div><div class="si-mt"><span class="bx bm">Moderate Attention</span><span>Company</span></div></div><div style="font-size:11.5px;color:var(--m);">Jul 19, 2026</div></div>
    <div class="scr-item"><div class="si-sc" style="background:var(--am);">◐</div><div><div class="si-nm">Aguan (Sugianto Kusuma)</div><div class="si-mt"><span class="bx bm">Moderate Attention</span><span>Person</span></div></div><div style="font-size:11.5px;color:var(--m);">Apr 20, 2025</div></div>
   </div>
  </div>
 
  <!-- ═══════════ LOADING ═══════════ -->
  <div class="sv" id="ps-loading">
-  <div class="ldw"><div class="lsp"></div><div class="lttl" id="ps-lt">Building risk assessment profile...</div><div style="font-size:12.5px;color:var(--m);margin-bottom:28px;">Memindai arsip Tempo, menyusun topic cluster, dan memetakan struktur entitas...</div>
+  <div class="ldw"><div class="lsp"></div><div class="lttl" id="ps-lt">Building investigative profile...</div><div style="font-size:12.5px;color:var(--m);margin-bottom:28px;">Memindai arsip Tempo, menyusun topic cluster, dan memetakan struktur entitas...</div>
   <ul class="lsteps"><li class="lsi" id="pls1"><div class="lic">📚</div><span>Searching entity in Tempo archive...</span></li><li class="lsi" id="pls2"><div class="lic">🧩</div><span>Clustering issues into topics...</span></li><li class="lsi" id="pls3"><div class="lic">🔗</div><span>Mapping ownership &amp; relationships...</span></li><li class="lsi" id="pls4"><div class="lic">⚡</div><span>Compiling risk signals &amp; track record...</span></li><li class="lsi" id="pls5"><div class="lic">✅</div><span>Finalizing profile...</span></li></ul>
   <div style="font-size:26px;font-weight:700;font-family:'Playfair Display',serif;color:var(--n);margin-top:14px;" id="ps-pct">0%</div></div>
  </div>
@@ -1325,9 +1327,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
  <div class="sv" id="ps-result">
 
   <!-- ═══ ENTITY HEADER ═══ -->
-  <div style="border-radius:12px;overflow:hidden;border:1px solid var(--b);margin-bottom:16px;">
+  <div style="border-radius:12px;border:1px solid var(--b);margin-bottom:16px;">
    <div class="prof-hd" style="flex-wrap:wrap;gap:16px;">
-    <div style="flex:1;min-width:260px;">
+    <div style="flex:1;min-width:260px;" id="prof-left">
      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
       <div class="prof-nm" style="margin-bottom:0;">PT Waskita Karya Tbk</div>
       <span class="bx" style="background:rgba(255,255,255,.15);color:#fff;">Company</span>
@@ -1340,8 +1342,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
      </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0;">
+     <div id="prof-attn">
      <div class="attn-pill attn-critical">🔴 Critical Review Required <span class="attn-info">ⓘ</span>
       <div class="attn-tip">Attention level dihitung dari <strong>materialitas</strong>, <strong>recency</strong>, <strong>kredibilitas sumber</strong>, dan <strong>status penyelesaian</strong> sinyal yang terdeteksi — bukan skor risiko tunggal. "Critical" berarti ada isu material yang masih belum terselesaikan dan memerlukan tinjauan lebih lanjut sebelum keputusan bisnis diambil.</div>
+     </div>
      </div>
      <div class="flex g6 wrap" style="justify-content:flex-end;">
       <button class="btn bo bsm" onclick="openWL()">☆ Tambah ke Watchlist</button>
@@ -1352,7 +1356,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
    </div>
 
    <!-- ═══ 5 MAIN TABS ═══ -->
-   <div style="background:#fff;border-top:none;">
+   <div style="background:#fff;border-top:none;border-radius:0 0 12px 12px;">
     <div class="tabs-bar" id="ps-tabs">
      <div class="tab on" onclick="pstab('overview')">Overview</div>
      <div class="tab" onclick="pstab('issues')">Issues &amp; Track Record</div>
@@ -1363,6 +1367,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
 
     <!-- ═════════════════════ TAB 1 — OVERVIEW ═════════════════════ -->
     <div class="tc on cp" id="pst-overview">
+     <div id="pst-overview-inner">
 
      <!-- A. Executive Snapshot -->
      <div class="card cp m14" style="border-left:4px solid var(--r);">
@@ -1379,7 +1384,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
        <div style="font-size:12px;line-height:1.5;"><strong style="color:var(--n);">Perubahan terbaru:</strong> <span style="color:var(--m);">direksi baru dilantik (Nov 2024) — pergantian ketiga dalam 3 tahun.</span></div>
       </div>
       <div class="flex g6 wrap" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--b);">
-       <button class="btn bp bsm" onclick="saveRep('PT Waskita Karya Tbk · Profile Risk Assessment')">📋 Generate Report</button>
+       <button class="btn bp bsm" onclick="saveRep('PT Waskita Karya Tbk · Investigative Profile')">📋 Generate Report</button>
        <button class="btn bo bsm" onclick="openWL()">☆ Tambah ke Watchlist</button>
        <button class="ask-cta bsm" onclick="openAIP('ps')">💬 Ask Tempo</button>
       </div>
@@ -1546,6 +1551,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
       </div>
      </div>
 
+     </div>
     </div><!-- end pst-overview -->
     <!-- ═════════════════════ TAB 2 — ISSUES & TRACK RECORD ═════════════════════ -->
     <div class="tc cp" id="pst-issues">
@@ -1554,7 +1560,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
       <div class="tf-bar" style="flex-direction:column;align-items:stretch;gap:9px;">
        <input class="fi" id="issues-search" placeholder="🔍 Cari topic cluster..." style="width:100%;" oninput="filterTopics()">
        <div class="flex g8 wrap">
-        <select class="tf-sel" style="flex:1;min-width:130px;" id="issues-cat" onchange="filterTopics()"><option value="">Semua Kategori</option><option>Financial</option><option>Legal</option><option>Governance</option><option>Reputation</option><option>Operational</option></select>
+        <select class="tf-sel" style="flex:1;min-width:130px;" id="issues-cat" onchange="filterTopics()"><option value="">Semua Kategori</option><option>Financial</option><option>Legal</option><option>Governance</option><option>Reputation</option><option>Operational</option><option>Regulatory</option><option>Environmental</option></select>
         <select class="tf-sel" style="flex:1;min-width:130px;" id="issues-risk" onchange="filterTopics()"><option value="">Semua Risk Level</option><option>High</option><option>Medium</option><option>Low</option></select>
         <select class="tf-sel" style="flex:1;min-width:130px;" id="issues-status" onchange="filterTopics()"><option value="">Semua Status</option><option>Ongoing</option><option>Unresolved</option><option>Partially Resolved</option></select>
         <select class="tf-sel" style="flex:1;min-width:130px;" id="issues-sort" onchange="filterTopics()"><option value="materiality">Sort: Materiality</option><option value="recency">Sort: Recency</option><option value="coverage">Sort: Coverage Volume</option></select>
@@ -1579,6 +1585,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
       <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Ownership &amp; Leadership Map</div>
        <div class="struct-toggle"><button class="on" onclick="structTab(this,'current')">Current</button><button onclick="structTab(this,'historical')">Historical</button></div>
       </div>
+      <div id="struct-inner">
 
       <div id="struct-current">
        <div class="g2" style="gap:9px;margin-bottom:12px;">
@@ -1618,6 +1625,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
         <div class="tli"><div class="tyr">2012</div><div class="tev">IPO di Bursa Efek Indonesia (WSKT)</div><div class="tim">Kepemilikan publik mulai terbentuk melalui penawaran saham perdana.</div></div>
         <div class="tli" style="margin-bottom:0;"><div class="tyr">1961</div><div class="tev">Pendirian PT Waskita Karya sebagai perusahaan konstruksi negara</div><div class="tim">Titik awal sejarah perusahaan sebagai BUMN konstruksi.</div></div>
        </div>
+      </div>
       </div>
      </div>
 
@@ -1701,7 +1709,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
 
      <!-- C. Corporate Action Tracker -->
      <div class="card cp m4">
-      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Corporate Action Tracker</div><span class="bx bn">6 aksi korporasi</span></div>
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Corporate Action Tracker</div><span class="bx bn" id="corp-action-count">6 aksi korporasi</span></div>
+      <div id="corp-action-inner">
       <div class="tl-w">
        <div class="tli hl">
         <div class="tyr">Jan 2025 · Debt Restructuring</div>
@@ -1739,6 +1748,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
         <div class="tim">Entitas terlibat: Sindikasi kreditur, Kementerian BUMN. Relevansi strategis: respons awal terhadap tekanan cash flow pasca-ekspansi.</div>
         <div class="flex g6 wrap mt6"><button class="bev" onclick="pstab('issues');openTopic('debt')">🧩 Topic Cluster</button></div>
        </div>
+      </div>
       </div>
      </div>
 
@@ -1846,8 +1856,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
  .scope-health-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
  .scope-health-card{background:var(--bg);border-radius:8px;padding:11px;text-align:center;}
  /* Signal Insight Page */
- .insight-hero{position:sticky;top:0;background:#fff;z-index:15;padding:16px 20px 12px;margin-bottom:16px;border:1px solid var(--b);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);}
- .insight-nav{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--b);margin-top:14px;-webkit-overflow-scrolling:touch;}
+ .insight-hero{background:#fff;padding:16px 20px;margin-bottom:12px;border:1px solid var(--b);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);}
+ .insight-nav{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;position:sticky;top:0;background:#fff;z-index:15;margin-bottom:16px;border:1px solid var(--b);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:0 6px;}
  .insight-nav-item{padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--m);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;}
  .insight-nav-item:hover{color:var(--n);}
  .insight-nav-item.on{color:var(--r);border-bottom-color:var(--r);}
@@ -2109,16 +2119,16 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
     <span class="sig-status sig-status-accel" id="ins-status">Accelerating</span>
     <span id="ins-citation-cov" style="margin-left:auto;font-weight:700;color:var(--n);">94% cakupan sitasi</span>
    </div>
-   <div class="insight-nav" id="insight-nav">
-    <div class="insight-nav-item on" data-sec="ins-sec-overview" onclick="insNav(this,'ins-sec-overview')">Overview</div>
-    <div class="insight-nav-item" data-sec="ins-sec-actors" onclick="insNav(this,'ins-sec-actors')">Actors</div>
-    <div class="insight-nav-item" data-sec="ins-sec-timeline" onclick="insNav(this,'ins-sec-timeline')">Timeline</div>
-    <div class="insight-nav-item" data-sec="ins-sec-velocity" onclick="insNav(this,'ins-sec-velocity')">Velocity</div>
-    <div class="insight-nav-item" data-sec="ins-sec-sentiment" onclick="insNav(this,'ins-sec-sentiment')">Sentiment</div>
-    <div class="insight-nav-item" data-sec="ins-sec-precedents" onclick="insNav(this,'ins-sec-precedents')">Precedents</div>
-    <div class="insight-nav-item" data-sec="ins-sec-implications" onclick="insNav(this,'ins-sec-implications')">Next Steps</div>
-    <div class="insight-nav-item" data-sec="ins-sec-evidence" onclick="insNav(this,'ins-sec-evidence')">Evidence</div>
-   </div>
+  </div>
+  <div class="insight-nav" id="insight-nav">
+   <div class="insight-nav-item on" data-sec="ins-sec-overview" onclick="insNav(this,'ins-sec-overview')">Overview</div>
+   <div class="insight-nav-item" data-sec="ins-sec-actors" onclick="insNav(this,'ins-sec-actors')">Actors</div>
+   <div class="insight-nav-item" data-sec="ins-sec-timeline" onclick="insNav(this,'ins-sec-timeline')">Timeline</div>
+   <div class="insight-nav-item" data-sec="ins-sec-velocity" onclick="insNav(this,'ins-sec-velocity')">Velocity</div>
+   <div class="insight-nav-item" data-sec="ins-sec-sentiment" onclick="insNav(this,'ins-sec-sentiment')">Sentiment</div>
+   <div class="insight-nav-item" data-sec="ins-sec-precedents" onclick="insNav(this,'ins-sec-precedents')">Precedents</div>
+   <div class="insight-nav-item" data-sec="ins-sec-implications" onclick="insNav(this,'ins-sec-implications')">Next Steps</div>
+   <div class="insight-nav-item" data-sec="ins-sec-evidence" onclick="insNav(this,'ins-sec-evidence')">Evidence</div>
   </div>
 
   <div>
@@ -2256,7 +2266,7 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
 <div class="pg" id="page-watch">
  <div class="sv on" id="watch-home">
   <div class="sh m8">
-   <div><div class="ttl">Watchlist</div><div style="font-size:13px;color:var(--m);margin-top:2px;">Signal yang dipantau secara berkelanjutan — perkembangan baru, alert, dan digest.</div></div>
+   <div><div class="ttl">Watchlist</div><div style="font-size:13px;color:var(--m);margin-top:2px;">Command center pemantauan — lihat apa yang berubah di semua signal yang Anda pantau, tanpa harus membuka satu per satu. <span style="color:var(--s);">Untuk menjelajah &amp; menganalisis signal baru, gunakan Signal Monitor.</span></div></div>
    <button class="btn bp" onclick="P('mon')">+ Pantau Signal Baru</button>
   </div>
   <div class="kpi-g m14">
@@ -2265,6 +2275,14 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
    <div class="kpi"><div class="kpi-l">Prioritas Tinggi</div><div class="kpi-v">1</div><div class="kpi-c up">Perlu perhatian</div></div>
    <div class="kpi"><div class="kpi-l">Digest Berikutnya</div><div class="kpi-v" style="font-size:16px;">Besok</div><div class="kpi-c ok">08:00 WIB</div></div>
   </div>
+
+  <!-- Cross-signal activity feed — the thing Signal Monitor itself doesn't show -->
+  <div class="card cp m14">
+   <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">🔔 Aktivitas Terbaru — Semua Signal</div><span class="bx bn">Sejak digest terakhir</span></div>
+   <div id="wl-activity-feed"><!-- populated by JS: renderWatchlistActivity() --></div>
+  </div>
+
+  <div class="sh m10" style="margin-top:4px;"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Signal yang Dipantau</div></div>
   <div id="watchlist-body"><!-- populated by JS: renderWatchlist() --></div>
   <div id="watchlist-empty" class="lens-empty" style="display:none;margin-top:12px;">
    <div style="font-size:30px;margin-bottom:8px;">⭐</div>
@@ -2339,7 +2357,7 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
     </div>
    </div>
    <div class="rli rep-item" data-cat="ps" onclick="showSV('rep','exec-brief')" style="cursor:pointer;">
-    <div class="rli-src">Profile Risk Assessment</div>
+    <div class="rli-src">Investigative Profile</div>
     <div class="rli-t">Aguan (Sugianto Kusuma) — Executive Profile</div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px;align-items:center;">
      <span class="rli-tpl">⚡ Executive Brief</span>
@@ -2662,7 +2680,7 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
    <div class="ce" id="chat-empty">
     <div class="ce-av">AT</div>
     <div class="ce-ttl">Ask Tempo</div>
-    <div class="ce-sub">Tanya cepat tentang entitas, regulasi, industri, atau isu bisnis Indonesia — dijawab dari 847K+ arsip Tempo dengan kutipan sumber. Untuk pemahaman mendalam, gunakan Profile Risk Assessment.</div>
+    <div class="ce-sub">Tanya cepat tentang entitas, regulasi, industri, atau isu bisnis Indonesia — dijawab dari 847K+ arsip Tempo dengan kutipan sumber. Untuk pemahaman mendalam, gunakan Investigative Profile.</div>
     <div class="ce-tp-g">
      <div class="ce-tp" onclick="askT('Siapa PT Waskita Karya dan apa latar belakang bisnisnya?')">👤 Siapa PT Waskita Karya?</div>
      <div class="ce-tp" onclick="askT('Apa yang terjadi dengan kasus KPK dan Waskita Karya?')">⚖️ Kasus KPK Waskita</div>
@@ -2904,11 +2922,11 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
 </div>
 <script>
 // NAV
-const ptitles={home:'Home',ps:'Profile Risk Assessment',mon:'Signal Monitor',watch:'Watchlist',rep:'Generated Reports',ask:'Ask Tempo'};
+const ptitles={home:'Home',ps:'Investigative Profile',mon:'Signal Monitor',watch:'Watchlist',rep:'Generated Reports',ask:'Ask Tempo'};
 const picons={home:'🏠',ps:'👤',mon:'📡',watch:'⭐',rep:'📄',ask:'💬'};
 // Subview breadcrumb labels + back targets
 const svMeta = {
-  ps:  { result:'Risk Assessment Profile', search:null },
+  ps:  { result:'Investigative Profile', search:null },
   mon: { wizard:'Create Custom Signal', loading:null, insight:'Signal Insight', home:null },
   watch: { home:null },
   rep: { 'exec-brief':'Executive Brief', 'full-report':'Full Screening Report', 'risk-summary':'Risk Summary', 'entity-profile':'Entity Profile Report', 'mon-digest':'Monitoring Digest', home:null }
@@ -2916,6 +2934,9 @@ const svMeta = {
 // Default subview to restore when navigating back to a page from breadcrumb
 const svDefault = { ps:'search', mon:'home', watch:'home', rep:'home' };
 
+function getCurrentEntityDisplayName(){
+  return _currentEntity==='freeport' ? 'PT Freeport Indonesia' : 'PT Waskita Karya Tbk';
+}
 function bcHTML(pgId, svId){
   const home = '<span class="tb-bc-seg" onclick="P(\'home\')"><span class="tb-bc-icon">🏠</span> Home</span>';
   if(pgId==='home') return '<span class="tb-bc-seg active"><span class="tb-bc-icon">🏠</span> Home</span>';
@@ -2927,7 +2948,8 @@ function bcHTML(pgId, svId){
   const defSv   = svDefault[pgId]||'home';
   const pgBack  = '<span class="tb-bc-seg back" onclick="showSV(\''+pgId+'\',\''+defSv+'\')"><span class="tb-bc-icon">'+pgIcon+'</span> '+pgLabel+'</span>';
   if(!svId || !(svMeta[pgId]&&svMeta[pgId][svId])) return home+sep+pgSeg;
-  const svLabel = svMeta[pgId][svId];
+  let svLabel = svMeta[pgId][svId];
+  if(pgId==='ps'&&svId==='result') svLabel = getCurrentEntityDisplayName();
   return home+sep+pgBack+sep+'<span class="tb-bc-seg active">'+svLabel+'</span>';
 }
 // Mobile sidebar
@@ -2956,6 +2978,7 @@ function P(id){
   document.querySelector('.ct').scrollTop=0;
   syncMobNav(id);
   closeSidebar();
+  if(id==='watch'){setTimeout(()=>{renderWatchlist();renderWatchlistActivity();},20);}
 }
 function showSV(pg,id){
   const page=document.getElementById('page-'+pg);if(!page)return;
@@ -2965,13 +2988,19 @@ function showSV(pg,id){
   document.getElementById('bc').innerHTML=bcHTML(pg,id);
   document.querySelector('.ct').scrollTop=0;
   if(pg==='ps'&&id==='result'){pstab('overview');closeTopicDetail();setTimeout(()=>{renderOverviewTopicCards();renderTopicList();renderSources();},60);}
-  if(pg==='watch'&&id==='home')setTimeout(renderWatchlist,20);
+  if(pg==='watch'&&id==='home')setTimeout(()=>{renderWatchlist();renderWatchlistActivity();},20);
 }
 // PS
 function fillPS(nm){document.getElementById('ps-in').value=nm;chkPS(nm);}
 function selDA(el,bid){document.getElementById(bid).querySelectorAll('.daopt').forEach(o=>o.classList.remove('on'));el.classList.add('on');}
 function chkPS(v){const el=document.getElementById('ps-da');if(el)el.style.display=v.toLowerCase().includes('waskita')?'block':'none';}
-function runPS(){const v=document.getElementById('ps-in').value.trim()||'PT Waskita Karya';document.getElementById('ps-lt').textContent='Menyusun profil untuk '+v;showSV('ps','loading');animLD('pls',5,[0,700,1400,2100,2800],[20,40,60,80,96],'ps-pct',()=>showSV('ps','result'));}
+function runPS(){
+  const v=document.getElementById('ps-in').value.trim()||'PT Waskita Karya';
+  const isFreeport=v.toLowerCase().includes('freeport');
+  document.getElementById('ps-lt').textContent='Menyusun profil untuk '+v;
+  showSV('ps','loading');
+  animLD('pls',5,[0,700,1400,2100,2800],[20,40,60,80,96],'ps-pct',()=>loadEntityProfile(isFreeport?'freeport':'waskita'));
+}
 // PS tabs
 // Loading animation
 function animLD(prefix,count,delays,pcts,pctId,done){for(let i=1;i<=count;i++){const e=document.getElementById(prefix+i);if(e){e.classList.remove('on','done');}}delays.forEach((d,i)=>{setTimeout(()=>{if(i>0){const p=document.getElementById(prefix+i);if(p){p.classList.remove('on');p.classList.add('done');p.querySelector('.lic').textContent='✓';}}const c=document.getElementById(prefix+(i+1));if(c)c.classList.add('on');const pe=document.getElementById(pctId);if(pe)pe.textContent=pcts[i]+'%';},d);});setTimeout(()=>{const last=document.getElementById(prefix+count);if(last){last.classList.remove('on');last.classList.add('done');last.querySelector('.lic').textContent='✓';}const pe=document.getElementById(pctId);if(pe)pe.textContent='100%';setTimeout(done,400);},delays[delays.length-1]+600);}
@@ -3034,7 +3063,7 @@ const entTopicMap={
 };
 const topicLabel={debt:'Debt Restructuring',legal:'Legal & Corruption',governance:'Governance',reputation:'Reputation',project:'Project Delivery'};
 function openEntN(id){closeEv();
-  const kgFallback=(typeof KGN!=='undefined')?KGN.find(n=>n.id===id):null;
+  const kgFallback=getCurrentKGN().find(n=>n.id===id);
   const d=entData[id]||(kgFallback?{nm:kgFallback.fullName,type:kgFallback.role,rel:kgFallback.rel,mentions:kgFallback.mentions,risk:kgFallback.risk,str:'—',matter:kgFallback.why,riskProp:kgFallback.prop,arts:[]}:null);
   if(!d)return;
   document.getElementById('ent-t').textContent=d.nm;
@@ -3189,7 +3218,7 @@ const KG_ARTICLES = {
 // If no articles: show "—" for both columns (mention can't exist without an article source).
 function getKGArticles(id){return KG_ARTICLES[id]||[];}
 
-const KGN = [
+const WASKITA_KGN = [
   // ── Core ──
   {id:'waskita',name:'PT Waskita\nKarya',fullName:'PT Waskita Karya Tbk',color:'#CC1F2D',r:44,weight:42,type:'main',
    role:'Entitas Utama · Risk 78/100',mentions:42,risk:'Financial, Legal, Governance, Media',
@@ -3332,7 +3361,7 @@ const KGN = [
    prop:'Mogok subkontraktor dapat menghentikan proyek aktif, memperburuk delivery risk dan reputasi Waskita.'}
 ];
 
-const KGL = [
+const WASKITA_KGL = [
   // ── KPK & Legal Cluster ──
   {source:'kpk',target:'waskita',label:'selidiki korupsi',weight:9,color:'#CC1F2D',width:3,type:'legal'},
   {source:'kpk',target:'dir1',label:'tersangkakan',weight:9,color:'#D97706',width:2.5,type:'legal'},
@@ -3383,8 +3412,106 @@ const KGL = [
   // ── Subcontractors ──
   {source:'waskita',target:'subkon',label:'kontrak ke',weight:5,color:'#94A3B8',width:1.5,type:'other'},
   {source:'subkon',target:'waskita',label:'klaim bayar',weight:5,color:'#CC1F2D',width:1.5,type:'other',dashed:true}
-]
+];
 
+// ════════════════════════════════════════════════════════════
+// FREEPORT — actor graph dataset (real entities, sourced from Data_Freeport.xlsx)
+// ════════════════════════════════════════════════════════════
+const FREEPORT_KGN = [
+  {id:'fp-ptfi',name:'PT Freeport\nIndonesia',fullName:'PT Freeport Indonesia (PTFI)',color:'#CC1F2D',r:44,weight:42,type:'main',
+   role:'Entitas Utama · Operator tambang Grasberg',mentions:120,risk:'Operasional, Governance, Lingkungan, Fiskal',
+   rel:'Subjek utama profil ini',
+   why:'PTFI mengoperasikan salah satu tambang tembaga-emas terbesar di dunia (Grasberg, Papua Tengah) dan merupakan salah satu penyumbang penerimaan negara terbesar dari sektor pertambangan.',
+   prop:'Perkembangan operasional (longsor, smelter), kepemilikan (divestasi), dan regulasi (IUPK) di PTFI berdampak langsung ke penerimaan negara dan pasokan emas/tembaga nasional.'},
+
+  {id:'fp-fcx',name:'Freeport-\nMcMoRan Inc.',fullName:'Freeport-McMoRan Inc. (FCX)',color:'#7C3AED',r:34,weight:9,type:'group',
+   role:'Induk Usaha AS (NYSE: FCX)',mentions:28,risk:'Governance, Kepemilikan',
+   rel:'Pemegang saham minoritas signifikan PTFI, melepas 12% saham tambahan ke Indonesia (2025–2026)',
+   why:'FCX adalah perusahaan tambang tembaga-emas asal Amerika Serikat yang mendirikan dan mengoperasikan PTFI sejak 1973. Kepemilikannya di PTFI terus menyusut seiring divestasi bertahap ke pemerintah Indonesia.',
+   prop:'Perubahan kepemilikan FCX di PTFI (termasuk pelepasan 12% saham tambahan) memengaruhi struktur kendali dan pembagian keuntungan jangka panjang.'},
+
+  {id:'fp-mindid',name:'MIND ID /\nInalum',fullName:'MIND ID (PT Indonesia Asahan Aluminium/Inalum)',color:'#0F1A2E',r:32,weight:9,type:'governance',
+   role:'Pemegang Saham Mayoritas — BUMN Holding Tambang',mentions:22,risk:'Governance, Kepemilikan',
+   rel:'Menguasai 51,2% saham PTFI sejak divestasi Desember 2018, menuju 61%+ dengan tambahan 12%',
+   why:'MIND ID menebus 51,2% saham PTFI senilai Rp55,8 triliun pada Desember 2018 — momen kunci yang mengubah PTFI menjadi mayoritas milik negara.',
+   prop:'Sebagai pemegang saham mayoritas, keputusan MIND ID/pemerintah menentukan arah strategis, direksi, dan pembagian dividen PTFI ke negara.'},
+
+  {id:'fp-esdm',name:'Kementerian\nESDM',fullName:'Kementerian Energi dan Sumber Daya Mineral (ESDM)',color:'#1E3A5F',r:28,weight:7,type:'governance',
+   role:'Regulator Pertambangan & Energi',mentions:26,risk:'Regulatory, Operasional',
+   rel:'Menerbitkan dan memperpanjang Izin Usaha Pertambangan Khusus (IUPK) PTFI, mengawasi keselamatan operasi tambang',
+   why:'ESDM adalah otoritas yang mengonfirmasi perpanjangan IUPK PTFI hingga 2061 dan memberikan update resmi selama insiden longsor Grasberg 2025.',
+   prop:'Keputusan ESDM soal perizinan, evaluasi keselamatan, dan revisi RKAB langsung menentukan kelangsungan operasi PTFI.'},
+
+  {id:'fp-investasi',name:'Kementerian\nInvestasi/BKPM',fullName:'Kementerian Investasi dan Hilirisasi / BKPM',color:'#2563EB',r:24,weight:6,type:'governance',
+   role:'Regulator Investasi & Hilirisasi',mentions:14,risk:'Governance, Kepemilikan',
+   rel:'Memimpin negosiasi divestasi saham tambahan 12% dengan Freeport-McMoRan (2025–2026)',
+   why:'Menteri Investasi dan Hilirisasi (merangkap Kepala BKPM/CEO Danantara) memimpin negosiasi langsung dengan CEO Freeport-McMoRan soal pelepasan saham tambahan.',
+   prop:'Hasil negosiasi kepemilikan saham memengaruhi seberapa besar kendali dan keuntungan yang diperoleh Indonesia dari PTFI ke depan.'},
+
+  {id:'fp-danantara',name:'Danantara',fullName:'Badan Pengelola Investasi Daya Anagata Nusantara (Danantara)',color:'#0891B2',r:22,weight:5,type:'financial',
+   role:'Badan Pengelola Investasi Negara',mentions:9,risk:'Governance, Kepemilikan',
+   rel:'Terlibat dalam proses negosiasi dan klaim kesepakatan divestasi saham tambahan PTFI',
+   why:'Danantara adalah lembaga pengelola investasi negara yang turut memimpin negosiasi strategis dengan Freeport-McMoRan.',
+   prop:'Peran ganda Danantara dalam investasi negara dan negosiasi korporasi menambah kompleksitas struktur pengambilan keputusan.'},
+
+  {id:'fp-bpk',name:'BPK',fullName:'Badan Pemeriksa Keuangan (BPK)',color:'#92400E',r:19,weight:4,type:'governance',
+   role:'Auditor Negara',mentions:6,risk:'Lingkungan, Governance',
+   rel:'Mengaudit dan menemukan indikasi pencemaran lingkungan oleh limbah tambang PTFI (2017)',
+   why:'BPK memperkirakan potensi kerugian akibat kerusakan lingkungan akibat limbah tambang PTFI mencapai Rp185 triliun berdasarkan audit 2017.',
+   prop:'Temuan BPK menjadi rujukan berulang dalam diskursus tanggung jawab lingkungan PTFI, termasuk saat proses divestasi 2018–2019.'},
+
+  {id:'fp-smelting',name:'PT Smelting',fullName:'PT Smelting (JV dengan Mitsubishi Materials)',color:'#0891B2',r:24,weight:6,type:'subsidiary',
+   role:'Smelter Tembaga Pertama Indonesia',mentions:12,risk:'Operasional',
+   rel:'Fasilitas peleburan tembaga pertama PTFI di Gresik, beroperasi sejak 1996, kapasitas 1,3 juta ton/tahun',
+   why:'PT Smelting adalah smelter tembaga pertama di Indonesia, dibangun 1996 bersama konsorsium Jepang sebagai bagian dari kepatuhan Kontrak Karya II.',
+   prop:'Selama smelter baru Manyar terganggu (kebakaran 2024, kekurangan pasokan pasca-longsor 2025), PT Smelting menjadi satu-satunya fasilitas pengolahan konsentrat yang beroperasi penuh.'},
+
+  {id:'fp-redpath',name:'PT Redpath\nIndonesia',fullName:'PT Redpath Indonesia',color:'#64748B',r:20,weight:5,type:'other',
+   role:'Kontraktor Pertambangan Bawah Tanah',mentions:8,risk:'Operasional, Keselamatan Kerja',
+   rel:'Kontraktor yang mempekerjakan tujuh pekerja korban longsor Grasberg Block Cave (Sept 2025)',
+   why:'Seluruh tujuh pekerja yang meninggal dalam insiden longsor September 2025 merupakan karyawan PT Redpath Indonesia, kontraktor pengembangan tambang bawah tanah PTFI.',
+   prop:'Insiden ini menyoroti eksposur keselamatan kerja kontraktor pihak ketiga dalam rantai operasional tambang bawah tanah PTFI.'},
+
+  {id:'fp-antam',name:'Antam',fullName:'PT Aneka Tambang Tbk (Antam)',color:'#64748B',r:20,weight:4,type:'peer',
+   role:'Pembeli Emas — BUMN Tambang',mentions:9,risk:'Operasional, Rantai Pasok',
+   rel:'Membeli seluruh produksi emas PTFI; pasokan sempat terdampak longsor Grasberg 2025',
+   why:'Antam bergantung pada pasokan emas dari PTFI untuk kebutuhan produksinya; longsor Grasberg sempat membuat pasokan emas ke Antam seret.',
+   prop:'Gangguan produksi PTFI berdampak berantai ke ketersediaan emas Antam di pasar domestik.'},
+
+  {id:'fp-papua',name:'Pemda Papua\nTengah',fullName:'Pemerintah Daerah Papua Tengah / Mimika',color:'#16A34A',r:20,weight:5,type:'political',
+   role:'Pemerintah Daerah & Komunitas Sekitar Operasi',mentions:10,risk:'Sosial, Lingkungan',
+   rel:'Menerima kontribusi dana bagi hasil dan investasi sosial dari operasional PTFI',
+   why:'PTFI menyalurkan setoran signifikan ke Pemda Papua (dana bagi hasil) dan menjalankan program investasi sosial (pendidikan, kesehatan) di sekitar area operasi.',
+   prop:'Keberlanjutan hubungan dengan pemerintah daerah dan masyarakat Papua menjadi prasyarat sosial bagi kelangsungan izin operasi jangka panjang PTFI.'},
+
+  {id:'fp-polda',name:'Polda Papua\nTengah',fullName:'Kepolisian Daerah Papua Tengah',color:'#374151',r:18,weight:4,type:'legal',
+   role:'Aparat Keamanan & Penegak Hukum',mentions:5,risk:'Keamanan, Operasional',
+   rel:'Menginvestigasi insiden penembakan berulang di kawasan operasional tambang PTFI',
+   why:'Kawasan operasi Freeport di Tembagapura dan Grasberg berulang kali mengalami insiden penembakan sejak awal 2000-an, terbaru pada Maret 2026.',
+   prop:'Eksposur keamanan yang berulang menjadi faktor risiko keselamatan kerja jangka panjang yang independen dari risiko operasional/geoteknik.'}
+];
+const FREEPORT_KGL = [
+  {source:'fp-fcx',target:'fp-ptfi',label:'pemegang saham (menyusut)',weight:8,color:'#7C3AED',width:2.5,type:'group'},
+  {source:'fp-mindid',target:'fp-ptfi',label:'pemegang saham mayoritas',weight:9,color:'#0F1A2E',width:3,type:'governance'},
+  {source:'fp-esdm',target:'fp-ptfi',label:'penerbit IUPK',weight:8,color:'#1E3A5F',width:2.5,type:'governance'},
+  {source:'fp-investasi',target:'fp-ptfi',label:'negosiasi divestasi',weight:6,color:'#2563EB',width:2,type:'governance'},
+  {source:'fp-investasi',target:'fp-fcx',label:'negosiasi langsung',weight:5,color:'#2563EB',width:1.5,type:'governance',dashed:true},
+  {source:'fp-danantara',target:'fp-ptfi',label:'proses divestasi',weight:4,color:'#0891B2',width:1.5,type:'financial',dashed:true},
+  {source:'fp-bpk',target:'fp-ptfi',label:'audit lingkungan',weight:4,color:'#92400E',width:1.5,type:'governance',dashed:true},
+  {source:'fp-ptfi',target:'fp-smelting',label:'anak usaha/JV',weight:6,color:'#0891B2',width:2,type:'subsidiary'},
+  {source:'fp-redpath',target:'fp-ptfi',label:'kontraktor tambang bawah tanah',weight:6,color:'#64748B',width:2,type:'other'},
+  {source:'fp-ptfi',target:'fp-antam',label:'pasok emas',weight:5,color:'#64748B',width:2,type:'peer'},
+  {source:'fp-ptfi',target:'fp-papua',label:'dana bagi hasil & investasi sosial',weight:5,color:'#16A34A',width:2,type:'political'},
+  {source:'fp-polda',target:'fp-ptfi',label:'investigasi insiden keamanan',weight:4,color:'#374151',width:1.5,type:'legal'}
+];
+
+// ════════════════════════════════════════════════════════════
+// ENTITY SWITCHING — Investigative Profile multi-entity support
+// ════════════════════════════════════════════════════════════
+let _currentEntity='waskita';
+function getCurrentKGN(){return _currentEntity==='freeport'?FREEPORT_KGN:WASKITA_KGN;}
+function getCurrentKGL(){return _currentEntity==='freeport'?FREEPORT_KGL:WASKITA_KGL;}
+function getMainEntityId(){const n=getCurrentKGN().find(x=>x.type==='main');return n?n.id:'waskita';}
 
 let _kgInited=false,_kgSvg,_kgG,_kgZoom,_kgSim,_kgNodeSel,_kgLinkSel,_kgLabelSel,_kgNodes,_kgLinks,_kgSelId=null;
 
@@ -3395,10 +3522,10 @@ function initKG(){
   _kgInited=true;
   const cont=document.getElementById('kg-force-container');
   const W=cont?cont.offsetWidth:840,H=380;
-  _kgNodes=KGN.map(n=>({...n,x:W/2+(Math.random()-.5)*200,y:H/2+(Math.random()-.5)*160}));
-  _kgLinks=KGL.map(l=>({...l}));
-  // Center waskita
-  const wn=_kgNodes.find(n=>n.id==='waskita');
+  _kgNodes=getCurrentKGN().map(n=>({...n,x:W/2+(Math.random()-.5)*200,y:H/2+(Math.random()-.5)*160}));
+  _kgLinks=getCurrentKGL().map(l=>({...l}));
+  // Center main entity node
+  const wn=_kgNodes.find(n=>n.id===getMainEntityId());
   if(wn){wn.x=W/2;wn.y=H/2;}
 
   _kgSvg=d3.select('#kg-force-svg').attr('width',W).attr('height',H);
@@ -3622,8 +3749,9 @@ const STR_LABELS={Kuat:'<span style="color:var(--r);font-weight:600;">Kuat</span
 
 function buildEntityTable(){
   const tbody=document.getElementById('ent-table-body');
-  if(!tbody||!KGN)return;
-  tbody.innerHTML=KGN.map(n=>{
+  const kgn=getCurrentKGN();
+  if(!tbody||!kgn)return;
+  tbody.innerHTML=kgn.map(n=>{
     const arts=getKGArticles(n.id);
     const artCount=arts.length;
     // Only count mentions from actual articles — n.weight is relationship strength, not mention count
@@ -3656,16 +3784,17 @@ function syncEntityTable(visible){
   if(!document.getElementById('ent-table-body'))return;
   const typeOk=t=>(!_kgTypeFilter||_kgTypeFilter.includes(t)||t==='main');
   let visCount=0;
-  KGN.forEach(n=>{
+  getCurrentKGN().forEach(n=>{
     const show=visible.has(n.id)&&typeOk(n.type);
     if(show)visCount++;
     const row=document.getElementById('etr-'+n.id);
     if(row)row.style.display=show?'':'none';
   });
+  const srcCount=getCurrentSources().length;
   const cnt=document.getElementById('ent-table-count');
-  if(cnt)cnt.textContent=visCount+' entitas · 42 sumber';
+  if(cnt)cnt.textContent=visCount+' entitas · '+srcCount+' sumber';
   const cntHd=document.getElementById('ent-table-count-hd');
-  if(cntHd)cntHd.textContent=visCount+' entitas · 42 sumber';
+  if(cntHd)cntHd.textContent=visCount+' entitas · '+srcCount+' sumber';
 }
 
 // ── Article Drawer ────────────────────────────────────────
@@ -3673,7 +3802,7 @@ const SENT_BADGE={Negative:'<span class="bx bh" style="font-size:10px;">Negatif<
 const TYPE_BADGE=tp=>`<span style="background:var(--pul);color:var(--pu);border-radius:3px;padding:1px 6px;font-size:10px;font-weight:600;">${tp}</span>`;
 
 function openEntityArticles(nodeId){
-  const node=KGN.find(n=>n.id===nodeId);
+  const node=getCurrentKGN().find(n=>n.id===nodeId);
   const arts=getKGArticles(nodeId);
   if(!node)return;
   document.getElementById('ent-art-title').textContent=node.fullName+' — Artikel Terkait';
@@ -3688,8 +3817,11 @@ function openEntityArticles(nodeId){
     body.innerHTML=`<div style="background:var(--bll);border-radius:6px;padding:8px 11px;font-size:11.5px;color:var(--bl);margin-bottom:13px;line-height:1.6;">
       <strong>Mention</strong> = total kemunculan nama di teks. <strong>Artikel</strong> = jumlah dokumen unik. ${totalMentions} mention dari ${artCount} artikel.
     </div>`+
-    arts.map(a=>`
-      <div class="evi" style="margin-bottom:11px;cursor:pointer;" onclick="openArticleDetail('${a.id}','${nodeId}')">
+    arts.map(a=>{
+      const openAction=a.url?`window.open('${a.url}','_blank')`:`openArticleDetail('${a.id}','${nodeId}')`;
+      const linkLabel=a.url?'↗ Buka Artikel Asli':'↗ Buka Artikel Lengkap (contoh)';
+      return `
+      <div class="evi" style="margin-bottom:11px;cursor:pointer;" onclick="${openAction}">
        <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:6px;">
         <span style="font-size:12px;font-weight:700;color:var(--n);">${a.src}</span>
         <span style="background:var(--bg);border-radius:3px;padding:1px 6px;font-size:10px;color:var(--m);">${a.srcType||'Berita Online'}</span>
@@ -3700,9 +3832,10 @@ function openEntityArticles(nodeId){
        <div class="eitt" style="margin-bottom:7px;line-height:1.4;">${a.title}</div>
        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:8px;">${a.summary}</div>
        <div style="display:flex;justify-content:flex-end;padding-top:6px;border-top:1px solid var(--b);">
-        <a href="#" onclick="openArticleDetail('${a.id}','${nodeId}');return false" style="font-size:11.5px;color:var(--bl);font-weight:600;text-decoration:none;">↗ Buka Artikel Lengkap (contoh)</a>
+        <a href="#" onclick="event.stopPropagation();${openAction};return false" style="font-size:11.5px;color:var(--bl);font-weight:600;text-decoration:none;">${linkLabel}</a>
        </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
   document.getElementById('ent-art-ov').classList.add('open');
   document.getElementById('ent-art-drw').classList.add('open');
@@ -3713,8 +3846,9 @@ function openArticleDetail(artId, nodeId){
   const arts=getKGArticles(nodeId);
   const a=arts.find(x=>x.id===artId);
   if(!a){window.open('https://tempo.co','_blank');return;}
-  // Show in an overlay modal-style
-  const node=KGN.find(n=>n.id===nodeId);
+  if(a.url){window.open(a.url,'_blank');return;}
+  // Show in an overlay modal-style (demo articles without a real URL)
+  const node=getCurrentKGN().find(n=>n.id===nodeId);
   const existing=document.getElementById('art-detail-modal');
   if(existing)existing.remove();
   const modal=document.createElement('div');
@@ -3774,11 +3908,17 @@ function toggleRRow(id){const row=document.getElementById('rrow-'+id);if(row)row
 function toggleAcc(id){const el=document.getElementById(id);if(el)el.classList.toggle('open');}
 
 // ============================================================
-// PROFILE RISK ASSESSMENT — Issues & Track Record data model
+// INVESTIGATIVE PROFILE — Issues & Track Record data model
 // ============================================================
-const topicColor={debt:'#CC1F2D',legal:'#D97706',governance:'#0F1A2E',reputation:'#7C3AED',project:'#2563EB'};
-const topicOrder=['debt','legal','governance','reputation','project'];
-const topicLabel2={debt:'Debt Restructuring',legal:'Legal & Corruption',governance:'Governance',reputation:'Reputation',project:'Project Delivery'};
+const topicColor={debt:'#CC1F2D',legal:'#D97706',governance:'#0F1A2E',reputation:'#7C3AED',project:'#2563EB',
+  'fp-longsor':'#CC1F2D','fp-kontrak':'#0F1A2E','fp-smelter':'#D97706','fp-lingkungan':'#16A34A','fp-fiskal':'#7C3AED','fp-keamanan':'#374151'};
+const topicOrderByEntity={
+  waskita:['debt','legal','governance','reputation','project'],
+  freeport:['fp-longsor','fp-kontrak','fp-smelter','fp-lingkungan','fp-fiskal','fp-keamanan']
+};
+function getTopicOrder(){return topicOrderByEntity[_currentEntity]||topicOrderByEntity.waskita;}
+const topicLabel2={debt:'Debt Restructuring',legal:'Legal & Corruption',governance:'Governance',reputation:'Reputation',project:'Project Delivery',
+  'fp-longsor':'Longsor Tambang Grasberg','fp-kontrak':'Kontrak & Divestasi','fp-smelter':'Hilirisasi & Smelter','fp-lingkungan':'Isu Lingkungan','fp-fiskal':'Kontribusi Fiskal','fp-keamanan':'Insiden Keamanan'};
 
 const topicData={
  debt:{
@@ -3991,7 +4131,316 @@ const topicData={
    change:'Penyelesaian pembayaran subkontraktor yang tertunda akan menjadi sinyal perbaikan operasional yang kuat.',
    trigger:'Pantau pengumuman Otorita IKN dan laporan asosiasi subkontraktor terkait status pembayaran.'
   }
+ },
+ 'fp-longsor':{
+  key:'fp-longsor',title:'Longsor Tambang Bawah Tanah Grasberg Block Cave',category:'Operational',riskLevel:'High',status:'Ongoing',
+  firstDetected:'Sep 2025',latestUpdate:'Jul 2026',coverageVol:32,tone:'Negative-Recovery',actorsShort:'Kementerian ESDM, PT Redpath Indonesia, Tony Wenas',
+  summary:'Longsor di tambang bawah tanah Grasberg Block Cave pada 8 September 2025 menewaskan tujuh pekerja kontraktor dan menghentikan produksi hampir sebulan, dengan dampak pemulihan yang masih berlanjut hingga 2026–2027.',
+  why:'GBC menyumbang sekitar 64% dari total kapasitas produksi konsentrat Freeport — gangguan di lokasi ini berdampak langsung pada produksi, pasokan smelter, dan penerimaan negara.',
+  relatedDecision:'Kajian rantai pasok, kemitraan smelter/pembeli konsentrat, evaluasi kontraktor tambang bawah tanah',
+  findings:[
+   {stmt:'Longsor terjadi Senin malam, 8 September 2025 sekitar pukul 22.00 WIT di blok Grasberg Block Cave, menjebak tujuh pekerja kontraktor.',materiality:'High',sources:3,conf:'High'},
+   {stmt:'Proses evakuasi berlangsung 27 hari; seluruh tujuh pekerja (karyawan kontraktor PT Redpath Indonesia) ditemukan meninggal dunia, evakuasi selesai 6 Oktober 2025.',materiality:'High',sources:4,conf:'High'},
+   {stmt:'Kapasitas produksi sempat anjlok ke sekitar 30% pasca-longsor karena GBC menyumbang 64% dari total produksi konsentrat Freeport (208.356 ton/hari pada 2024).',materiality:'High',sources:2,conf:'High'},
+   {stmt:'Freeport merevisi turun target produksi 2026 menjadi 478 ribu ton tembaga dan 26 ton emas, dan memproyeksikan penerimaan negara turun 39,5% menjadi US$2,6 miliar pada 2026.',materiality:'Medium',sources:2,conf:'High'}
+  ],
+  chrono:[
+   {date:'8 Sep 2025',type:'Operational',title:'Longsor terjadi di Grasberg Block Cave',desc:'Material dalam jumlah besar mengalir dari salah satu titik produksi, menutup akses dan menjebak tujuh pekerja kontraktor PT Redpath Indonesia.',actors:'PT Freeport Indonesia, PT Redpath Indonesia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2047398/tambang-bawah-tanah-freeport-indonesia-longsor-tujuh-pekerja-terjebak'},
+   {date:'15 Sep 2025',type:'Operational',title:'Produksi anjlok ke sekitar 30%',desc:'Kementerian ESDM menyatakan kapasitas produksi GBC turun tajam karena operasi masih terhenti demi keselamatan.',actors:'Kementerian ESDM',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2049110/produksi-freeport-anjlok-karena-longsor-tambang-bawah-tanah'},
+   {date:'20 Sep 2025',type:'Operational',title:'Dua pekerja ditemukan meninggal',desc:'Dua dari tujuh pekerja yang terjebak ditemukan tidak bernyawa; lima lainnya masih dalam pencarian.',actors:'PT Freeport Indonesia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2050477/sebanyak-dua-pekerja-freeport-terjebak-longsor-ditemukan-tewas'},
+   {date:'5 Okt 2025',type:'Operational',title:'Tiga pekerja tambahan ditemukan meninggal',desc:'Presiden Direktur PTFI Tony Wenas menyampaikan belasungkawa; identifikasi jenazah dilakukan bersama tim medis dan kepolisian.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2054587/tiga-orang-jadi-korban-tewas-longsor-tambang-bawah-tanah-freeport'},
+   {date:'6 Okt 2025',type:'Operational',title:'Evakuasi selesai — tujuh pekerja meninggal dunia',desc:'Seluruh proses evakuasi selesai setelah 27 hari; volume material basah yang menimbun diperkirakan sekitar 800 ribu ton.',actors:'PT Freeport Indonesia, PT Redpath Indonesia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2054849/evakuasi-korban-longsor-tambang-freeport-selesai-7-pekerja-meninggal'},
+   {date:'14 Nov 2025',type:'Operational',title:'Blok DMLZ dan Big Gossan kembali beroperasi',desc:'Kementerian ESDM menerbitkan izin operasi untuk dua blok yang tidak terdampak langsung longsor, meski GBC sendiri masih tertutup.',actors:'Kementerian ESDM',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2065599/tambang-freeport-indonesia-kembali-beroperasi'},
+   {date:'24 Nov 2025',type:'Financial',title:'Target produksi 2026 direvisi turun',desc:'Freeport menurunkan target produksi tembaga dan emas 2026 dalam revisi RKAB, meski proyeksi pendapatan tertolong kenaikan harga komoditas.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2068247/freeport-turunkan-target-produksi-emas-dan-tembaga-pada-2026'},
+   {date:'9 Apr 2026',type:'Operational',title:'Produksi pulih ke sekitar 40–50%',desc:'PTFI menargetkan operasional mendekati 100% pada akhir 2026 dan kapasitas penuh pada awal 2027, dengan penguatan aspek keselamatan.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2097156/produksi-tambang-freeport-pascalongsor-capai-50-persen'},
+   {date:'14 Jul 2026',type:'Financial',title:'Penerimaan negara diproyeksikan turun 39,5%',desc:'Kapasitas produksi hulu 2026 diperkirakan baru sekitar 65% dari kapasitas penuh akibat proses ramp-up yang lebih lambat dari perkiraan.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2113630/penerimaan-negara-dari-freeport-akan-turun-jadi-usd-26-m'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:2},{l:'Sel',v:1},{l:'Rab',v:3},{l:'Kam',v:2},{l:'Jum',v:1},{l:'Sab',v:0},{l:'Min',v:1}],
+   weekly:[{l:'M1',v:5},{l:'M2',v:8},{l:'M3',v:6},{l:'M4',v:4},{l:'M5',v:3},{l:'M6',v:2}],
+   monthly:[{l:'Sep 25',v:14},{l:'Okt 25',v:9},{l:'Nov 25',v:6},{l:'Des 25',v:2},{l:'Apr 26',v:2},{l:'Jul 26',v:2}]
+  },
+  coverageNote:'Volume pemberitaan memuncak tajam pada September–Oktober 2025 selama masa pencarian dan evakuasi tujuh pekerja, lalu menurun setelah operasi berangsur pulih, dengan lonjakan kecil kembali muncul saat rilis data dampak fiskal pada Juli 2026.',
+  tone2:[
+   {label:'Kemanusiaan & Keselamatan Kerja',pct:45,sentiment:'Negatif',color:'#CC1F2D',desc:'Framing dominan pada masa pencarian dan evakuasi tujuh pekerja yang meninggal dunia.'},
+   {label:'Pemulihan Operasional',pct:35,sentiment:'Mixed',color:'#D97706',desc:'Narasi bergeser ke pemulihan bertahap produksi dan target operasional 2026–2027.'},
+   {label:'Dampak Fiskal & Ekonomi',pct:20,sentiment:'Negatif',color:'#7C3AED',desc:'Sorotan pada penurunan penerimaan negara dan pasokan emas/tembaga nasional.'}
+  ],
+  toneNote:'Narasi berkembang dari liputan kemanusiaan yang intens (Sept–Okt 2025) menjadi framing pemulihan operasional bertahap, dengan isu dampak fiskal muncul kembali pada pertengahan 2026 seiring publikasi data resmi ke DPR.',
+  actors:[
+   {name:'Kementerian ESDM',type:'Regulator',role:'Mengawasi evaluasi keselamatan dan menerbitkan izin operasi bertahap',activity:'Tinggi',latest:'Menerbitkan izin operasi DMLZ & Big Gossan — Nov 2025',id:'fp-esdm'},
+   {name:'PT Redpath Indonesia',type:'Kontraktor',role:'Mempekerjakan tujuh pekerja yang menjadi korban',activity:'Tinggi',latest:'Proses identifikasi dan pendampingan keluarga korban',id:'fp-redpath'},
+   {name:'PT Freeport Indonesia',type:'Operator Tambang',role:'Mengelola proses evakuasi dan pemulihan operasional',activity:'Tinggi',latest:'Produksi pulih ke 40–50% — April 2026',id:'fp-ptfi'}
+  ],
+  evidence:[
+   {title:'Tambang Bawah Tanah Freeport Indonesia Longsor, Tujuh Pekerja Terjebak',pub:'Tempo.co',date:'9 Sep 2025',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/2047398/tambang-bawah-tanah-freeport-indonesia-longsor-tujuh-pekerja-terjebak'},
+   {title:'Evakuasi Korban Longsor Tambang Freeport Selesai, 7 Pekerja Meninggal',pub:'Tempo.co',date:'6 Okt 2025',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/2054849/evakuasi-korban-longsor-tambang-freeport-selesai-7-pekerja-meninggal'},
+   {title:'Tambang Freeport Indonesia Kembali Beroperasi',pub:'Tempo.co',date:'14 Nov 2025',type:'Berita',relevance:'Medium',verif:'verified',url:'https://bisnis.tempo.co/read/2065599/tambang-freeport-indonesia-kembali-beroperasi'},
+   {title:'Penerimaan Negara dari Freeport akan Turun jadi USD 2,6 M',pub:'Tempo.co',date:'14 Jul 2026',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/2113630/penerimaan-negara-dari-freeport-akan-turun-jadi-usd-26-m'}
+  ],
+  decision:{
+   current:'Risiko operasional dan keselamatan kerja telah terkonfirmasi material (tujuh korban jiwa), dengan dampak produksi dan fiskal yang masih berlanjut hingga pertengahan 2026.',
+   unresolved:['Hasil investigasi penyebab longsor secara teknis belum dipublikasikan secara rinci di arsip yang tersedia.','Kepastian pemulihan kapasitas penuh pada awal 2027 masih bergantung pada progres perbaikan area tambang.'],
+   change:'Publikasi hasil investigasi resmi penyebab longsor dan konfirmasi pemulihan kapasitas produksi penuh akan menjadi indikator utama penyelesaian isu ini.',
+   trigger:'Pantau laporan RKAB berikutnya dan pernyataan resmi ESDM/PTFI soal target pemulihan Grasberg Block Cave.'
+  }
+ },
+ 'fp-kontrak':{
+  key:'fp-kontrak',title:'Perpanjangan Kontrak & Divestasi Saham (IUPK hingga 2061)',category:'Governance',riskLevel:'Medium',status:'Ongoing',
+  firstDetected:'2018',latestUpdate:'Jun 2026',coverageVol:28,tone:'Mixed-Positive',actorsShort:'MIND ID, Kementerian Investasi, Freeport-McMoRan',
+  summary:'Sejak divestasi 51,2% saham ke Inalum/MIND ID pada 2018, pemerintah terus memperbesar kepemilikannya di PTFI hingga menyepakati tambahan 12% saham gratis dari Freeport-McMoRan pada 2025–2026, seiring perpanjangan izin tambang hingga 2061.',
+  why:'Struktur kepemilikan menentukan pembagian keuntungan, kendali strategis, dan kepastian jangka panjang operasi tambang terbesar kedua di dunia ini bagi Indonesia.',
+  relatedDecision:'Kemitraan jangka panjang, investasi/M&A, kajian regulasi pertambangan',
+  findings:[
+   {stmt:'Desember 2018, Inalum menebus 51,2% saham PTFI senilai Rp55,8 triliun, menjadikan PTFI mayoritas milik negara untuk pertama kalinya sejak 1973.',materiality:'High',sources:2,conf:'High'},
+   {stmt:'November 2023–Mei 2024, pemerintah mengumumkan perpanjangan IUPK PTFI dari 2041 menjadi 2061, dengan tambahan kepemilikan saham 10% menjadi 61%.',materiality:'High',sources:3,conf:'High'},
+   {stmt:'September–Oktober 2025, pemerintah menegosiasikan tambahan 12% saham (bukan 10%) dari Freeport-McMoRan; perusahaan setuju melepasnya tanpa biaya dengan syarat membangun 2 sekolah dan 1 rumah sakit di Papua.',materiality:'High',sources:3,conf:'High'},
+   {stmt:'Februari 2026, MoU perpanjangan IUPK ditandatangani di Washington DC oleh Menteri Investasi, CEO Freeport-McMoRan Kathleen Quirk, dan Presiden Direktur PTFI Tony Wenas.',materiality:'Medium',sources:2,conf:'High'},
+   {stmt:'Perpanjangan kontrak 20 tahun (2041–2061) membawa nilai investasi sekitar US$20 miliar (Rp337 triliun), menurut Menteri Koordinator Bidang Perekonomian Airlangga Hartarto dan Menteri Investasi Rosan Roeslani.',materiality:'High',sources:1,conf:'High'},
+   {stmt:'Desember 2018, BPK merekomendasikan agar hak partisipasi 10% saham untuk Pemerintah Provinsi Papua disalurkan melalui skema dividen, bukan penyertaan modal BUMD, untuk menghindari risiko penyimpangan berdasarkan pengalaman kerja sama BUMD sebelumnya.',materiality:'Medium',sources:1,conf:'High'}
+  ],
+  chrono:[
+   {date:'22 Des 2018',type:'Corporate Action',title:'Inalum tebus 51,2% saham Freeport Indonesia',desc:'Transaksi senilai Rp55,8 triliun (US$3,85 miliar) menjadikan Indonesia pemegang saham mayoritas PTFI untuk pertama kalinya.',actors:'Inalum/MIND ID, Freeport-McMoRan',src:'Koran Tempo',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/438432/inalum-tebus-saham-freeport-rp-558-triliun'},
+   {date:'20 Des 2018',type:'Governance',title:'BPK rekomendasikan skema dividen untuk hak partisipasi Papua',desc:'BPK menilai penyertaan modal BUMD berisiko menimbulkan penyimpangan; hak partisipasi 10% saham untuk Pemerintah Provinsi Papua disarankan disalurkan melalui perhitungan dividen agar benar-benar dinikmati masyarakat Papua.',actors:'BPK',src:'Koran Tempo',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/438358/bpk-penyertaan-bumd-di-freeport-berisiko'},
+   {date:'17 Nov 2023',type:'Regulatory',title:'ESDM umumkan rencana perpanjangan IUPK hingga 2061',desc:'Menteri ESDM Arifin Tasrif menyatakan IUPK PTFI yang berakhir 2041 akan diperpanjang, dengan kepemilikan mayoritas tetap di tangan Indonesia.',actors:'Kementerian ESDM',src:'Tempo.co',url:'https://bisnis.tempo.co/read/1798096/menteri-esdm-sebut-izin-usaha-pertambangan-freeport-diperpanjang-hingga-2061'},
+   {date:'2 Mei 2024',type:'Regulatory',title:'Kontrak resmi diperpanjang, saham pemerintah jadi 61%',desc:'Menteri Investasi Bahlil Lahadalia mengonfirmasi penambahan 10% saham sehingga kepemilikan pemerintah mencapai 61%.',actors:'Bahlil Lahadalia (Kementerian Investasi)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/1863237/kontrak-freeport-diperpanjang-hingga-2061-bahlil-kita-kembalikan-milik-orang-indonesia'},
+   {date:'21 Sep 2025',type:'Corporate Action',title:'Freeport Indonesia buka suara soal akuisisi saham 12%',desc:'PTFI mengonfirmasi pembahasan penambahan saham pemerintah lebih dari 10% masih berlangsung dengan induk usaha Freeport-McMoRan.',actors:'PT Freeport Indonesia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2050768/freeport-indonesia-buka-suara-soal-pemerintah-akuisisi-saham-12-persen'},
+   {date:'1 Okt 2025',type:'Corporate Action',title:'Freeport-McMoRan setuju lepas 12% saham tanpa biaya',desc:'Menteri Investasi Rosan Roeslani mengumumkan kesepakatan pelepasan 12% saham, dengan syarat PTFI membangun dua sekolah dan satu rumah sakit di Papua.',actors:'Rosan Roeslani, Freeport-McMoRan',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2053537/induk-freeport-lepas-saham-12-persen-untuk-indonesia'},
+   {date:'20 Feb 2026',type:'Regulatory',title:'Kesepakatan perpanjangan kontrak resmi diumumkan',desc:'Freeport-McMoRan mengumumkan kesepakatan dengan pemerintah Indonesia; 12% saham tambahan akan dialihkan pada 2041 tanpa biaya, dengan penggantian investasi proporsional berdasarkan nilai buku.',actors:'Freeport-McMoRan, Pemerintah Indonesia',src:'Koran Tempo',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/496486/kontrak-freeport-diperpanjang'},
+   {date:'20 Feb 2026',type:'Regulatory',title:'Nilai investasi perpanjangan kontrak diungkap: US$20 miliar',desc:'Menteri Koordinator Bidang Perekonomian Airlangga Hartarto mengumumkan perpanjangan 20 tahun ini membawa nilai investasi sekitar Rp337 triliun, diumumkan bersamaan dengan penandatanganan perjanjian dagang timbal-balik Indonesia-AS di Washington DC.',actors:'Airlangga Hartarto, Rosan Roeslani',src:'Tempo English',url:'https://en.tempo.co/read/2088225/freeports-indonesia-contract-extended-with-20-billion-investment'},
+   {date:'18 Jun 2026',type:'Corporate Action',title:'PTFI ajukan draf perjanjian divestasi saham ke pemerintah',desc:'Presiden Direktur Tony Wenas menyerahkan draf perjanjian pengalihan 12% saham sebagai syarat penerbitan IUPK sebelum 2041.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2109082/freeport-ajukan-perjanjian-divestasi-saham-ke-pemerintah'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:1},{l:'Sel',v:2},{l:'Rab',v:1},{l:'Kam',v:1},{l:'Jum',v:2},{l:'Sab',v:0},{l:'Min',v:0}],
+   weekly:[{l:'M1',v:3},{l:'M2',v:4},{l:'M3',v:5},{l:'M4',v:3},{l:'M5',v:2},{l:'M6',v:3}],
+   monthly:[{l:'2018',v:8},{l:'2023',v:12},{l:'2024',v:14},{l:'2025',v:10},{l:'2026',v:6}]
+  },
+  coverageNote:'Volume pemberitaan meningkat pada momen-momen kunci: penuntasan divestasi 2018, pengumuman perpanjangan kontrak 2023–2024, dan negosiasi tambahan saham 2025–2026.',
+  tone2:[
+   {label:'Kedaulatan Sumber Daya',pct:50,sentiment:'Positif',color:'#16A34A',desc:'Framing dominan soal Indonesia "mengambil alih" kendali atas aset tambang strategis nasional.'},
+   {label:'Negosiasi & Kepastian Bisnis',pct:30,sentiment:'Mixed',color:'#2563EB',desc:'Narasi soal proses negosiasi yang panjang dan berlapis antara pemerintah dan Freeport-McMoRan.'},
+   {label:'Skeptisisme Publik',pct:20,sentiment:'Mixed',color:'#D97706',desc:'Sebagian kalangan (termasuk anggota DPR) mempertanyakan mengapa Indonesia tidak mengelola tambang ini sepenuhnya sendiri.'}
+  ],
+  toneNote:'Narasi secara konsisten condong positif dari sisi pemerintah ("mengembalikan aset ke tangan Indonesia"), namun tetap diselingi pertanyaan kritis soal kecepatan dan transparansi proses negosiasi saham.',
+  actors:[
+   {name:'MIND ID',type:'BUMN Holding Tambang',role:'Pemegang saham mayoritas PTFI sejak 2018',activity:'Tinggi',latest:'Menuju kepemilikan 61%+ dengan tambahan 12% saham',id:'fp-mindid'},
+   {name:'Freeport-McMoRan Inc.',type:'Induk Usaha',role:'Melepas 12% saham tambahan ke Indonesia tanpa biaya',activity:'Tinggi',latest:'Menandatangani MoU perpanjangan IUPK — Feb 2026',id:'fp-fcx'},
+   {name:'Kementerian Investasi/BKPM',type:'Regulator',role:'Memimpin negosiasi langsung dengan manajemen Freeport-McMoRan',activity:'Tinggi',latest:'Mengumumkan kesepakatan 12% saham — Okt 2025',id:'fp-investasi'}
+  ],
+  evidence:[
+   {title:'Inalum Tebus Saham Freeport Rp 55,8 Triliun',pub:'Koran Tempo',date:'22 Des 2018',type:'Berita',relevance:'High',verif:'verified',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/438432/inalum-tebus-saham-freeport-rp-558-triliun'},
+   {title:'Kontrak Freeport Diperpanjang hingga 2061, Bahlil: Kita Kembalikan Milik Orang Indonesia',pub:'Tempo.co',date:'2 Mei 2024',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/1863237/kontrak-freeport-diperpanjang-hingga-2061-bahlil-kita-kembalikan-milik-orang-indonesia'},
+   {title:'Induk Freeport Lepas Saham 12 Persen untuk Indonesia',pub:'Tempo.co',date:'1 Okt 2025',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/2053537/induk-freeport-lepas-saham-12-persen-untuk-indonesia'},
+   {title:'Kontrak Freeport Diperpanjang',pub:'Koran Tempo',date:'20 Feb 2026',type:'Berita',relevance:'Medium',verif:'verified',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/496486/kontrak-freeport-diperpanjang'},
+   {title:'Freeport Ajukan Perjanjian Divestasi Saham ke Pemerintah',pub:'Tempo.co',date:'18 Jun 2026',type:'Berita',relevance:'Medium',verif:'verified',url:'https://bisnis.tempo.co/read/2109082/freeport-ajukan-perjanjian-divestasi-saham-ke-pemerintah'},
+   {title:'Freeport Extends Indonesia Contract to 2061 with $20bn Investment',pub:'Tempo English',date:'20 Feb 2026',type:'Berita',relevance:'High',verif:'verified',url:'https://en.tempo.co/read/2088225/freeports-indonesia-contract-extended-with-20-billion-investment'}
+  ],
+  decision:{
+   current:'Struktur kepemilikan bergerak konsisten menuju penguatan kendali negara, namun penandatanganan final perjanjian pengalihan 12% saham per Juni 2026 masih dalam proses.',
+   unresolved:['Kapan tepatnya perjanjian pengalihan 12% saham resmi ditandatangani, mengingat baru berupa draf per Juni 2026.','Bagaimana skema penggantian biaya investasi proporsional berdasarkan nilai buku akan dihitung secara rinci.'],
+   change:'Penandatanganan resmi perjanjian transfer saham dan penerbitan IUPK baru sebelum 2041 akan menjadi penyelesaian formal dari proses ini.',
+   trigger:'Pantau pengumuman resmi penandatanganan perjanjian divestasi dan penerbitan revisi PP Minerba terkait.'
+  }
+ },
+ 'fp-smelter':{
+  key:'fp-smelter',title:'Hilirisasi & Smelter Gresik',category:'Regulatory',riskLevel:'Medium',status:'Ongoing',
+  firstDetected:'2023',latestUpdate:'Jul 2026',coverageVol:22,tone:'Mixed',actorsShort:'PT Smelting, Kementerian Investasi, Antam',
+  summary:'Ekspansi smelter Freeport di Gresik (diresmikan Desember 2023, target kapasitas 3 juta ton konsentrat/tahun) sempat terganggu kebakaran Oktober 2024 dan kekurangan pasokan pasca-longsor Grasberg 2025, dengan target pemulihan penuh pada September 2026.',
+  why:'Kelangsungan smelter menjadi syarat wajib perpanjangan izin ekspor konsentrat dan program hilirisasi nasional; gangguan di smelter berdampak langsung ke kebutuhan perpanjangan izin ekspor bahan mentah.',
+  relatedDecision:'Kemitraan rantai pasok hilirisasi, investasi infrastruktur pengolahan mineral',
+  findings:[
+   {stmt:'Desember 2023, Presiden Jokowi meresmikan ekspansi smelter Freeport di Manyar, Gresik (JIIPE), menargetkan kapasitas total 3 juta ton konsentrat per tahun.',materiality:'Medium',sources:2,conf:'High'},
+   {stmt:'Oktober 2024, kebakaran terjadi di unit Gas Cleaning Plant smelter baru Gresik, menunda produksi katoda tembaga hingga kuartal II 2025.',materiality:'High',sources:2,conf:'High'},
+   {stmt:'Biaya perbaikan smelter pascakebakaran mencapai US$120 juta, ditanggung oleh asuransi; smelter kembali berproduksi bertahap mulai Juni 2025.',materiality:'Medium',sources:1,conf:'High'},
+   {stmt:'Longsor Grasberg 2025 membuat smelter Manyar kekurangan pasokan konsentrat; smelter ditargetkan kembali beroperasi penuh mulai September 2026.',materiality:'Medium',sources:2,conf:'High'},
+   {stmt:'Februari 2025, fasilitas Precious Metal Refinery PTFI mengirim batangan emas perdana (125 kg, kemurnian 99,99%) senilai Rp207 miliar ke PT Aneka Tambang (Antam).',materiality:'Low',sources:1,conf:'High'}
+  ],
+  chrono:[
+   {date:'14 Des 2023',type:'Corporate Action',title:'Presiden Jokowi resmikan ekspansi smelter Freeport Gresik',desc:'Target kapasitas katoda tembaga naik dari 1 juta menjadi 1,7 juta ton per tahun tambahan, menjadikannya desain single smelter terbesar di dunia.',actors:'Presiden Joko Widodo, PTFI',src:'Tempo.co',url:'https://nasional.tempo.co/read/1809473/jokowi-resmikan-smelter-baru-pt-freeport-target-produksi-tembaga-3-juta-ton'},
+   {date:'16 Okt 2024',type:'Operational',title:'Kebakaran di smelter baru Gresik',desc:'Unit pembersih gas (Gas Cleaning Plant) terbakar, menunda penjualan tembaga olahan hingga kuartal II 2025 dan memicu permintaan perpanjangan izin ekspor konsentrat.',actors:'PT Freeport Indonesia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/1929469/kebakaran-smelter-di-gresik-pt-freeport-minta-pemerintah-perpanjang-izin-ekspor-konsentrat'},
+   {date:'13 Feb 2025',type:'Corporate Action',title:'Pengiriman batangan emas perdana ke Antam',desc:'Precious Metal Refinery PTFI mengirim 125 kg batangan emas kemurnian 99,99% senilai Rp207 miliar ke Antam — dari total 189 kg lumpur anoda yang diproses, menandai milestone hilirisasi emas domestik.',actors:'PT Freeport Indonesia, Antam',src:'Tempo English',url:'https://en.tempo.co/read/1974896/freeport-indonesia-sends-first-gold-bars-to-antam-worth-rp207-billion'},
+   {date:'19 Feb 2025',type:'Regulatory',title:'Pemerintah kembali izinkan ekspor tembaga mentah',desc:'Presiden Prabowo mengizinkan ekspor konsentrat tembaga dilanjutkan meski kuota 2024 telah habis, dengan sanksi kenaikan pajak ekspor, demi mencegah PHK massal.',actors:'Presiden Prabowo Subianto, Bahlil Lahadalia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/1977510/pemerintah-kembali-izinkan-freeport-indonesia-ekspor-tembaga'},
+   {date:'2 Jun 2025',type:'Operational',title:'Smelter kembali berproduksi bertahap',desc:'Presiden Direktur PTFI Tony Wenas menyatakan perbaikan smelter menghabiskan biaya US$120 juta yang ditanggung asuransi; target produksi penuh Desember 2025.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2013419/bos-freeport-indonesia-perbaikan-smelter-butuh-us-120-juta'},
+   {date:'19 Jun 2026',type:'Operational',title:'Smelter Manyar ditargetkan beroperasi lagi September 2026',desc:'Pasokan konsentrat ke smelter kedua ini masih terbatas karena kapasitas produksi Grasberg baru pulih sekitar 50% pascalongsor 2025.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2109308/smelter-freeport-di-gresik-beroperasi-lagi-per-september'},
+   {date:'14 Jul 2026',type:'Operational',title:'Kapasitas total dua smelter capai 3 juta ton/tahun',desc:'Freeport juga mengoperasikan precious metal refinery untuk memurnikan emas, perak, dan logam kelompok platinum dari lumpur anoda.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2113595/kapasitas-smelter-freeport-3-juta-ton-tembaga-per-tahun'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:1},{l:'Sel',v:1},{l:'Rab',v:0},{l:'Kam',v:1},{l:'Jum',v:1},{l:'Sab',v:0},{l:'Min',v:0}],
+   weekly:[{l:'M1',v:2},{l:'M2',v:3},{l:'M3',v:2},{l:'M4',v:1},{l:'M5',v:2},{l:'M6',v:1}],
+   monthly:[{l:'2023',v:5},{l:'2024',v:7},{l:'2025',v:6},{l:'2026',v:4}]
+  },
+  coverageNote:'Pemberitaan meningkat pada momen peresmian (Des 2023) dan kebakaran (Okt 2024), lalu kembali muncul terkait jadwal pemulihan pascalongsor pada semester I 2026.',
+  tone2:[
+   {label:'Pencapaian Hilirisasi',pct:40,sentiment:'Positif',color:'#16A34A',desc:'Framing soal pencapaian smelter tembaga terbesar di dunia sebagai bukti keberhasilan program hilirisasi nasional.'},
+   {label:'Gangguan Operasional',pct:35,sentiment:'Negatif',color:'#CC1F2D',desc:'Sorotan pada insiden kebakaran dan keterlambatan produksi yang berulang.'},
+   {label:'Dilema Kebijakan Ekspor',pct:25,sentiment:'Mixed',color:'#D97706',desc:'Perdebatan soal pelonggaran berulang izin ekspor konsentrat mentah di tengah komitmen hilirisasi.'}
+  ],
+  toneNote:'Narasi hilirisasi yang positif kerap berbenturan dengan kenyataan operasional (kebakaran, keterlambatan pasokan), menciptakan narasi ganda antara pencapaian dan tantangan pelaksanaan.',
+  actors:[
+   {name:'PT Smelting',type:'Anak Usaha/JV',role:'Smelter cadangan yang tetap beroperasi saat smelter Manyar terganggu',activity:'Sedang',latest:'Menyerap sebagian pasokan konsentrat selama pemulihan Grasberg',id:'fp-smelting'},
+   {name:'Kementerian Investasi/BKPM',type:'Regulator',role:'Mengaitkan syarat perpanjangan izin ekspor dengan penyelesaian smelter',activity:'Sedang',latest:'Mendukung perpanjangan izin ekspor pascakebakaran 2024',id:'fp-investasi'},
+   {name:'Antam',type:'Mitra Hilir',role:'Membeli seluruh produksi emas PTFI, terdampak gangguan pasokan',activity:'Sedang',latest:'Pasokan emas sempat seret akibat longsor 2025',id:'fp-antam'}
+  ],
+  evidence:[
+   {title:'Jokowi Resmikan Smelter Baru PT Freeport, Target Produksi Tembaga 3 Juta Ton',pub:'Tempo.co',date:'14 Des 2023',type:'Berita',relevance:'Medium',verif:'verified',url:'https://nasional.tempo.co/read/1809473/jokowi-resmikan-smelter-baru-pt-freeport-target-produksi-tembaga-3-juta-ton'},
+   {title:'Kebakaran Smelter di Gresik, PT Freeport Minta Pemerintah Perpanjang Izin Ekspor Konsentrat',pub:'Tempo.co',date:'17 Okt 2024',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/1929469/kebakaran-smelter-di-gresik-pt-freeport-minta-pemerintah-perpanjang-izin-ekspor-konsentrat'},
+   {title:'Bos Freeport Indonesia: Perbaikan Smelter Butuh US$ 120 Juta',pub:'Tempo.co',date:'2 Jun 2025',type:'Berita',relevance:'Medium',verif:'verified',url:'https://bisnis.tempo.co/read/2013419/bos-freeport-indonesia-perbaikan-smelter-butuh-us-120-juta'},
+   {title:'Kapasitas Smelter Freeport 3 Juta Ton Tembaga per Tahun',pub:'Tempo.co',date:'14 Jul 2026',type:'Berita',relevance:'Medium',verif:'verified',url:'https://bisnis.tempo.co/read/2113595/kapasitas-smelter-freeport-3-juta-ton-tembaga-per-tahun'},
+   {title:'Freeport Indonesia Sends First Gold Bars to Antam Worth Rp207 Billion',pub:'Tempo English',date:'13 Feb 2025',type:'Berita',relevance:'Low',verif:'verified',url:'https://en.tempo.co/read/1974896/freeport-indonesia-sends-first-gold-bars-to-antam-worth-rp207-billion'}
+  ],
+  decision:{
+   current:'Kapasitas hilirisasi sudah terbangun signifikan (3 juta ton/tahun), tapi keandalan operasionalnya masih rentan gangguan tunggal (kebakaran, pasokan konsentrat).',
+   unresolved:['Apakah smelter Manyar akan benar-benar mencapai operasi penuh sesuai target September 2026.','Bagaimana kebijakan izin ekspor konsentrat mentah akan berubah setelah smelter beroperasi stabil kembali.'],
+   change:'Konfirmasi smelter Manyar beroperasi penuh tanpa gangguan berarti akan menjadi sinyal kuat stabilitas rantai hilirisasi Freeport.',
+   trigger:'Pantau laporan produksi katoda tembaga smelter Manyar pada kuartal III–IV 2026.'
+  }
+ },
+ 'fp-lingkungan':{
+  key:'fp-lingkungan',title:'Isu Lingkungan: Limbah Tambang (Tailing)',category:'Environmental',riskLevel:'Medium',status:'Unresolved',
+  firstDetected:'2006',latestUpdate:'Jun 2025',coverageVol:18,tone:'Negative-Mixed',actorsShort:'BPK, Kementerian Lingkungan Hidup, Jatam',
+  summary:'Temuan BPK 2017 memperkirakan kerusakan lingkungan akibat limbah tambang (tailing) Freeport mencapai Rp185 triliun; isu ini sempat dipertanyakan kembali saat proses divestasi 2018–2019, di tengah inisiatif ESG lain yang terus dijalankan perusahaan.',
+  why:'Skala kerusakan lingkungan yang diperkirakan mencapai ratusan triliun rupiah menjadi salah satu isu paling material dan berjangka panjang dalam operasi PTFI di Papua.',
+  relatedDecision:'Kajian ESG, kepatuhan lingkungan, kemitraan yang mempertimbangkan risiko reputasi',
+  findings:[
+   {stmt:'Audit BPK 2017 menemukan limbah tambang PTFI meluber dari hulu sungai hingga ke laut di pesisir Kabupaten Mimika, dengan potensi kerugian diperkirakan mencapai Rp185 triliun.',materiality:'High',sources:2,conf:'High'},
+   {stmt:'Kolam penampungan limbah (Modified Ajkwa Deposition Area) dinilai tidak mampu menampung debit limbah yang terus meningkat seiring kenaikan produksi tambang bawah tanah.',materiality:'Medium',sources:2,conf:'Medium'},
+   {stmt:'Saat divestasi 51,2% saham disepakati Desember 2018, sejumlah pihak (termasuk Jaringan Advokasi Tambang/Jatam) mempertanyakan penyelesaian isu lingkungan yang belum tuntas.',materiality:'Medium',sources:2,conf:'Medium'},
+   {stmt:'Perusahaan menjalankan sejumlah inisiatif lingkungan lanjutan, termasuk target penurunan emisi gas rumah kaca 30% pada 2030 dan rehabilitasi 500 hektare mangrove di Kalimantan Selatan (2025).',materiality:'Low',sources:2,conf:'High'}
+  ],
+  chrono:[
+   {date:'8 Mei 2017',type:'Regulatory',title:'BPK: limbah Freeport cemari laut',desc:'Berdasarkan pemeriksaan lapangan dan citra satelit, BPK menemukan limbah tambang meluber ke daerah aliran sungai dan laut di pesisir Mimika, dengan estimasi kerugian Rp185 triliun.',actors:'BPK',src:'Koran Tempo',url:'https://koran.tempo.co/read/berita-utama/416446/bpk-limbah-freeport-cemari-laut'},
+   {date:'9 Mei 2018',type:'Environmental',title:'Kekhawatiran lonjakan volume limbah tambang bawah tanah',desc:'Pakar sumber daya menyoroti risiko volume limbah tailing meningkat seiring rencana kenaikan produksi dari tambang bawah tanah Grasberg Block Cave.',actors:'Center for Indonesia Resources Strategic Studies',src:'Koran Tempo',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/430561/limbah-freeport-berisiko-melonjak'},
+   {date:'26 Jan 2019',type:'Environmental',title:'Isu lingkungan tidak gugur oleh divestasi',desc:'Kementerian Lingkungan Hidup dan Kehutanan menegaskan penyelesaian isu tailing tetap berjalan terpisah dari proses divestasi saham yang telah rampung Desember 2018.',actors:'Kementerian Lingkungan Hidup dan Kehutanan',src:'Majalah Tempo',url:'https://majalah.tempo.co/read/investigasi/157030/isu-lingkungan-tidak-gugur-oleh-divestasi'},
+   {date:'28 Sep 2023',type:'Environmental',title:'PTFI paparkan strategi penurunan emisi gas rumah kaca',desc:'Perusahaan menargetkan penurunan emisi 30% pada 2030 melalui elektrifikasi alat angkut tambang dan penggantian pembangkit listrik tenaga uap batu bara.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/1777507/bos-freeport-indonesia-beberkan-strategi-perusahaan-kurangi-emisi-gas-rumah-kaca'},
+   {date:'2 Jun 2025',type:'Environmental',title:'Rehabilitasi 500 hektare mangrove di Kalimantan Selatan',desc:'PTFI berkolaborasi dengan Kementerian Lingkungan Hidup dan universitas setempat merehabilitasi ekosistem mangrove di Kotabaru dan Tanah Laut.',actors:'PT Freeport Indonesia, KLHK',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2013375/freeport-indonesia-rehabilitasi-500-hektare-mangrove-di-kalsel'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:0},{l:'Sel',v:1},{l:'Rab',v:0},{l:'Kam',v:0},{l:'Jum',v:1},{l:'Sab',v:0},{l:'Min',v:0}],
+   weekly:[{l:'M1',v:1},{l:'M2',v:2},{l:'M3',v:1},{l:'M4',v:1},{l:'M5',v:1},{l:'M6',v:0}],
+   monthly:[{l:'2017',v:4},{l:'2018',v:5},{l:'2019',v:6},{l:'2023',v:2},{l:'2025',v:2}]
+  },
+  coverageNote:'Puncak pemberitaan terjadi pada 2017–2019, bertepatan dengan temuan audit BPK dan proses divestasi saham; pemberitaan terbaru lebih banyak menyoroti inisiatif ESG positif dibanding isu tailing historis.',
+  tone2:[
+   {label:'Kerusakan Lingkungan Historis',pct:45,sentiment:'Negatif',color:'#CC1F2D',desc:'Framing dominan pada periode 2017–2019 seputar temuan BPK dan risiko limbah tailing.'},
+   {label:'Akuntabilitas Pasca-Divestasi',pct:25,sentiment:'Mixed',color:'#D97706',desc:'Pertanyaan publik soal siapa yang bertanggung jawab menuntaskan isu lingkungan setelah kepemilikan berubah.'},
+   {label:'Inisiatif ESG Terkini',pct:30,sentiment:'Positif',color:'#16A34A',desc:'Pemberitaan terbaru menyoroti program penurunan emisi dan rehabilitasi ekosistem sebagai langkah positif.'}
+  ],
+  toneNote:'Terdapat pergeseran framing dari isu kerusakan lingkungan historis yang belum sepenuhnya terselesaikan (2017–2019) menuju liputan inisiatif keberlanjutan yang lebih baru — namun arsip yang tersedia tidak menunjukkan konfirmasi eksplisit bahwa masalah tailing tahun 2017 telah dinyatakan tuntas.',
+  actors:[
+   {name:'BPK',type:'Auditor Negara',role:'Menemukan dan mengestimasi kerugian lingkungan akibat limbah tambang',activity:'Rendah (temuan historis)',latest:'Estimasi kerugian Rp185 triliun — audit 2017',id:'fp-bpk'},
+   {name:'Kementerian Lingkungan Hidup dan Kehutanan',type:'Regulator',role:'Mengawasi roadmap penyelesaian isu tailing PTFI',activity:'Rendah',latest:'Menegaskan isu lingkungan terpisah dari divestasi — Jan 2019',id:'fp-esdm'},
+   {name:'PT Freeport Indonesia',type:'Operator Tambang',role:'Menjalankan roadmap pengelolaan limbah dan inisiatif ESG lanjutan',activity:'Sedang',latest:'Rehabilitasi 500 hektare mangrove — Jun 2025',id:'fp-ptfi'}
+  ],
+  evidence:[
+   {title:'BPK: Limbah Freeport Cemari Laut',pub:'Koran Tempo',date:'8 Mei 2017',type:'Berita',relevance:'High',verif:'verified',url:'https://koran.tempo.co/read/berita-utama/416446/bpk-limbah-freeport-cemari-laut'},
+   {title:'Isu Lingkungan Tidak Gugur Oleh Divestasi',pub:'Majalah Tempo',date:'26 Jan 2019',type:'Investigasi',relevance:'High',verif:'verified',url:'https://majalah.tempo.co/read/investigasi/157030/isu-lingkungan-tidak-gugur-oleh-divestasi'},
+   {title:'Freeport Indonesia Rehabilitasi 500 Hektare Mangrove di Kalsel',pub:'Tempo.co',date:'2 Jun 2025',type:'Berita',relevance:'Medium',verif:'verified',url:'https://bisnis.tempo.co/read/2013375/freeport-indonesia-rehabilitasi-500-hektare-mangrove-di-kalsel'}
+  ],
+  decision:{
+   current:'Isu lingkungan historis (tailing) belum ditemukan konfirmasi penyelesaian tuntas dalam arsip yang tersedia, meski perusahaan menjalankan berbagai inisiatif keberlanjutan baru.',
+   unresolved:['Status terkini implementasi roadmap penyelesaian tailing yang disebut Kementerian LHK pada 2019 tidak terkonfirmasi lebih lanjut di arsip yang tersedia.','Apakah kolam penampungan limbah (ModADA) telah diperbarui sesuai rekomendasi audit BPK dan ITB.'],
+   change:'Publikasi audit lingkungan terbaru atau laporan keberlanjutan resmi PTFI soal status pengelolaan tailing akan menjadi indikator penyelesaian isu ini.',
+   trigger:'Pantau laporan keberlanjutan (sustainability report) PTFI dan publikasi audit lingkungan resmi berikutnya.'
+  }
+ },
+ 'fp-fiskal':{
+  key:'fp-fiskal',title:'Kontribusi Fiskal ke Negara',category:'Financial',riskLevel:'Medium',status:'Ongoing',
+  firstDetected:'2022',latestUpdate:'Jul 2026',coverageVol:14,tone:'Mixed',actorsShort:'MIND ID, Kementerian Keuangan, DPR',
+  summary:'PTFI merupakan salah satu penyumbang penerimaan negara terbesar dari sektor pertambangan melalui pajak, royalti, dan dividen, namun kontribusi ini diproyeksikan turun signifikan pada 2026 akibat dampak longsor Grasberg terhadap produksi.',
+  why:'Fluktuasi kontribusi fiskal PTFI berdampak langsung pada penerimaan negara bukan pajak (PNBP) dan penerimaan daerah Papua, menjadikannya indikator penting kesehatan sektor pertambangan nasional.',
+  relatedDecision:'Perencanaan anggaran negara, evaluasi ketergantungan fiskal pada komoditas tambang',
+  findings:[
+   {stmt:'Sepanjang 2023, PTFI mencatat laba Rp48,79 triliun dan menyetor Rp3,35 triliun ke Pemerintah Daerah Papua.',materiality:'Medium',sources:1,conf:'High'},
+   {stmt:'Sepanjang 2025, PTFI menyetorkan sekitar Rp70–75 triliun kepada negara dalam bentuk pajak, royalti, dividen, dan penerimaan lainnya.',materiality:'Medium',sources:2,conf:'High'},
+   {stmt:'Penerimaan negara dari PTFI diproyeksikan turun 39,5% pada 2026 menjadi US$2,6 miliar, dari realisasi 2025 sebesar US$4,3 miliar, akibat produksi yang belum pulih penuh pascalongsor.',materiality:'High',sources:2,conf:'High'},
+   {stmt:'Freeport memproyeksikan kontribusinya kembali meningkat menjadi sekitar US$4,7 miliar mulai 2027 seiring pemulihan produksi Grasberg Block Cave.',materiality:'Medium',sources:1,conf:'Medium'},
+   {stmt:'Dalam jangka panjang, Freeport memproyeksikan kontribusi tahunan ke negara dapat melebihi US$7 miliar (~Rp120 triliun) begitu operasi tambang dan kedua smelter Gresik beroperasi pada kapasitas penuh.',materiality:'Medium',sources:1,conf:'Medium'}
+  ],
+  chrono:[
+   {date:'28 Apr 2024',type:'Financial',title:'Laba 2023 tercatat Rp48,79 triliun',desc:'PTFI menyetor Rp3,35 triliun ke Pemerintah Daerah Papua dari hasil kinerja 2023.',actors:'PT Freeport Indonesia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/1863237/kontrak-freeport-diperpanjang-hingga-2061-bahlil-kita-kembalikan-milik-orang-indonesia'},
+   {date:'24 Nov 2025',type:'Financial',title:'Proyeksi pendapatan 2026 tertolong kenaikan harga komoditas',desc:'Meski target produksi tembaga dan emas 2026 diturunkan, Presiden Direktur Tony Wenas memperkirakan pendapatan tak jauh berbeda dari rencana awal berkat lonjakan harga emas dan tembaga dunia.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2068247/freeport-turunkan-target-produksi-emas-dan-tembaga-pada-2026'},
+   {date:'9 Apr 2026',type:'Financial',title:'Setoran 2025 ke negara capai sekitar Rp70 triliun',desc:'PTFI menegaskan komitmen investasi sosial senilai hampir Rp2 triliun pada 2025, dengan tambahan sekitar US$100 juta per tahun ke depan.',actors:'Tony Wenas (PTFI)',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2097156/produksi-tambang-freeport-pascalongsor-capai-50-persen'},
+   {date:'14 Jul 2026',type:'Financial',title:'Penerimaan negara 2026 diproyeksikan anjlok 39,5%',desc:'Dalam rapat dengar pendapat di Komisi XII DPR, PTFI merincikan penerimaan negara 2026 terdiri atas US$1 miliar pajak, US$1,1 miliar dividen via MIND ID, dan US$500 juta PNBP termasuk royalti.',actors:'Tony Wenas (PTFI), Komisi XII DPR',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2113630/penerimaan-negara-dari-freeport-akan-turun-jadi-usd-26-m'},
+   {date:'15 Jul 2026',type:'Financial',title:'Setoran ke negara anjlok 39,5 persen dikonfirmasi ulang',desc:'Realisasi setoran 2025 sebesar US$4,3 miliar dibandingkan proyeksi 2026 sebesar US$2,6 miliar — penurunan sejalan dengan belum pulihnya produksi tambang Grasberg.',actors:'PT Freeport Indonesia',src:'Koran Tempo',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/499504/setoran-freeport-ke-negara-anjlok-395-persen'},
+   {date:'15 Jul 2026',type:'Financial',title:'Target jangka panjang: kontribusi tahunan lebih dari US$7 miliar',desc:'Tony Wenas menyatakan begitu operasi tambang dan kedua smelter Gresik beroperasi penuh, seluruh rantai nilai tembaga (konsentrat, katoda, hingga logam mulia) dapat diproses domestik, mendorong kontribusi tahunan ke negara melebihi US$7 miliar.',actors:'Tony Wenas (PTFI)',src:'Tempo English',url:'https://en.tempo.co/read/2113776/freeport-projects-over-us7bn-in-annual-contributions-to-indonesia'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:0},{l:'Sel',v:1},{l:'Rab',v:0},{l:'Kam',v:1},{l:'Jum',v:0},{l:'Sab',v:0},{l:'Min',v:0}],
+   weekly:[{l:'M1',v:1},{l:'M2',v:1},{l:'M3',v:2},{l:'M4',v:1},{l:'M5',v:1},{l:'M6',v:2}],
+   monthly:[{l:'2024',v:3},{l:'2025',v:4},{l:'2026',v:7}]
+  },
+  coverageNote:'Pemberitaan soal kontribusi fiskal meningkat tajam pada 2026, bertepatan dengan rilis proyeksi penurunan penerimaan negara akibat dampak longsor Grasberg terhadap produksi.',
+  tone2:[
+   {label:'Kontributor Fiskal Utama',pct:40,sentiment:'Positif',color:'#16A34A',desc:'Framing PTFI sebagai salah satu penyumbang penerimaan negara terbesar dari sektor tambang.'},
+   {label:'Dampak Penurunan Produksi',pct:45,sentiment:'Negatif',color:'#CC1F2D',desc:'Sorotan pada proyeksi penurunan tajam penerimaan negara akibat gangguan produksi pascalongsor.'},
+   {label:'Optimisme Pemulihan 2027',pct:15,sentiment:'Positif',color:'#2563EB',desc:'Proyeksi kontribusi kembali meningkat signifikan mulai 2027 seiring pemulihan produksi.'}
+  ],
+  toneNote:'Narasi bergeser dari penekanan kontribusi fiskal yang besar dan stabil menuju kekhawatiran atas penurunan tajam jangka pendek, dengan optimisme pemulihan yang digantungkan pada keberhasilan ramp-up produksi 2026–2027.',
+  actors:[
+   {name:'Kementerian Keuangan',type:'Regulator Fiskal',role:'Menerima kontribusi pajak dan turut memantau proyeksi PNBP dari PTFI',activity:'Sedang',latest:'Turut dalam pembahasan proyeksi penerimaan negara 2026',id:'fp-investasi'},
+   {name:'Komisi XII DPR',type:'Lembaga Legislatif',role:'Menerima paparan resmi PTFI soal proyeksi penerimaan negara',activity:'Sedang',latest:'Rapat dengar pendapat soal penurunan setoran — Jul 2026',id:'fp-esdm'},
+   {name:'MIND ID',type:'BUMN Holding Tambang',role:'Menyalurkan dividen dari PTFI ke pemerintah',activity:'Sedang',latest:'Menerima proyeksi dividen US$1,1 miliar untuk 2026',id:'fp-mindid'}
+  ],
+  evidence:[
+   {title:'2023, PT Freeport Indonesia Catat Laba Rp 48,79 Triliun dan Setor Rp 3,35 Triliun ke Pemda Papua',pub:'Tempo.co',date:'28 Apr 2024',type:'Berita',relevance:'Medium',verif:'verified',url:'https://bisnis.tempo.co/read/1863237/kontrak-freeport-diperpanjang-hingga-2061-bahlil-kita-kembalikan-milik-orang-indonesia'},
+   {title:'Penerimaan Negara dari Freeport akan Turun jadi USD 2,6 M',pub:'Tempo.co',date:'14 Jul 2026',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/2113630/penerimaan-negara-dari-freeport-akan-turun-jadi-usd-26-m'},
+   {title:'Setoran Freeport ke Negara Anjlok 39,5 Persen',pub:'Koran Tempo',date:'15 Jul 2026',type:'Berita',relevance:'High',verif:'verified',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/499504/setoran-freeport-ke-negara-anjlok-395-persen'},
+   {title:'Freeport Projects Over US$7bn in Annual Contributions to Indonesia',pub:'Tempo English',date:'15 Jul 2026',type:'Berita',relevance:'Medium',verif:'verified',url:'https://en.tempo.co/read/2113776/freeport-projects-over-us7bn-in-annual-contributions-to-indonesia'}
+  ],
+  decision:{
+   current:'Kontribusi fiskal PTFI tetap besar secara historis, namun proyeksi 2026 menunjukkan penurunan material yang terkonfirmasi langsung dari manajemen dalam forum resmi DPR.',
+   unresolved:['Apakah proyeksi pemulihan penerimaan negara ke US$4,7 miliar pada 2027 akan tercapai sesuai jadwal pemulihan produksi.','Rincian lengkap alokasi PNBP dan royalti 2026 di luar tiga komponen utama yang diungkap manajemen.'],
+   change:'Realisasi aktual penerimaan negara 2026 dibandingkan proyeksi US$2,6 miliar akan menjadi indikator utama validitas proyeksi pemulihan 2027.',
+   trigger:'Pantau laporan keuangan/RKAB tahunan berikutnya dan rilis data resmi Kementerian Keuangan soal PNBP sektor tambang.'
+  }
+ },
+ 'fp-keamanan':{
+  key:'fp-keamanan',title:'Insiden Keamanan di Kawasan Operasi Tambang',category:'Operational',riskLevel:'Medium',status:'Ongoing',
+  firstDetected:'2002',latestUpdate:'Mar 2026',coverageVol:9,tone:'Negative',actorsShort:'Polda Papua Tengah, TNI, PT Freeport Indonesia',
+  summary:'Kawasan operasi Freeport di Tembagapura dan Grasberg berulang kali mengalami insiden penembakan oleh pihak tak dikenal sejak awal 2000-an, dengan kejadian terbaru pada Maret 2026 yang menewaskan seorang karyawan departemen eksplorasi.',
+  why:'Eksposur keamanan yang berulang di area operasional menjadi faktor risiko keselamatan kerja jangka panjang yang berbeda dari risiko operasional/geoteknik seperti longsor tambang.',
+  relatedDecision:'Evaluasi risiko keselamatan kerja, kajian keberlanjutan operasi di wilayah rawan gangguan keamanan',
+  findings:[
+   {stmt:'September 2002, penembakan terhadap iring-iringan kendaraan di Jalan Raya Timika-Tembagapura menewaskan tiga orang (dua warga negara AS, satu WNI) dan melukai 14 orang.',materiality:'High',sources:1,conf:'High'},
+   {stmt:'30 Maret 2020, serangan bersenjata di kawasan perkantoran Kuala Kencana menewaskan satu karyawan warga negara Selandia Baru dan melukai dua WNI — disebut kembali dalam pemberitaan insiden 2026 sebagai preseden.',materiality:'High',sources:1,conf:'Medium'},
+   {stmt:'Awal 2022, Panglima TNI mengevaluasi penempatan pos pengamanan objek vital di kawasan Freeport, mengakui kontak senjata berulang terjadi di sekitar Pos 60–64.',materiality:'Medium',sources:1,conf:'High'},
+   {stmt:'11 Maret 2026, seorang karyawan Departemen Eksplorasi PTFI (Simson Mulia, 48) tewas ditembak orang tak dikenal di area tambang terbuka Grasberg; satu saksi kunci mengalami luka ringan.',materiality:'High',sources:2,conf:'High'}
+  ],
+  chrono:[
+   {date:'Sep 2002',type:'Security',title:'Penembakan iring-iringan kendaraan di Timika-Tembagapura',desc:'Tiga orang tewas (dua WN Amerika Serikat, satu WNI) dan 14 luka berat setelah kelompok tak dikenal menembaki konvoi menuju lokasi tambang.',actors:'Kepolisian RI, Kedutaan Besar AS',src:'Majalah Tempo',url:'https://majalah.tempo.co/read/peristiwa/80333/penembakan-di-freeport'},
+   {date:'31 Jan 2022',type:'Security',title:'Panglima TNI evaluasi pengamanan objek vital Freeport',desc:'Jenderal Andika Perkasa mengevaluasi pos-pos pengamanan setelah mengakui kontak senjata berulang di sekitar Pos 60–64, kawasan operasional Freeport.',actors:'Panglima TNI',src:'Tempo.co',url:'https://nasional.tempo.co/read/1556075/panglima-tni-evaluasi-pengamanan-pt-freeport-indonesia'},
+   {date:'11 Mar 2026',type:'Security',title:'Karyawan PTFI tewas ditembak di area tambang terbuka Grasberg',desc:'Simson Mulia, karyawan Departemen Eksplorasi, tewas akibat luka tembak saat berkendara di area bekas lahan reklamasi; seorang saksi selamat dengan bersembunyi hingga tim keamanan tiba.',actors:'Polda Papua Tengah, PT Freeport Indonesia',src:'Tempo.co',url:'https://metro.tempo.co/read/2092012/kronologi-penembakan-di-tambang-grasberg-freeport'},
+   {date:'11 Mar 2026',type:'Security',title:'Freeport koordinasi dengan aparat keamanan pascapenembakan',desc:'Perusahaan menegaskan keselamatan dan keamanan karyawan menjadi prioritas utama, sembari terus berkoordinasi dengan aparat keamanan pemerintah.',actors:'PT Freeport Indonesia',src:'Tempo.co',url:'https://bisnis.tempo.co/read/2091964/satu-pekerja-freeport-tewas-ditembak-di-tambang-grasberg'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:0},{l:'Sel',v:1},{l:'Rab',v:1},{l:'Kam',v:0},{l:'Jum',v:0},{l:'Sab',v:0},{l:'Min',v:0}],
+   weekly:[{l:'M1',v:2},{l:'M2',v:0},{l:'M3',v:0},{l:'M4',v:0},{l:'M5',v:0},{l:'M6',v:0}],
+   monthly:[{l:'2002',v:1},{l:'2020',v:1},{l:'2022',v:1},{l:'2026',v:2}]
+  },
+  coverageNote:'Insiden bersifat sporadis dengan interval bertahun-tahun antar kejadian — pemberitaan muncul tajam dalam waktu singkat setiap kali insiden terjadi, lalu mereda tanpa liputan lanjutan yang berkesinambungan di arsip yang tersedia.',
+  tone2:[
+   {label:'Keselamatan Kerja & Korban Jiwa',pct:60,sentiment:'Negatif',color:'#CC1F2D',desc:'Framing dominan pada dampak langsung terhadap keselamatan karyawan dan korban jiwa.'},
+   {label:'Respons Keamanan & Investigasi',pct:40,sentiment:'Mixed',color:'#D97706',desc:'Liputan proses investigasi kepolisian dan evaluasi pengamanan oleh TNI.'}
+  ],
+  toneNote:'Pemberitaan konsisten bersifat faktual dan berbasis keterangan resmi kepolisian/perusahaan, tanpa spekulasi motif — arsip yang tersedia tidak mengonfirmasi identitas atau afiliasi pelaku pada insiden 2026.',
+  actors:[
+   {name:'Polda Papua Tengah',type:'Aparat Keamanan',role:'Menginvestigasi insiden penembakan di kawasan operasional',activity:'Sedang',latest:'Merilis kronologi penembakan Maret 2026',id:'fp-polda'},
+   {name:'PT Freeport Indonesia',type:'Operator Tambang',role:'Berkoordinasi dengan aparat keamanan dan mendampingi keluarga korban',activity:'Sedang',latest:'Menegaskan keselamatan karyawan sebagai prioritas utama',id:'fp-ptfi'}
+  ],
+  evidence:[
+   {title:'Penembakan di Freeport',pub:'Majalah Tempo',date:'2 Sep 2002',type:'Berita',relevance:'Medium',verif:'verified',url:'https://majalah.tempo.co/read/peristiwa/80333/penembakan-di-freeport'},
+   {title:'Panglima TNI Evaluasi Pengamanan PT Freeport Indonesia',pub:'Tempo.co',date:'1 Feb 2022',type:'Berita',relevance:'Medium',verif:'verified',url:'https://nasional.tempo.co/read/1556075/panglima-tni-evaluasi-pengamanan-pt-freeport-indonesia'},
+   {title:'Satu Pekerja Freeport Tewas Ditembak di Tambang Grasberg',pub:'Tempo.co',date:'11 Mar 2026',type:'Berita',relevance:'High',verif:'verified',url:'https://bisnis.tempo.co/read/2091964/satu-pekerja-freeport-tewas-ditembak-di-tambang-grasberg'},
+   {title:'Kronologi Penembakan di Tambang Grasberg Freeport',pub:'Tempo.co',date:'11 Mar 2026',type:'Berita',relevance:'High',verif:'verified',url:'https://metro.tempo.co/read/2092012/kronologi-penembakan-di-tambang-grasberg-freeport'}
+  ],
+  decision:{
+   current:'Insiden keamanan bersifat sporadis namun berulang selama lebih dari dua dekade, dengan pola yang konsisten yaitu penembakan oleh pihak tak dikenal terhadap karyawan atau kendaraan operasional.',
+   unresolved:['Identitas dan motif pelaku pada insiden Maret 2026 belum dipublikasikan hasil investigasinya di arsip yang tersedia.','Belum ada data resmi soal perubahan protokol keamanan pascainsiden 2026 yang terdokumentasi lebih lanjut di arsip yang tersedia.'],
+   change:'Publikasi hasil investigasi resmi kepolisian dan konfirmasi perubahan protokol keamanan pascainsiden akan menjadi indikator penyelesaian.',
+   trigger:'Pantau rilis resmi Polda Papua Tengah dan pernyataan lanjutan PTFI soal langkah keamanan tambahan.'
+  }
  }
+
 };
 
 function riskBadgeClass(lvl){return lvl==='High'?'bh':lvl==='Medium'?'bm':'bl';}
@@ -4015,12 +4464,11 @@ function topicCardHTML(key){
 }
 function renderOverviewTopicCards(){
   const el=document.getElementById('ov-topic-cards');if(!el)return;
-  el.innerHTML=topicOrder.map(k=>topicCardHTML(k)).join('');
+  el.innerHTML=getTopicOrder().map(k=>topicCardHTML(k)).join('');
 }
 function renderTopicList(){
   const el=document.getElementById('issues-topic-list');if(!el)return;
-  if(el.children.length)return; // already rendered
-  el.innerHTML=topicOrder.map(k=>`<div data-key="${k}" data-cat="${topicData[k].category}" data-risk="${topicData[k].riskLevel}" data-status="${topicData[k].status}">${topicCardHTML(k)}</div>`).join('');
+  el.innerHTML=getTopicOrder().map(k=>`<div data-key="${k}" data-cat="${topicData[k].category}" data-risk="${topicData[k].riskLevel}" data-status="${topicData[k].status}">${topicCardHTML(k)}</div>`).join('');
   filterTopics();
 }
 function filterTopics(){
@@ -4101,7 +4549,7 @@ function topicDetailHTML(key){
      ${chronoTypes.map(ct=>`<span class="cf-chip" onclick="chronoFilter(this,'${ct}')">${ct}</span>`).join('')}
     </div>
     <div class="tl-w" id="chrono-list">
-     ${t.chrono.map(c=>`<div class="tli hl chrono-item" data-ctype="${c.type}"><div class="tyr">${c.date} · ${c.type}</div><div class="tev">${c.title}</div><div class="tim">${c.desc}</div><div style="font-size:11px;color:var(--s);margin-top:3px;">Aktor: ${c.actors} · ${c.src}</div></div>`).join('')}
+     ${t.chrono.map(c=>`<div class="tli hl chrono-item" data-ctype="${c.type}"><div class="tyr">${c.date} · ${c.type}</div><div class="tev">${c.title}</div><div class="tim">${c.desc}</div><div style="font-size:11px;color:var(--s);margin-top:3px;">Aktor: ${c.actors} · ${c.url?`<a href="#" onclick="window.open('${c.url}','_blank');return false" style="color:var(--bl);font-weight:600;text-decoration:none;">${c.src} ↗</a>`:c.src}</div></div>`).join('')}
     </div>
    </div>
   </div>
@@ -4149,7 +4597,7 @@ function topicDetailHTML(key){
     <div class="mon-tbl" style="border:none;">
      <table><thead><tr><th>Judul</th><th>Publisher</th><th>Tanggal</th><th>Tipe</th><th>Relevansi</th><th>Verifikasi</th><th></th></tr></thead>
      <tbody>
-      ${t.evidence.map(e=>`<tr><td style="max-width:220px;">${e.title}</td><td>${e.pub}</td><td>${e.date}</td><td><span class="bx bn" style="font-size:10.5px;">${e.type}</span></td><td><span class="bx ${riskBadgeClass(e.relevance)}" style="font-size:10.5px;">${e.relevance}</span></td><td>${vbadgeHTML(e.verif)}</td><td>${e.ev?`<button class="bev" onclick="openEv('${e.ev}')">Buka →</button>`:`<span style="font-size:11px;color:var(--s);">—</span>`}</td></tr>`).join('')}
+      ${t.evidence.map(e=>`<tr><td style="max-width:220px;">${e.title}</td><td>${e.pub}</td><td>${e.date}</td><td><span class="bx bn" style="font-size:10.5px;">${e.type}</span></td><td><span class="bx ${riskBadgeClass(e.relevance)}" style="font-size:10.5px;">${e.relevance}</span></td><td>${vbadgeHTML(e.verif)}</td><td>${e.url?`<button class="bev" onclick="window.open('${e.url}','_blank')">Buka Artikel →</button>`:(e.ev?`<button class="bev" onclick="openEv('${e.ev}')">Buka →</button>`:`<span style="font-size:11px;color:var(--s);">—</span>`)}</td></tr>`).join('')}
      </tbody></table>
     </div>
     </div>
@@ -4235,7 +4683,13 @@ const topicEntityMap={
   legal:['waskita','kpk','dir1','dir2','tipikor','kejagung','ppatk','bpkp'],
   governance:['waskita','kemen','pupr','ojk','bpkp','pem'],
   reputation:['waskita','ojk','bumn','wika','ptpp','adhi'],
-  project:['waskita','toltj','ikn','subkon','pupr','pem']
+  project:['waskita','toltj','ikn','subkon','pupr','pem'],
+  'fp-longsor':['fp-ptfi','fp-esdm','fp-redpath'],
+  'fp-kontrak':['fp-ptfi','fp-mindid','fp-fcx','fp-investasi','fp-danantara'],
+  'fp-smelter':['fp-ptfi','fp-smelting','fp-investasi','fp-antam'],
+  'fp-lingkungan':['fp-ptfi','fp-bpk','fp-esdm'],
+  'fp-fiskal':['fp-ptfi','fp-mindid','fp-investasi','fp-esdm'],
+  'fp-keamanan':['fp-ptfi','fp-polda']
 };
 let _tkgSvg,_tkgG,_tkgZoom,_tkgSim,_tkgNodeSel,_tkgLinkSel,_tkgNodes,_tkgLinks,_tkgSelId=null;
 function initTopicKG(key){
@@ -4249,9 +4703,9 @@ function initTopicKG(key){
   const cont=document.getElementById('td-kg-container');
   const W=cont?cont.offsetWidth:640,H=240;
   const scl=0.72;
-  _tkgNodes=KGN.filter(n=>ids.includes(n.id)).map(n=>({...n,r:Math.round(n.r*scl),x:W/2+(Math.random()-.5)*160,y:H/2+(Math.random()-.5)*110}));
-  _tkgLinks=KGL.filter(l=>ids.includes(l.source)&&ids.includes(l.target)).map(l=>({...l}));
-  const wn=_tkgNodes.find(n=>n.id==='waskita');if(wn){wn.x=W/2;wn.y=H/2;}
+  _tkgNodes=getCurrentKGN().filter(n=>ids.includes(n.id)).map(n=>({...n,r:Math.round(n.r*scl),x:W/2+(Math.random()-.5)*160,y:H/2+(Math.random()-.5)*110}));
+  _tkgLinks=getCurrentKGL().filter(l=>ids.includes(l.source)&&ids.includes(l.target)).map(l=>({...l}));
+  const wn=_tkgNodes.find(n=>n.id===getMainEntityId());if(wn){wn.x=W/2;wn.y=H/2;}
   _tkgSvg=d3.select('#td-kg-svg').attr('width',W).attr('height',H);
   const defs=_tkgSvg.append('defs');
   const pat=defs.append('pattern').attr('id','tkgbg').attr('width',28).attr('height',28).attr('patternUnits','userSpaceOnUse');
@@ -4534,7 +4988,7 @@ function openActor(id){
    ${conn.map(c=>`<div class="fi-row"><div class="fi-v" style="font-size:12.5px;">${c.name}</div><span class="bx bn" style="font-size:10px;">${c.type}</span></div>`).join('')||'<div style="font-size:12px;color:var(--s);">Tidak ada relasi langsung yang terpetakan.</div>'}
    <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin:13px 0 8px;letter-spacing:.5px;">Sitasi Pendukung</div>
    <div class="flex g6 wrap" style="margin-bottom:14px;">${citChip('c4')}${citChip('c13')}${citChip('c1')}</div>
-   <button class="btn bn2 bsm" onclick="closeActor();P('ps');showSV('ps','search')">🔍 Jalankan Profile Risk Assessment</button>`;
+   <button class="btn bn2 bsm" onclick="closeActor();P('ps');showSV('ps','search')">🔍 Jalankan Investigative Profile</button>`;
   document.getElementById('actor-ov').classList.add('open');
   document.getElementById('actor-drw').classList.add('open');
 }
@@ -4594,7 +5048,7 @@ const EV_SIGNAL={
  ],
  nextSteps:[
   {icon:'🕰️',title:'Jalankan Precedent Analysis pada pattern policy discontinuity',trigger:'Hasil insentif 2026 saat ini belum jelas, dan skema 2025 punya tanggal berakhir tetap yang mirip dengan pattern historis (88% kemiripan — lihat Precedent #1). Meninjau bagaimana transisi insentif fiskal serupa terselesaikan bisa mempertajam ekspektasi soal apa yang akan terjadi berikutnya.',cta:'Lihat Precedent #1 →',action:"insNavTo('ins-sec-precedents')"},
-  {icon:'🔍',title:'Jalankan Profile Risk Assessment pada BYD atau Chery',trigger:'Dua aktor ini saat ini paling cepat mendorong kenaikan pangsa di BEV dan PHEV. Profile Risk Assessment akan menampilkan konteks kepemilikan, hukum, dan keuangan yang tidak tercakup di signal ini.',cta:'Jalankan Profile Risk Assessment →',action:"P('ps');showSV('ps','search')"},
+  {icon:'🔍',title:'Jalankan Investigative Profile pada BYD atau Chery',trigger:'Dua aktor ini saat ini paling cepat mendorong kenaikan pangsa di BEV dan PHEV. Investigative Profile akan menampilkan konteks kepemilikan, hukum, dan keuangan yang tidak tercakup di signal ini.',cta:'Jalankan Investigative Profile →',action:"P('ps');showSV('ps','search')"},
   {icon:'🔔',title:'Atur alert untuk konfirmasi resmi insentif 2026',trigger:'Claim ini saat ini berlabel Awaiting Official Confirmation — sampai regulasi resminya terbit, asumsi apa pun soal insentif 2026 masih spekulatif.',cta:'Atur Alert →',action:'openWatchlistModal()'},
   {icon:'🧭',title:'Pantau signal Ekspansi Otomotif Cina di Indonesia',trigger:'Signal terkait ini melacak kelompok kompetitor yang sama tapi dari sisi manufaktur dan distribusi, bukan dari sisi kebijakan/pasar — keduanya saling melengkapi cakupannya.',cta:'Lihat Signal Terkait →',action:"sigDemoToast('Ekspansi Otomotif Cina di Indonesia')"}
  ],
@@ -4907,28 +5361,53 @@ function runSignalAnalysis(){
 let _watchlistActive=true;
 let _selectedFreq='Real-time untuk kejadian kritis';
 const WATCHLIST=[
- {id:'astra-ev',name:'Astra EV Policy and Market Monitor',status:'Rapidly Rising',latestChange:'Pertumbuhan perakitan lokal PHEV',newDev:18,priority:'Tinggi',lastUpdated:'2 jam lalu',nextDigest:'Besok jam 08:00',channels:'Email dan WhatsApp'}
+ {id:'astra-ev',name:'Astra EV Policy and Market Monitor',status:'Rapidly Rising',latestChange:'Pertumbuhan perakitan lokal PHEV',newDev:18,priority:'Tinggi',lastUpdated:'2 jam lalu',nextDigest:'Besok jam 08:00',channels:'Email dan WhatsApp',paused:false}
 ];
 function renderWatchlist(){
  const el=document.getElementById('watchlist-body');const empty=document.getElementById('watchlist-empty');
  if(!el)return;
  if(!WATCHLIST.length){el.innerHTML='';if(empty)empty.style.display='block';return;}
  if(empty)empty.style.display='none';
- el.innerHTML=`<div class="tbl-scroll"><div class="mon-tbl"><table>
-  <thead><tr><th>Signal</th><th>Status</th><th>Perubahan Terbaru</th><th>Baru</th><th>Prioritas</th><th>Diperbarui</th><th>Digest Berikutnya</th><th>Channel</th><th></th></tr></thead>
-  <tbody>${WATCHLIST.map(w=>`<tr style="cursor:pointer;" onclick="openSignal('custom')">
-    <td><strong style="color:var(--n);">${w.name}</strong></td>
-    <td><span class="sig-status sig-status-accel">${w.status}</span></td>
-    <td style="font-size:12px;color:var(--m);">${w.latestChange}</td>
-    <td><span class="bx bh" style="font-size:10.5px;">${w.newDev}</span></td>
-    <td><span class="bx ${w.priority==='Tinggi'?'bh':'bm'}" style="font-size:10.5px;">${w.priority}</span></td>
-    <td style="font-size:11.5px;color:var(--s);">${w.lastUpdated}</td>
-    <td style="font-size:11.5px;color:var(--s);">${w.nextDigest}</td>
-    <td style="font-size:11.5px;color:var(--m);">${w.channels}</td>
-    <td><button class="bev" onclick="event.stopPropagation();openSignal('custom')">Buka →</button></td>
-   </tr>`).join('')}</tbody>
- </table></div></div>`;
+ el.innerHTML=WATCHLIST.map(w=>`
+  <div class="rd-card" id="wlrow-${w.id}" style="margin-bottom:9px;">
+   <div class="rd-hd" onclick="toggleWatchRow('${w.id}')" style="cursor:pointer;">
+    <div class="rd-body">
+     <div class="rd-name">${w.name} ${w.paused?'<span class="bx bn" style="margin-left:6px;">⏸ Dijeda</span>':''}</div>
+     <div class="rd-summary">${w.latestChange} · ${w.newDev} perkembangan baru</div>
+     <div class="rd-meta"><span class="sig-status sig-status-accel">${w.status}</span><span class="bx ${w.priority==='Tinggi'?'bh':'bm'}">${w.priority} Prioritas</span><span class="bx bn">Diperbarui ${w.lastUpdated}</span></div>
+    </div>
+    <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+   </div>
+   <div class="rd-detail">
+    <div class="g2" style="gap:9px;margin-bottom:11px;">
+     <div style="background:var(--bg);border-radius:7px;padding:9px 11px;"><div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:3px;">Digest Berikutnya</div><div style="font-size:12.5px;font-weight:600;color:var(--n);">${w.nextDigest}</div></div>
+     <div style="background:var(--bg);border-radius:7px;padding:9px 11px;"><div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:3px;">Channel Notifikasi</div><div style="font-size:12.5px;font-weight:600;color:var(--n);">${w.channels}</div></div>
+    </div>
+    <div class="flex g6 wrap">
+     <button class="btn bp bsm" onclick="event.stopPropagation();openSignal('custom')">📊 Buka Analisis Lengkap</button>
+     <button class="btn bo bsm" onclick="event.stopPropagation();toggleWatchPause('${w.id}')">${w.paused?'▶ Lanjutkan Pemantauan':'⏸ Jeda Pemantauan'}</button>
+     <button class="btn bo bsm" onclick="event.stopPropagation();openWatchlistModal()">⚙ Ubah Alert</button>
+    </div>
+   </div>
+  </div>`).join('');
  document.getElementById('wl-count-kpi').textContent=WATCHLIST.length;
+}
+function toggleWatchRow(id){const row=document.getElementById('wlrow-'+id);if(row)row.classList.toggle('open');}
+function toggleWatchPause(id){
+ const w=WATCHLIST.find(x=>x.id===id);if(!w)return;
+ w.paused=!w.paused;
+ toast(w.paused?'Pemantauan dijeda':'Pemantauan dilanjutkan');
+ renderWatchlist();
+}
+function renderWatchlistActivity(){
+ const el=document.getElementById('wl-activity-feed');if(!el)return;
+ const items=(typeof EV_SIGNAL!=='undefined'&&EV_SIGNAL.whatChanged)?EV_SIGNAL.whatChanged:[];
+ if(!items.length){el.innerHTML='<div style="font-size:12.5px;color:var(--m);">Belum ada aktivitas baru.</div>';return;}
+ el.innerHTML=items.map(c=>`
+  <div class="flag" style="margin-bottom:8px;">
+   <div class="fhd"><div class="ft">${c.title}</div><div class="flex g6"><span class="bx bn">${c.date}</span></div></div>
+   <div class="fbd"><div class="fd">${c.desc}</div><div class="fm"><div style="font-size:11px;color:var(--m);">📡 Astra EV Policy and Market Monitor</div><button class="bev" onclick="P('mon');showSV('mon','insight');openSignal('custom')">Lihat di Signal →</button></div></div>
+  </div>`).join('');
 }
 function openWatchlistModal(){
  document.getElementById('watch-modal-form').style.display='block';
@@ -4965,7 +5444,7 @@ function structTab(btn,mode){
 }
 
 // ── Specialized Lenses ──
-const lensContent={
+const WASKITA_LENS_CONTENT={
  esg:{icon:'🌱',name:'ESG Media Proxy',body:`
   <div style="font-size:11.5px;background:var(--bll);color:var(--bl);border-radius:6px;padding:8px 11px;margin-bottom:12px;">ℹ️ Ini adalah <strong>proxy media dan sumber publik</strong>, bukan rating ESG formal dari lembaga pemeringkat.</div>
   <div class="g2" style="gap:10px;margin-bottom:12px;">
@@ -4998,7 +5477,7 @@ const lensContent={
   <div class="lens-empty"><div style="font-size:32px;margin-bottom:10px;">🔍</div><div style="font-size:14px;font-weight:600;color:var(--n);margin-bottom:6px;">No material verified signal identified in the available corpus.</div><div style="font-size:12.5px;color:var(--m);line-height:1.6;max-width:440px;margin:0 auto;">PT Waskita Karya beroperasi sebagai kontraktor infrastruktur B2G/B2B — tidak ditemukan pola keluhan konsumen ritel, boikot, atau kontroversi produk/layanan yang terverifikasi di arsip Tempo untuk entitas ini.</div></div>`}
 };
 function lensOpen(id){
-  const l=lensContent[id];if(!l)return;
+  const l=WASKITA_LENS_CONTENT[id];if(!l)return;
   const grid=document.getElementById('pst-lenses-grid'),det=document.getElementById('pst-lenses-detail');
   if(grid)grid.style.display='none';
   if(det)det.style.display='block';
@@ -5012,8 +5491,484 @@ function lensClose(){
   if(grid)grid.style.display='grid';
 }
 
+// ════════════════════════════════════════════════════════════
+// FREEPORT — Overview / Structure / Lenses / Sources / entity switching
+// ════════════════════════════════════════════════════════════
+
+const FREEPORT_OVERVIEW_HTML = `
+     <!-- A. Executive Snapshot -->
+     <div class="card cp m14" style="border-left:4px solid var(--am);">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Executive Snapshot</div><span class="bx bn">Evidence: Strong · 31 sumber Tempo</span></div>
+      <div style="font-size:13.5px;color:var(--t);line-height:1.6;margin-bottom:12px;font-weight:600;">PT Freeport Indonesia menghadapi tekanan operasional signifikan usai longsor tambang bawah tanah Grasberg Block Cave (Sep 2025) yang menewaskan tujuh pekerja, di tengah konsolidasi kepemilikan negara yang terus menguat dan ekspansi hilirisasi yang belum sepenuhnya stabil.</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+       <div class="rss-sig"><span class="bx bh" style="font-size:10.5px;flex-shrink:0;">Tinggi</span><div style="font-size:12.5px;">Longsor Grasberg Block Cave (Sep 2025) menewaskan tujuh pekerja kontraktor; produksi belum pulih penuh hingga pertengahan 2026.</div></div>
+       <div class="rss-sig"><span class="bx bh" style="font-size:10.5px;flex-shrink:0;">Tinggi</span><div style="font-size:12.5px;">Penerimaan negara dari PTFI diproyeksikan turun 39,5% pada 2026 akibat dampak longsor terhadap produksi.</div></div>
+       <div class="rss-sig"><span class="bx" style="background:var(--grl);color:var(--gr);font-size:10.5px;flex-shrink:0;">Positif</span><div style="font-size:12.5px;">Kepemilikan negara terus menguat — tambahan 12% saham disepakati gratis dari Freeport-McMoRan (2025–2026).</div></div>
+      </div>
+      <div style="border-top:1px solid var(--b);padding-top:10px;display:flex;flex-direction:column;gap:5px;">
+       <div style="font-size:12px;line-height:1.5;"><strong style="color:var(--r);">Belum terselesaikan:</strong> <span style="color:var(--m);">pemulihan penuh kapasitas Grasberg &amp; penandatanganan final perjanjian divestasi 12%.</span></div>
+       <div style="font-size:12px;line-height:1.5;"><strong style="color:var(--gr);">Perkembangan positif:</strong> <span style="color:var(--m);">kontrak diperpanjang hingga 2061; kesepakatan pelepasan 12% saham tanpa biaya (Okt 2025).</span></div>
+       <div style="font-size:12px;line-height:1.5;"><strong style="color:var(--n);">Perubahan terbaru:</strong> <span style="color:var(--m);">smelter Manyar ditargetkan beroperasi kembali September 2026.</span></div>
+      </div>
+      <div class="flex g6 wrap" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--b);">
+       <button class="btn bp bsm" onclick="saveRep('PT Freeport Indonesia · Investigative Profile')">📋 Generate Report</button>
+       <button class="btn bo bsm" onclick="openWL()">☆ Tambah ke Watchlist</button>
+       <button class="ask-cta bsm" onclick="openAIP('ps')">💬 Ask Tempo</button>
+      </div>
+     </div>
+
+     <!-- C. Overall Risk Signals -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Overall Risk Signals</div><span class="bx bn">5 sinyal utama</span></div>
+      <div style="font-size:12px;color:var(--m);margin-bottom:12px;">Klik sinyal untuk detail; klik "Lihat Topic Cluster" untuk analisis lengkap di tab <strong>Issues &amp; Track Record</strong>.</div>
+
+      <div class="rd-card" id="rrow-sig1" onclick="toggleRRow('sig1')">
+       <div class="rd-hd">
+        <div class="rd-rank r1">1</div>
+        <div class="rd-body">
+         <div class="rd-name">Longsor Tambang &amp; Dampak Operasional</div>
+         <div class="rd-summary">Longsor Grasberg Block Cave (Sep 2025) menewaskan tujuh pekerja dan menurunkan produksi tajam — pemulihan penuh ditargetkan awal 2027.</div>
+         <div class="rd-meta"><span class="bx bh">High</span><span class="bx bn">Operational · Ongoing</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Mengapa ini penting:</strong> GBC menyumbang 64% dari total produksi Freeport — gangguan di sana berdampak langsung ke produksi, pasokan smelter, dan penerimaan negara.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('issues');openTopic('fp-longsor')">🧩 Lihat Topic Cluster →</button>
+       </div>
+      </div>
+
+      <div class="rd-card" id="rrow-sig2" onclick="toggleRRow('sig2')" style="margin-top:8px;">
+       <div class="rd-hd">
+        <div class="rd-rank r2">2</div>
+        <div class="rd-body">
+         <div class="rd-name">Konsolidasi Kepemilikan &amp; Kontrak</div>
+         <div class="rd-summary">Kontrak diperpanjang hingga 2061; tambahan 12% saham disepakati gratis dari Freeport-McMoRan, namun penandatanganan final masih berproses.</div>
+         <div class="rd-meta"><span class="bx bm">Medium</span><span class="bx bn">Governance · Ongoing</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Mengapa ini penting:</strong> struktur kepemilikan menentukan pembagian keuntungan dan kendali strategis jangka panjang atas salah satu tambang terbesar dunia.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('issues');openTopic('fp-kontrak')">🧩 Lihat Topic Cluster →</button>
+       </div>
+      </div>
+
+      <div class="rd-card" id="rrow-sig3" onclick="toggleRRow('sig3')" style="margin-top:8px;">
+       <div class="rd-hd">
+        <div class="rd-rank r3">3</div>
+        <div class="rd-body">
+         <div class="rd-name">Ketergantungan Hilirisasi pada Smelter Tunggal</div>
+         <div class="rd-summary">Kebakaran smelter Gresik (Okt 2024) dan kekurangan pasokan pascalongsor menunjukkan kerentanan rantai hilirisasi.</div>
+         <div class="rd-meta"><span class="bx bm">Medium</span><span class="bx bn">Regulatory · Ongoing</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Mengapa ini penting:</strong> kelangsungan smelter menjadi syarat perpanjangan izin ekspor konsentrat dan indikator utama keberhasilan program hilirisasi nasional.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('issues');openTopic('fp-smelter')">🧩 Lihat Topic Cluster →</button>
+       </div>
+      </div>
+
+      <div class="rd-card" id="rrow-sig4" onclick="toggleRRow('sig4')" style="margin-top:8px;">
+       <div class="rd-hd">
+        <div class="rd-rank r3">4</div>
+        <div class="rd-body">
+         <div class="rd-name">Isu Lingkungan Historis Belum Tuntas</div>
+         <div class="rd-summary">Temuan BPK 2017 (potensi kerugian Rp185 triliun) belum ditemukan konfirmasi penyelesaian tuntas di arsip yang tersedia.</div>
+         <div class="rd-meta"><span class="bx bm">Medium</span><span class="bx bn">Environmental · Unresolved</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Mengapa ini penting:</strong> skala kerusakan lingkungan yang diperkirakan mencapai ratusan triliun rupiah menjadi eksposur reputasi jangka panjang bagi mitra dan investor.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('issues');openTopic('fp-lingkungan')">🧩 Lihat Topic Cluster →</button>
+       </div>
+      </div>
+
+      <div class="rd-card" id="rrow-sig5" onclick="toggleRRow('sig5')" style="margin-top:8px;">
+       <div class="rd-hd">
+        <div class="rd-rank r3">5</div>
+        <div class="rd-body">
+         <div class="rd-name">Insiden Keamanan di Kawasan Operasi Tambang</div>
+         <div class="rd-summary">Penembakan oleh pihak tak dikenal terjadi berulang sejak 2002; kejadian terbaru Maret 2026 menewaskan seorang karyawan PTFI.</div>
+         <div class="rd-meta"><span class="bx bm">Medium</span><span class="bx bn">Operational · Ongoing</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Mengapa ini penting:</strong> eksposur keamanan yang berulang di area operasional adalah faktor risiko keselamatan kerja jangka panjang yang independen dari risiko geoteknik seperti longsor.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('issues');openTopic('fp-keamanan')">🧩 Lihat Topic Cluster →</button>
+       </div>
+      </div>
+     </div>
+
+     <!-- F. Top Topic Clusters -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Top Topic Clusters</div><span class="bx bn">6 cluster</span></div>
+      <div style="display:flex;flex-direction:column;gap:9px;" id="ov-topic-cards"><!-- populated by JS: renderOverviewTopicCards() --></div>
+     </div>
+
+     <!-- G. Decision Implications -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Decision Implications</div><span class="bx bn">Bahasa netral — bukan rekomendasi langsung</span></div>
+      <div class="sig-split" style="margin-bottom:10px;">
+       <div class="sig-col recovery">
+        <div style="font-size:11.5px;font-weight:700;color:var(--gr);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">✓ Yang Mendukung Keputusan</div>
+        <div class="sig-item">Kepemilikan negara terus menguat (51%→61%→lebih), memberi kepastian kendali jangka panjang.</div>
+        <div class="sig-item">Kontrak IUPK diperpanjang hingga 2061, memberi kepastian horizon operasi jangka panjang.</div>
+       </div>
+       <div class="sig-col risk">
+        <div style="font-size:11.5px;font-weight:700;color:var(--r);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">⚠ Yang Meningkatkan Risiko</div>
+        <div class="sig-item">Dampak fiskal &amp; operasional longsor Grasberg belum sepenuhnya pulih hingga pertengahan 2026.</div>
+        <div class="sig-item">Isu lingkungan historis (tailing) belum ada konfirmasi tuntas di arsip yang tersedia.</div>
+       </div>
+      </div>
+      <div class="mit-group">
+       <div class="mit-group-title">◐ Belum Terselesaikan / Perlu Diverifikasi</div>
+       <div class="mit-item">Material uncertainty remains — penandatanganan final perjanjian transfer 12% saham (baru berupa draf per Jun 2026).</div>
+       <div class="mit-item">Requires further validation — hasil investigasi teknis resmi penyebab longsor Grasberg Block Cave.</div>
+      </div>
+      <div class="mit-group" style="margin-bottom:0;">
+       <div class="mit-group-title">📡 Prioritas Monitoring yang Disarankan</div>
+       <div class="mit-item">Monitor before commitment — konfirmasi resmi pemulihan kapasitas produksi Grasberg dan progres smelter Manyar.</div>
+       <div class="mit-item">Pantau laporan RKAB berikutnya dan publikasi laporan keberlanjutan (sustainability report) PTFI.</div>
+      </div>
+     </div>
+
+     <!-- B. Key Facts (collapsed by default) -->
+     <div class="acc" id="acc-keyfacts">
+      <div class="acc-hd" onclick="toggleAcc('acc-keyfacts')"><div class="acc-ttl">📋 Key Facts <span class="bx bn" style="font-weight:500;font-size:11px;">10 fakta</span></div><div class="acc-chevron">▸</div></div>
+      <div class="acc-body">
+       <div class="fi-row"><div class="fi-k">Legal Identity</div><div class="fi-v">PT Freeport Indonesia (PTFI) — beroperasi di Indonesia sejak 1973, awalnya di bawah Kontrak Karya, kini rezim IUPK</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span><span class="fi-asof" style="color:var(--s);">arsip s.d. Jul 2026</span></div></div>
+       <div class="fi-row"><div class="fi-k">Listing Status</div><div class="fi-v">Tidak tercatat di BEI (privat) — induk usaha Freeport-McMoRan Inc. tercatat di NYSE: FCX</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span><span class="fi-asof" style="color:var(--s);">arsip s.d. Jul 2026</span></div></div>
+       <div class="fi-row"><div class="fi-k">Industry</div><div class="fi-v">Pertambangan mineral — tembaga, emas, perak (tambang Grasberg, Papua Tengah)</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Ownership Type</div><div class="fi-v">MIND ID/Pemerintah Indonesia ≥51,2% (menuju 61%+ dengan tambahan 12%) · Freeport-McMoRan Inc. — sisanya, menyusut</div><div class="fi-meta"><span class="vbadge partial">◐ Partially Verified</span><span class="fi-asof" onclick="pstab('structure')" style="cursor:pointer;color:var(--bl);">🔗 lihat struktur</span></div></div>
+       <div class="fi-row"><div class="fi-k">Headquarters</div><div class="fi-v">Jakarta (kantor korporasi) · Operasional utama: Tembagapura, Mimika, Papua Tengah</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Main Business Lines</div><div class="fi-v">Penambangan tembaga-emas-perak Grasberg, pengolahan smelter (PT Smelting &amp; Manyar Gresik)</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Parent Entity</div><div class="fi-v">Freeport-McMoRan Inc. (Amerika Serikat, NYSE: FCX) — pemegang saham minoritas terbesar</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span><span class="fi-asof" onclick="openEntN('fp-fcx')" style="cursor:pointer;color:var(--bl);">🔗 lihat entitas</span></div></div>
+       <div class="fi-row"><div class="fi-k">Major Subsidiaries/JV</div><div class="fi-v">PT Smelting (joint venture dengan Mitsubishi Materials, smelter tembaga pertama Indonesia sejak 1996)</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span><span class="fi-asof" onclick="P('ps');pstab('structure')" style="cursor:pointer;color:var(--bl);">🔗 lihat struktur</span></div></div>
+       <div class="fi-row"><div class="fi-k">Leadership</div><div class="fi-v">Tony Wenas — Presiden Direktur PTFI · Kathleen Quirk — Presiden &amp; CEO Freeport-McMoRan Inc.</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row" style="border-bottom:none;"><div class="fi-k">Latest Reporting Period</div><div class="fi-v">Paparan resmi terbaru dalam arsip: rapat dengar pendapat Komisi XII DPR, Juli 2026</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span><span class="fi-asof" style="color:var(--s);">Jul 2026</span></div></div>
+      </div>
+     </div>
+
+     <!-- D. Company Risk Lens (collapsed by default) -->
+     <div class="acc" id="acc-risklens">
+      <div class="acc-hd" onclick="toggleAcc('acc-risklens')"><div class="acc-ttl">🧭 Company Risk Lens <span class="bx bn" style="font-weight:500;font-size:11px;">8 dimensi</span></div><div class="acc-chevron">▸</div></div>
+      <div class="acc-body">
+       <div style="font-size:12px;color:var(--m);margin-bottom:12px;">Bukan skor tunggal — setiap dimensi dinilai statusnya secara kualitatif berdasarkan pola pemberitaan yang tersedia.</div>
+       <div class="g2" style="gap:9px;">
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Financial Resilience</div><div style="font-size:11px;color:var(--m);">Tertekan sementara — penerimaan 2026 turun 39,5%</div></div><span class="dim-pill dim-deteriorating">Deteriorating</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Debt &amp; Liquidity</div><div style="font-size:11px;color:var(--m);">Data struktur utang tidak dibahas signifikan di arsip</div></div><span class="dim-pill dim-insuff">Insufficient Evidence</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Governance</div><div style="font-size:11px;color:var(--m);">Konsolidasi kepemilikan negara terus menguat</div></div><span class="dim-pill dim-improving">Improving</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Regulatory Exposure</div><div style="font-size:11px;color:var(--m);">Kontrak diperpanjang, hubungan regulator konstruktif</div></div><span class="dim-pill dim-improving">Improving</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Legal Exposure</div><div style="font-size:11px;color:var(--m);">Tidak ditemukan kasus hukum langsung terhadap PTFI di arsip</div></div><span class="dim-pill dim-insuff">Insufficient Evidence</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Operational Execution</div><div style="font-size:11px;color:var(--m);">Longsor &amp; kebakaran smelter berulang mengganggu operasional</div></div><span class="dim-pill dim-deteriorating">Deteriorating</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Reputation</div><div style="font-size:11px;color:var(--m);">Framing dominan positif soal kedaulatan sumber daya</div></div><span class="dim-pill dim-improving">Improving</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">ESG &amp; Stakeholder Exposure</div><div style="font-size:11px;color:var(--m);">Isu tailing historis belum ada konfirmasi tuntas</div></div><span class="dim-pill dim-unresolved">Unresolved</span></div>
+       </div>
+      </div>
+     </div>
+
+     <!-- E. Track Record Summary (collapsed by default) -->
+     <div class="acc" id="acc-trackrecord" style="margin-bottom:4px;">
+      <div class="acc-hd" onclick="toggleAcc('acc-trackrecord')"><div class="acc-ttl">📜 Track Record Summary <span class="bx bn" style="font-weight:500;font-size:11px;">1973–2026</span></div><div class="acc-chevron">▸</div></div>
+      <div class="acc-body">
+       <div class="tbl-scroll">
+       <div class="mon-tbl" style="border:none;">
+        <table>
+         <thead><tr><th>Kategori</th><th>Pola</th><th>Arah</th><th>Evidence</th></tr></thead>
+         <tbody>
+          <tr><td><strong>Financial Performance</strong></td><td style="font-size:12px;color:var(--m);">Kontribusi fiskal besar namun volatile mengikuti harga komoditas &amp; produksi</td><td><span class="tri">→ Mixed</span></td><td><span class="bx bn">Strong</span></td></tr>
+          <tr><td><strong>Ownership Consolidation</strong></td><td style="font-size:12px;color:var(--m);">Kepemilikan negara konsisten menguat sejak 2018</td><td><span class="trs">↗ Membaik</span></td><td><span class="bx bn">Strong</span></td></tr>
+          <tr><td><strong>Operational Safety</strong></td><td style="font-size:12px;color:var(--m);">Dua insiden longsor besar (2013, 2025) dengan korban jiwa signifikan</td><td><span class="trw">↓ Memburuk</span></td><td><span class="bx bn">Strong</span></td></tr>
+          <tr><td><strong>Downstream Expansion</strong></td><td style="font-size:12px;color:var(--m);">Smelter terbesar dunia namun rentan gangguan tunggal (kebakaran, pasokan)</td><td><span class="tri">→ Mixed</span></td><td><span class="bx bm">Moderate</span></td></tr>
+          <tr><td><strong>Environmental Management</strong></td><td style="font-size:12px;color:var(--m);">Isu tailing historis belum tuntas; inisiatif ESG baru terus berjalan</td><td><span class="tri">→ Mixed</span></td><td><span class="bx bm">Moderate</span></td></tr>
+          <tr><td><strong>Regulatory Relations</strong></td><td style="font-size:12px;color:var(--m);">Kontrak diperpanjang hingga 2061, hubungan konstruktif dengan pemerintah</td><td><span class="trs">↗ Membaik</span></td><td><span class="bx bn">Strong</span></td></tr>
+         </tbody>
+        </table>
+       </div>
+       </div>
+      </div>
+     </div>
+`;
+
+const FREEPORT_STRUCT_HTML = `
+      <div id="struct-current">
+       <div class="g2" style="gap:9px;margin-bottom:12px;">
+        <div style="background:var(--bg);border-radius:7px;padding:11px 13px;"><div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:4px;">Pemegang Saham Mayoritas</div><div style="font-size:12.5px;font-weight:600;color:var(--n);cursor:pointer;" onclick="openEntN('fp-mindid')">MIND ID (Pemerintah Indonesia) →</div></div>
+        <div style="background:var(--bg);border-radius:7px;padding:11px 13px;"><div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:4px;">Ultimate Controlling Party</div><div style="font-size:12.5px;font-weight:600;color:var(--n);">Pemerintah Republik Indonesia (melalui MIND ID)</div></div>
+       </div>
+       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:7px;">Major Shareholders</div>
+       <div class="tbl-scroll">
+       <div class="mon-tbl" style="border:none;margin-bottom:13px;">
+        <table><thead><tr><th>Pemegang Saham</th><th>Kepemilikan</th><th>Tipe</th></tr></thead>
+        <tbody>
+         <tr><td>MIND ID / Inalum (Pemerintah Indonesia)</td><td><strong>≥51,2%, menuju 61%+</strong></td><td><span class="bx bn">Pemerintah</span></td></tr>
+         <tr><td>Freeport-McMoRan Inc. (AS, NYSE: FCX)</td><td><strong>Sisanya — menyusut</strong></td><td><span class="bx bn">Induk Usaha Asing</span></td></tr>
+        </tbody></table>
+       </div>
+       </div>
+       <div style="background:var(--bll);border-radius:6px;padding:8px 11px;font-size:11.5px;color:var(--bl);margin-bottom:12px;line-height:1.6;">ℹ️ Persentase tepat kepemilikan pasca tambahan 12% saham belum terkonfirmasi tuntas — per Juni 2026 masih berupa draf perjanjian divestasi yang diajukan ke pemerintah.</div>
+       <div class="g2" style="gap:9px;">
+        <div>
+         <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:7px;">Board of Directors (Direksi)</div>
+         <div class="fi-row"><div class="fi-v" style="font-size:12.5px;">Tony Wenas — Presiden Direktur PTFI</div><span class="vbadge verified">✓</span></div>
+         <div class="fi-row" style="border-bottom:none;"><div class="fi-v" style="font-size:12.5px;">Komposisi direksi lain — data tidak tersedia di arsip</div><span class="vbadge insuff">—</span></div>
+        </div>
+        <div>
+         <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:7px;">Board of Commissioners (Komisaris)</div>
+         <div class="fi-row" style="border-bottom:none;"><div class="fi-v" style="font-size:12.5px;">Komposisi dewan komisaris — data tidak tersedia di arsip</div><span class="vbadge insuff">—</span></div>
+        </div>
+       </div>
+      </div>
+
+      <div id="struct-historical" style="display:none;">
+       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:9px;">Historical Ownership &amp; Contract Changes</div>
+       <div class="tl-w">
+        <div class="tli hl"><div class="tyr">Feb 2026</div><div class="tev">MoU perpanjangan IUPK ditandatangani di Washington DC</div><div class="tim">Menteri Investasi, CEO Freeport-McMoRan Kathleen Quirk, dan Presiden Direktur PTFI Tony Wenas menyepakati enam poin perpanjangan.</div></div>
+        <div class="tli"><div class="tyr">Okt 2025</div><div class="tev">Freeport-McMoRan setuju lepas 12% saham tanpa biaya</div><div class="tim">Kesepakatan disertai syarat pembangunan dua sekolah dan satu rumah sakit di Papua.</div></div>
+        <div class="tli"><div class="tyr">Mei 2024</div><div class="tev">Kontrak resmi diperpanjang hingga 2061, saham pemerintah jadi 61%</div><div class="tim">Penambahan 10% saham disepakati menyusul pengumuman perpanjangan IUPK November 2023.</div></div>
+        <div class="tli"><div class="tyr">Des 2018</div><div class="tev">Inalum tebus 51,2% saham Freeport Indonesia</div><div class="tim">Transaksi senilai Rp55,8 triliun menjadikan PTFI mayoritas milik negara untuk pertama kalinya sejak 1973.</div></div>
+        <div class="tli" style="margin-bottom:0;"><div class="tyr">1973</div><div class="tev">PT Freeport Indonesia mulai beroperasi di Papua</div><div class="tim">Beroperasi di bawah rezim Kontrak Karya, sebelum bertransisi ke IUPK pada 2018.</div></div>
+       </div>
+      </div>
+`;
+
+const FREEPORT_CORPACTION_HTML = `
+      <div class="tl-w">
+       <div class="tli hl">
+        <div class="tyr">Feb 2026 · Contract Extension</div>
+        <div class="tev">MoU perpanjangan IUPK ditandatangani di Washington DC</div>
+        <div class="tim">Entitas terlibat: Kementerian Investasi, Freeport-McMoRan, PTFI. Relevansi strategis: memastikan horizon operasi hingga 2061 dan mengunci tambahan 12% saham untuk Indonesia.</div>
+        <div class="flex g6 wrap mt6"><button class="bev" onclick="pstab('issues');openTopic('fp-kontrak')">🧩 Topic Cluster</button><button class="bev" onclick="window.open('https://koran.tempo.co/read/ekonomi-dan-bisnis/496486/kontrak-freeport-diperpanjang','_blank')">📰 Sumber</button></div>
+       </div>
+       <div class="tli">
+        <div class="tyr">Okt 2025 · Divestment</div>
+        <div class="tev">Freeport-McMoRan setuju lepas 12% saham tanpa biaya</div>
+        <div class="tim">Entitas terlibat: Kementerian Investasi/BKPM, Freeport-McMoRan. Relevansi strategis: memperbesar kendali negara atas aset tambang strategis.</div>
+        <div class="flex g6 wrap mt6"><button class="bev" onclick="pstab('issues');openTopic('fp-kontrak')">🧩 Topic Cluster</button><button class="bev" onclick="window.open('https://bisnis.tempo.co/read/2053537/induk-freeport-lepas-saham-12-persen-untuk-indonesia','_blank')">📰 Sumber</button></div>
+       </div>
+       <div class="tli">
+        <div class="tyr">Sep–Okt 2025 · Operational Incident</div>
+        <div class="tev">Longsor tambang bawah tanah Grasberg Block Cave</div>
+        <div class="tim">Entitas terlibat: PT Redpath Indonesia, Kementerian ESDM. Relevansi strategis: tujuh pekerja meninggal, produksi terhenti hampir sebulan, dampak fiskal berlanjut hingga 2026.</div>
+        <div class="flex g6 wrap mt6"><button class="bev" onclick="pstab('issues');openTopic('fp-longsor')">🧩 Topic Cluster</button><button class="bev" onclick="window.open('https://bisnis.tempo.co/read/2054849/evakuasi-korban-longsor-tambang-freeport-selesai-7-pekerja-meninggal','_blank')">📰 Sumber</button></div>
+       </div>
+       <div class="tli">
+        <div class="tyr">Okt 2024 · Operational Incident</div>
+        <div class="tev">Kebakaran unit Gas Cleaning Plant smelter Gresik</div>
+        <div class="tim">Entitas terlibat: PT Freeport Indonesia. Relevansi strategis: menunda produksi katoda tembaga dan memicu permintaan perpanjangan izin ekspor konsentrat.</div>
+        <div class="flex g6 wrap mt6"><button class="bev" onclick="pstab('issues');openTopic('fp-smelter')">🧩 Topic Cluster</button><button class="bev" onclick="window.open('https://bisnis.tempo.co/read/1929469/kebakaran-smelter-di-gresik-pt-freeport-minta-pemerintah-perpanjang-izin-ekspor-konsentrat','_blank')">📰 Sumber</button></div>
+       </div>
+       <div class="tli">
+        <div class="tyr">Mei 2024 · Regulatory Action</div>
+        <div class="tev">Kontrak resmi diperpanjang hingga 2061, saham pemerintah jadi 61%</div>
+        <div class="tim">Entitas terlibat: Kementerian Investasi, MIND ID. Relevansi strategis: memberi kepastian jangka panjang atas operasi tambang dan kepemilikan mayoritas negara.</div>
+        <div class="flex g6 wrap mt6"><button class="bev" onclick="pstab('issues');openTopic('fp-kontrak')">🧩 Topic Cluster</button><button class="bev" onclick="window.open('https://bisnis.tempo.co/read/1863237/kontrak-freeport-diperpanjang-hingga-2061-bahlil-kita-kembalikan-milik-orang-indonesia','_blank')">📰 Sumber</button></div>
+       </div>
+       <div class="tli" style="margin-bottom:0;">
+        <div class="tyr">Des 2018 · Divestment</div>
+        <div class="tev">Inalum tebus 51,2% saham Freeport Indonesia senilai Rp55,8 triliun</div>
+        <div class="tim">Entitas terlibat: Inalum/MIND ID, Freeport-McMoRan. Relevansi strategis: momen kunci PTFI menjadi mayoritas milik negara untuk pertama kalinya.</div>
+        <div class="flex g6 wrap mt6"><button class="bev" onclick="pstab('issues');openTopic('fp-kontrak')">🧩 Topic Cluster</button><button class="bev" onclick="window.open('https://koran.tempo.co/read/ekonomi-dan-bisnis/438432/inalum-tebus-saham-freeport-rp-558-triliun','_blank')">📰 Sumber</button></div>
+       </div>
+      </div>
+`;
+
+const LENS_CONTENT={
+ waskita: WASKITA_LENS_CONTENT,
+ freeport:{
+  esg:{icon:'🌱',name:'ESG Media Proxy',body:`
+   <div style="font-size:11.5px;background:var(--bll);color:var(--bl);border-radius:6px;padding:8px 11px;margin-bottom:12px;">ℹ️ Ini adalah <strong>proxy media dan sumber publik</strong>, bukan rating ESG formal dari lembaga pemeringkat.</div>
+   <div class="g2" style="gap:10px;margin-bottom:12px;">
+    <div style="background:var(--rl);border-radius:7px;padding:11px;"><div style="font-size:11px;font-weight:700;color:var(--r);text-transform:uppercase;margin-bottom:5px;">🌍 Environmental</div><div style="font-size:12px;color:var(--t);line-height:1.5;">Temuan BPK 2017: limbah tailing mencemari laut, estimasi kerugian Rp185 triliun — belum ada konfirmasi tuntas.</div><span class="bx bh" style="margin-top:6px;display:inline-block;">1 active cluster</span></div>
+    <div style="background:var(--grl);border-radius:7px;padding:11px;"><div style="font-size:11px;font-weight:700;color:var(--gr);text-transform:uppercase;margin-bottom:5px;">🤝 Social</div><div style="font-size:12px;color:var(--t);line-height:1.5;">Investasi sosial ~Rp2 triliun (2025), pembangunan sekolah &amp; RS di Papua sebagai bagian syarat divestasi.</div><span class="bx bl" style="margin-top:6px;display:inline-block;">Verified</span></div>
+    <div style="background:var(--aml);border-radius:7px;padding:11px;"><div style="font-size:11px;font-weight:700;color:var(--am);text-transform:uppercase;margin-bottom:5px;">🏛️ Governance</div><div style="font-size:12px;color:var(--t);line-height:1.5;">Konsolidasi kepemilikan negara terus menguat — lihat topic cluster Kontrak &amp; Divestasi.</div><span class="bx bm" style="margin-top:6px;display:inline-block;">1 active cluster</span></div>
+   </div>
+   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:6px;">Historical Trend — Volume Sinyal ESG</div>
+   <div class="bc-wrap" style="height:90px;margin-bottom:10px;">
+    <div class="bc-col"><div class="bc-val">4</div><div class="bc-bar" style="height:55px;background:var(--r);"></div><div class="bc-lbl">2017</div></div>
+    <div class="bc-col"><div class="bc-val">6</div><div class="bc-bar" style="height:70px;background:var(--r);"></div><div class="bc-lbl">2019</div></div>
+    <div class="bc-col"><div class="bc-val">2</div><div class="bc-bar" style="height:30px;background:var(--am);"></div><div class="bc-lbl">2023</div></div>
+    <div class="bc-col"><div class="bc-val">2</div><div class="bc-bar" style="height:30px;background:var(--gr);"></div><div class="bc-lbl">2025</div></div>
+   </div>
+   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:6px;">Key Stakeholder Groups</div>
+   <div class="flex g6 wrap" style="margin-bottom:10px;"><span class="bx bn">BPK</span><span class="bx bn">Kementerian LHK</span><span class="bx bn">Pemda Papua Tengah</span><span class="bx bn">MIND ID</span></div>
+   <div class="snote">⚠️ <strong>Keterbatasan data:</strong> proxy ini hanya mencerminkan apa yang diliput arsip Tempo yang tersedia — tidak mencakup audit ESG formal atau laporan keberlanjutan penuh PTFI.</div>`},
+  labor:{icon:'👷',name:'Labor Relations Tracker',body:`
+   <div class="g2" style="gap:10px;margin-bottom:12px;">
+    <div style="background:var(--bg);border-radius:7px;padding:11px;"><div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:4px;">Strikes / Protests</div><div style="font-size:12.5px;">Satu mogok kerja karyawan tercatat pada 2014 (Serikat Pekerja Seluruh Indonesia Freeport) — tidak ditemukan laporan mogok kerja formal lain pada 2015–2026 di arsip yang tersedia.</div></div>
+    <div style="background:var(--bg);border-radius:7px;padding:11px;"><div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:4px;">Keselamatan Kerja Kontraktor</div><div style="font-size:12.5px;">Tujuh pekerja kontraktor PT Redpath Indonesia meninggal dalam insiden longsor Grasberg Block Cave, September 2025.</div></div>
+   </div>
+   <div class="flag" style="margin-bottom:8px;"><div class="fhd"><div class="ft">Longsor Grasberg Block Cave — tujuh pekerja kontraktor meninggal</div><div class="flex g6"><span class="bx bh">High</span><span class="bx bn">Keselamatan Kerja</span></div></div><div class="fbd"><div class="fd">Seluruh korban merupakan karyawan PT Redpath Indonesia, kontraktor pengembangan tambang bawah tanah PTFI — menyoroti eksposur keselamatan kerja pada rantai kontraktor pihak ketiga.</div><div class="fm"><div style="font-size:11px;color:var(--m);">9 artikel · Sep–Okt 2025</div><button class="bev" onclick="lensClose();pstab('issues');openTopic('fp-longsor')">Lihat Topic →</button></div></div></div>
+   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:6px;">Union Activity</div>
+   <div style="font-size:12.5px;color:var(--m);margin-bottom:10px;">Satu catatan historis mogok kerja oleh Serikat Pekerja Seluruh Indonesia Freeport di Mil 28, Mimika (2014) ditemukan di arsip — tidak ada data aktivitas serikat pekerja formal pada periode 2015–2026.</div>
+   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:6px;">Resolution Status &amp; Trend</div>
+   <div class="rss-sig"><span class="bx bh" style="font-size:10.5px;">Unresolved</span><div style="font-size:12.5px;">Investigasi teknis resmi penyebab longsor Grasberg belum dipublikasikan secara rinci di arsip yang tersedia.</div></div>`},
+  consumer:{icon:'🛒',name:'Consumer Backlash Tracker',body:`
+   <div class="lens-empty"><div style="font-size:32px;margin-bottom:10px;">🔍</div><div style="font-size:14px;font-weight:600;color:var(--n);margin-bottom:6px;">No material verified signal identified in the available corpus.</div><div style="font-size:12.5px;color:var(--m);line-height:1.6;max-width:440px;margin:0 auto;">PT Freeport Indonesia menjual konsentrat tembaga-emas-perak ke smelter dan mitra hilir (B2B) — tidak ditemukan pola keluhan konsumen ritel, boikot, atau kontroversi produk/layanan konsumen di arsip Tempo yang tersedia untuk entitas ini.</div></div>`}
+ }
+};
+function lensOpen(id){
+  const l=(LENS_CONTENT[_currentEntity]||LENS_CONTENT.waskita)[id];if(!l)return;
+  const grid=document.getElementById('pst-lenses-grid'),det=document.getElementById('pst-lenses-detail');
+  if(grid)grid.style.display='none';
+  if(det)det.style.display='block';
+  const body=document.getElementById('lens-detail');if(!body)return;
+  body.innerHTML=`<div class="card cp m4"><div class="sh m10"><div class="ser" style="font-size:18px;font-weight:700;color:var(--n);">${l.icon} ${l.name}</div></div>${l.body}</div>`;
+  const ctEl=document.querySelector('.ct');if(ctEl)ctEl.scrollTop=0;
+}
+
+// ── Freeport sources (real URLs) ──
+const FREEPORT_SOURCES=[
+ {title:'Tambang Bawah Tanah Freeport Indonesia Longsor, Tujuh Pekerja Terjebak',pub:'Tempo.co',date:'9 Sep 2025',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Longsor di Grasberg Block Cave menjebak tujuh pekerja kontraktor PT Redpath Indonesia pada malam 8 September 2025.',url:'https://bisnis.tempo.co/read/2047398/tambang-bawah-tanah-freeport-indonesia-longsor-tujuh-pekerja-terjebak'},
+ {title:'Produksi Freeport Anjlok karena Longsor Tambang Bawah Tanah',pub:'Tempo.co',date:'15 Sep 2025',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Kementerian ESDM menyatakan kapasitas produksi GBC anjlok ke sekitar 30% pasca-longsor.',url:'https://bisnis.tempo.co/read/2049110/produksi-freeport-anjlok-karena-longsor-tambang-bawah-tanah'},
+ {title:'Sebanyak Dua Pekerja Freeport Terjebak Longsor Ditemukan Tewas',pub:'Tempo.co',date:'20 Sep 2025',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Dua dari tujuh pekerja yang terjebak ditemukan meninggal dunia.',url:'https://bisnis.tempo.co/read/2050477/sebanyak-dua-pekerja-freeport-terjebak-longsor-ditemukan-tewas'},
+ {title:'Evakuasi Korban Longsor Tambang Freeport Selesai, 7 Pekerja Meninggal',pub:'Tempo.co',date:'6 Okt 2025',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Proses evakuasi selesai setelah 27 hari; seluruh tujuh pekerja dinyatakan meninggal dunia.',url:'https://bisnis.tempo.co/read/2054849/evakuasi-korban-longsor-tambang-freeport-selesai-7-pekerja-meninggal'},
+ {title:'Tambang Freeport Indonesia Kembali Beroperasi',pub:'Tempo.co',date:'14 Nov 2025',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Blok DMLZ dan Big Gossan kembali beroperasi usai evaluasi Kementerian ESDM.',url:'https://bisnis.tempo.co/read/2065599/tambang-freeport-indonesia-kembali-beroperasi'},
+ {title:'Freeport Turunkan Target Produksi Emas dan Tembaga pada 2026',pub:'Tempo.co',date:'24 Nov 2025',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Target produksi 2026 direvisi turun dalam RKAB akibat dampak longsor terhadap kapasitas produksi.',url:'https://bisnis.tempo.co/read/2068247/freeport-turunkan-target-produksi-emas-dan-tembaga-pada-2026'},
+ {title:'Produksi Tambang Freeport Pascalongsor Capai 50 Persen',pub:'Tempo.co',date:'9 Apr 2026',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Produksi pulih ke 40–50%; target operasi penuh awal 2027.',url:'https://bisnis.tempo.co/read/2097156/produksi-tambang-freeport-pascalongsor-capai-50-persen'},
+ {title:'Penerimaan Negara dari Freeport akan Turun jadi USD 2,6 M',pub:'Tempo.co',date:'14 Jul 2026',type:'Tempo Archive',topic:'fp-longsor',verif:'Verified',excerpt:'Penerimaan negara 2026 diproyeksikan turun 39,5% akibat produksi yang belum pulih.',url:'https://bisnis.tempo.co/read/2113630/penerimaan-negara-dari-freeport-akan-turun-jadi-usd-26-m'},
+ {title:'Inalum Tebus Saham Freeport Rp 55,8 Triliun',pub:'Koran Tempo',date:'22 Des 2018',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'Inalum menebus 51,2% saham PTFI, menjadikannya mayoritas milik negara untuk pertama kalinya.',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/438432/inalum-tebus-saham-freeport-rp-558-triliun'},
+ {title:'Menteri ESDM Sebut Izin Usaha Pertambangan Freeport Diperpanjang hingga 2061',pub:'Tempo.co',date:'17 Nov 2023',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'ESDM mengonfirmasi rencana perpanjangan IUPK PTFI dari 2041 menjadi 2061.',url:'https://bisnis.tempo.co/read/1798096/menteri-esdm-sebut-izin-usaha-pertambangan-freeport-diperpanjang-hingga-2061'},
+ {title:'Kontrak Freeport Diperpanjang hingga 2061, Bahlil: Kita Kembalikan Milik Orang Indonesia',pub:'Tempo.co',date:'2 Mei 2024',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'Pemerintah mengonfirmasi tambahan 10% saham sehingga kepemilikan mencapai 61%.',url:'https://bisnis.tempo.co/read/1863237/kontrak-freeport-diperpanjang-hingga-2061-bahlil-kita-kembalikan-milik-orang-indonesia'},
+ {title:'Induk Freeport Lepas Saham 12 Persen untuk Indonesia',pub:'Tempo.co',date:'1 Okt 2025',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'Freeport-McMoRan setuju melepas 12% saham tanpa biaya, disertai syarat pembangunan fasilitas sosial di Papua.',url:'https://bisnis.tempo.co/read/2053537/induk-freeport-lepas-saham-12-persen-untuk-indonesia'},
+ {title:'Kontrak Freeport Diperpanjang',pub:'Koran Tempo',date:'20 Feb 2026',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'MoU perpanjangan IUPK diumumkan; 12% saham tambahan dialihkan tanpa biaya pada 2041.',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/496486/kontrak-freeport-diperpanjang'},
+ {title:'Freeport Ajukan Perjanjian Divestasi Saham ke Pemerintah',pub:'Tempo.co',date:'18 Jun 2026',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'PTFI menyerahkan draf perjanjian pengalihan 12% saham sebagai syarat penerbitan IUPK sebelum 2041.',url:'https://bisnis.tempo.co/read/2109082/freeport-ajukan-perjanjian-divestasi-saham-ke-pemerintah'},
+ {title:'Jokowi Resmikan Smelter Baru PT Freeport, Target Produksi Tembaga 3 Juta Ton',pub:'Tempo.co',date:'14 Des 2023',type:'Tempo Archive',topic:'fp-smelter',verif:'Verified',excerpt:'Ekspansi smelter Manyar diresmikan, menargetkan kapasitas tambahan 1,7 juta ton per tahun.',url:'https://nasional.tempo.co/read/1809473/jokowi-resmikan-smelter-baru-pt-freeport-target-produksi-tembaga-3-juta-ton'},
+ {title:'Kebakaran Smelter di Gresik, PT Freeport Minta Pemerintah Perpanjang Izin Ekspor Konsentrat',pub:'Tempo.co',date:'17 Okt 2024',type:'Tempo Archive',topic:'fp-smelter',verif:'Verified',excerpt:'Kebakaran unit Gas Cleaning Plant menunda produksi katoda tembaga hingga kuartal II 2025.',url:'https://bisnis.tempo.co/read/1929469/kebakaran-smelter-di-gresik-pt-freeport-minta-pemerintah-perpanjang-izin-ekspor-konsentrat'},
+ {title:'Bos Freeport Indonesia: Perbaikan Smelter Butuh US$ 120 Juta',pub:'Tempo.co',date:'2 Jun 2025',type:'Tempo Archive',topic:'fp-smelter',verif:'Verified',excerpt:'Biaya perbaikan smelter pascakebakaran ditanggung asuransi; produksi bertahap dimulai kembali.',url:'https://bisnis.tempo.co/read/2013419/bos-freeport-indonesia-perbaikan-smelter-butuh-us-120-juta'},
+ {title:'Kapasitas Smelter Freeport 3 Juta Ton Tembaga per Tahun',pub:'Tempo.co',date:'14 Jul 2026',type:'Tempo Archive',topic:'fp-smelter',verif:'Verified',excerpt:'Dua smelter Freeport kini berkapasitas gabungan 3 juta ton konsentrat per tahun, plus precious metal refinery.',url:'https://bisnis.tempo.co/read/2113595/kapasitas-smelter-freeport-3-juta-ton-tembaga-per-tahun'},
+ {title:'BPK: Limbah Freeport Cemari Laut',pub:'Koran Tempo',date:'8 Mei 2017',type:'Tempo Archive',topic:'fp-lingkungan',verif:'Verified',excerpt:'Audit BPK menemukan limbah tambang PTFI mencemari laut dengan estimasi kerugian Rp185 triliun.',url:'https://koran.tempo.co/read/berita-utama/416446/bpk-limbah-freeport-cemari-laut'},
+ {title:'Isu Lingkungan Tidak Gugur Oleh Divestasi',pub:'Majalah Tempo',date:'26 Jan 2019',type:'Tempo Archive',topic:'fp-lingkungan',verif:'Verified',excerpt:'Kementerian LHK menegaskan penyelesaian isu tailing berjalan terpisah dari proses divestasi saham.',url:'https://majalah.tempo.co/read/investigasi/157030/isu-lingkungan-tidak-gugur-oleh-divestasi'},
+ {title:'Freeport Indonesia Rehabilitasi 500 Hektare Mangrove di Kalsel',pub:'Tempo.co',date:'2 Jun 2025',type:'Tempo Archive',topic:'fp-lingkungan',verif:'Verified',excerpt:'PTFI berkolaborasi merehabilitasi ekosistem mangrove di Kalimantan Selatan.',url:'https://bisnis.tempo.co/read/2013375/freeport-indonesia-rehabilitasi-500-hektare-mangrove-di-kalsel'},
+ {title:'2023, PT Freeport Indonesia Catat Laba Rp 48,79 Triliun dan Setor Rp 3,35 Triliun ke Pemda Papua',pub:'Tempo.co',date:'28 Apr 2024',type:'Tempo Archive',topic:'fp-fiskal',verif:'Verified',excerpt:'PTFI mencatat laba besar pada 2023 dan menyetor signifikan ke Pemerintah Daerah Papua.',url:'https://bisnis.tempo.co/read/1863237/kontrak-freeport-diperpanjang-hingga-2061-bahlil-kita-kembalikan-milik-orang-indonesia'},
+ {title:'Setoran Freeport ke Negara Anjlok 39,5 Persen',pub:'Koran Tempo',date:'15 Jul 2026',type:'Tempo Archive',topic:'fp-fiskal',verif:'Verified',excerpt:'Setoran ke negara diproyeksikan turun dari US$4,3 miliar (2025) menjadi US$2,6 miliar (2026).',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/499504/setoran-freeport-ke-negara-anjlok-395-persen'},
+ {title:'BPK: Penyertaan BUMD di Freeport Berisiko',pub:'Koran Tempo',date:'20 Des 2018',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'BPK merekomendasikan hak partisipasi 10% saham Papua disalurkan lewat skema dividen, bukan penyertaan modal BUMD.',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/438358/bpk-penyertaan-bumd-di-freeport-berisiko'},
+ {title:'Freeport Extends Indonesia Contract to 2061 with $20bn Investment',pub:'Tempo English',date:'20 Feb 2026',type:'Tempo Archive',topic:'fp-kontrak',verif:'Verified',excerpt:'Perpanjangan kontrak 20 tahun membawa nilai investasi sekitar US$20 miliar (Rp337 triliun).',url:'https://en.tempo.co/read/2088225/freeports-indonesia-contract-extended-with-20-billion-investment'},
+ {title:'Freeport Indonesia Sends First Gold Bars to Antam Worth Rp207 Billion',pub:'Tempo English',date:'13 Feb 2025',type:'Tempo Archive',topic:'fp-smelter',verif:'Verified',excerpt:'Precious Metal Refinery PTFI mengirim 125 kg batangan emas kemurnian 99,99% ke Antam.',url:'https://en.tempo.co/read/1974896/freeport-indonesia-sends-first-gold-bars-to-antam-worth-rp207-billion'},
+ {title:'Freeport Projects Over US$7bn in Annual Contributions to Indonesia',pub:'Tempo English',date:'15 Jul 2026',type:'Tempo Archive',topic:'fp-fiskal',verif:'Verified',excerpt:'Kontribusi tahunan diproyeksikan melebihi US$7 miliar begitu tambang dan smelter beroperasi penuh.',url:'https://en.tempo.co/read/2113776/freeport-projects-over-us7bn-in-annual-contributions-to-indonesia'},
+ {title:'Penembakan di Freeport',pub:'Majalah Tempo',date:'2 Sep 2002',type:'Tempo Archive',topic:'fp-keamanan',verif:'Verified',excerpt:'Penembakan konvoi di Timika-Tembagapura menewaskan tiga orang dan melukai 14 lainnya.',url:'https://majalah.tempo.co/read/peristiwa/80333/penembakan-di-freeport'},
+ {title:'Panglima TNI Evaluasi Pengamanan PT Freeport Indonesia',pub:'Tempo.co',date:'1 Feb 2022',type:'Tempo Archive',topic:'fp-keamanan',verif:'Verified',excerpt:'Panglima TNI mengevaluasi pos pengamanan setelah mengakui kontak senjata berulang di kawasan Freeport.',url:'https://nasional.tempo.co/read/1556075/panglima-tni-evaluasi-pengamanan-pt-freeport-indonesia'},
+ {title:'Satu Pekerja Freeport Tewas Ditembak di Tambang Grasberg',pub:'Tempo.co',date:'11 Mar 2026',type:'Tempo Archive',topic:'fp-keamanan',verif:'Verified',excerpt:'Karyawan Departemen Eksplorasi PTFI tewas ditembak orang tak dikenal di area tambang terbuka Grasberg.',url:'https://bisnis.tempo.co/read/2091964/satu-pekerja-freeport-tewas-ditembak-di-tambang-grasberg'},
+ {title:'Kronologi Penembakan di Tambang Grasberg Freeport',pub:'Tempo.co',date:'11 Mar 2026',type:'Tempo Archive',topic:'fp-keamanan',verif:'Verified',excerpt:'Polda Papua Tengah merinci kronologi penembakan yang menewaskan satu karyawan dan melukai satu saksi.',url:'https://metro.tempo.co/read/2092012/kronologi-penembakan-di-tambang-grasberg-freeport'}
+];
+
+// ── Freeport per-actor article citations (real URLs, feeds Company Structure entity drawer) ──
+const FREEPORT_KG_ARTICLES={
+ 'fp-ptfi':[
+  {id:'FP001',title:'Tambang Bawah Tanah Freeport Indonesia Longsor, Tujuh Pekerja Terjebak',src:'Tempo.co',date:'9 Sep 2025',type:'Berita',sent:'Negative',mentions:5,summary:'Longsor di Grasberg Block Cave menjebak tujuh pekerja kontraktor; operasi tambang dihentikan sementara demi keselamatan.',url:'https://bisnis.tempo.co/read/2047398/tambang-bawah-tanah-freeport-indonesia-longsor-tujuh-pekerja-terjebak'},
+  {id:'FP002',title:'Kapasitas Smelter Freeport 3 Juta Ton Tembaga per Tahun',src:'Tempo.co',date:'14 Jul 2026',type:'Berita',sent:'Mixed',mentions:4,summary:'PTFI kini mengoperasikan dua smelter berkapasitas gabungan 3 juta ton per tahun plus precious metal refinery.',url:'https://bisnis.tempo.co/read/2113595/kapasitas-smelter-freeport-3-juta-ton-tembaga-per-tahun'}
+ ],
+ 'fp-fcx':[
+  {id:'FP101',title:'Induk Freeport Lepas Saham 12 Persen untuk Indonesia',src:'Tempo.co',date:'1 Okt 2025',type:'Berita',sent:'Positive',mentions:6,summary:'Freeport-McMoRan setuju melepas 12% saham PTFI tanpa biaya kepada pemerintah Indonesia.',url:'https://bisnis.tempo.co/read/2053537/induk-freeport-lepas-saham-12-persen-untuk-indonesia'}
+ ],
+ 'fp-mindid':[
+  {id:'FP201',title:'Inalum Tebus Saham Freeport Rp 55,8 Triliun',src:'Koran Tempo',date:'22 Des 2018',type:'Berita',sent:'Positive',mentions:8,summary:'Inalum/MIND ID menebus 51,2% saham PTFI, menjadikan Indonesia pemegang saham mayoritas.',url:'https://koran.tempo.co/read/ekonomi-dan-bisnis/438432/inalum-tebus-saham-freeport-rp-558-triliun'}
+ ],
+ 'fp-esdm':[
+  {id:'FP301',title:'Menteri ESDM Sebut Izin Usaha Pertambangan Freeport Diperpanjang hingga 2061',src:'Tempo.co',date:'17 Nov 2023',type:'Berita',sent:'Positive',mentions:5,summary:'ESDM mengonfirmasi rencana perpanjangan IUPK PTFI dari 2041 menjadi 2061.',url:'https://bisnis.tempo.co/read/1798096/menteri-esdm-sebut-izin-usaha-pertambangan-freeport-diperpanjang-hingga-2061'},
+  {id:'FP302',title:'Tambang Freeport Indonesia Kembali Beroperasi',src:'Tempo.co',date:'14 Nov 2025',type:'Berita',sent:'Mixed',mentions:4,summary:'ESDM menerbitkan izin operasi untuk blok DMLZ dan Big Gossan pascalongsor Grasberg.',url:'https://bisnis.tempo.co/read/2065599/tambang-freeport-indonesia-kembali-beroperasi'}
+ ],
+ 'fp-redpath':[
+  {id:'FP401',title:'Evakuasi Korban Longsor Tambang Freeport Selesai, 7 Pekerja Meninggal',src:'Tempo.co',date:'6 Okt 2025',type:'Berita',sent:'Negative',mentions:5,summary:'Seluruh tujuh pekerja kontraktor PT Redpath Indonesia yang terjebak longsor dinyatakan meninggal dunia.',url:'https://bisnis.tempo.co/read/2054849/evakuasi-korban-longsor-tambang-freeport-selesai-7-pekerja-meninggal'}
+ ],
+ 'fp-bpk':[
+  {id:'FP501',title:'BPK: Limbah Freeport Cemari Laut',src:'Koran Tempo',date:'8 Mei 2017',type:'Investigasi',sent:'Negative',mentions:6,summary:'Audit BPK menemukan limbah tambang PTFI mencemari laut, estimasi kerugian Rp185 triliun.',url:'https://koran.tempo.co/read/berita-utama/416446/bpk-limbah-freeport-cemari-laut'}
+ ],
+ 'fp-smelting':[
+  {id:'FP601',title:'Jokowi Resmikan Smelter Baru PT Freeport, Target Produksi Tembaga 3 Juta Ton',src:'Tempo.co',date:'14 Des 2023',type:'Berita',sent:'Positive',mentions:4,summary:'Ekspansi smelter Manyar diresmikan; PT Smelting tetap beroperasi sebagai fasilitas pertama sejak 1996.',url:'https://nasional.tempo.co/read/1809473/jokowi-resmikan-smelter-baru-pt-freeport-target-produksi-tembaga-3-juta-ton'}
+ ],
+ 'fp-antam':[
+  {id:'FP701',title:'Pasokan Emas ke Antam Terdampak Akibat Longsor di Freeport',src:'Tempo.co',date:'14 Okt 2025',type:'Berita',sent:'Negative',mentions:3,summary:'Longsor Grasberg membuat pasokan emas dari PTFI ke Antam sempat seret.',url:'https://bisnis.tempo.co/read/2054587/tiga-orang-jadi-korban-tewas-longsor-tambang-bawah-tanah-freeport'}
+ ],
+ 'fp-polda':[
+  {id:'FP801',title:'Kronologi Penembakan di Tambang Grasberg Freeport',src:'Tempo.co',date:'11 Mar 2026',type:'Berita',sent:'Negative',mentions:6,summary:'Kepala Polda Papua Tengah merinci kronologi penembakan yang menewaskan satu karyawan PTFI dan melukai satu saksi kunci.',url:'https://metro.tempo.co/read/2092012/kronologi-penembakan-di-tambang-grasberg-freeport'},
+  {id:'FP802',title:'Satu Pekerja Freeport Tewas Ditembak di Tambang Grasberg',src:'Tempo.co',date:'11 Mar 2026',type:'Berita',sent:'Negative',mentions:4,summary:'Perusahaan berkoordinasi dengan aparat keamanan pemerintah pascainsiden penembakan yang menewaskan karyawan Departemen Eksplorasi.',url:'https://bisnis.tempo.co/read/2091964/satu-pekerja-freeport-tewas-ditembak-di-tambang-grasberg'}
+ ]
+};
+// Merge into shared KG_ARTICLES lookup (keys are globally unique — 'fp-' prefix avoids collision with Waskita ids)
+Object.assign(KG_ARTICLES, FREEPORT_KG_ARTICLES);
+
+// ════════════════════════════════════════════════════════════
+// loadEntityProfile — master entity switch for Investigative Profile
+// ════════════════════════════════════════════════════════════
+let _waskitaOverviewCache=null,_waskitaStructCache=null,_waskitaCorpActionCache=null,_waskitaHeaderLeftCache=null,_waskitaHeaderAttnCache=null;
+function loadEntityProfile(id){
+  _currentEntity=(id==='freeport')?'freeport':'waskita';
+  // Cache Waskita's original DOM content on first switch away from it
+  if(_waskitaOverviewCache===null){
+    const ov=document.getElementById('pst-overview-inner');if(ov)_waskitaOverviewCache=ov.innerHTML;
+    const st=document.getElementById('struct-inner');if(st)_waskitaStructCache=st.innerHTML;
+    const ca=document.getElementById('corp-action-inner');if(ca)_waskitaCorpActionCache=ca.innerHTML;
+    const hl=document.getElementById('prof-left');if(hl)_waskitaHeaderLeftCache=hl.innerHTML;
+    const ha=document.getElementById('prof-attn');if(ha)_waskitaHeaderAttnCache=ha.innerHTML;
+  }
+  const ovEl=document.getElementById('pst-overview-inner');
+  const stEl=document.getElementById('struct-inner');
+  const caEl=document.getElementById('corp-action-inner');
+  const hlEl=document.getElementById('prof-left');
+  const haEl=document.getElementById('prof-attn');
+  const caCountEl=document.getElementById('corp-action-count');
+
+  if(_currentEntity==='freeport'){
+    if(ovEl)ovEl.innerHTML=FREEPORT_OVERVIEW_HTML;
+    if(stEl)stEl.innerHTML=FREEPORT_STRUCT_HTML;
+    if(caEl)caEl.innerHTML=FREEPORT_CORPACTION_HTML;
+    if(caCountEl)caCountEl.textContent='6 aksi korporasi';
+    if(hlEl)hlEl.innerHTML=`
+     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+      <div class="prof-nm" style="margin-bottom:0;">PT Freeport Indonesia</div>
+      <span class="bx" style="background:rgba(255,255,255,.15);color:#fff;">Company</span>
+     </div>
+     <div class="prof-mt" style="margin-bottom:8px;">Legal entity: <strong style="color:rgba(255,255,255,.7);">PT Freeport Indonesia (PTFI)</strong> · Tidak tercatat di BEI · Pertambangan Mineral · Indonesia</div>
+     <div class="flex g6 wrap">
+      <span class="bx" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);">📅 Diperbarui 19 Jul 2026</span>
+      <span class="bx" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);">🗂️ Cakupan data 1973–2026</span>
+      <span class="bx" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);">📰 31 sumber Tempo</span>
+     </div>`;
+    if(haEl)haEl.innerHTML=`
+     <div class="attn-pill attn-high">🟠 Moderate Attention Required <span class="attn-info">ⓘ</span>
+      <div class="attn-tip">Attention level dihitung dari <strong>materialitas</strong>, <strong>recency</strong>, <strong>kredibilitas sumber</strong>, dan <strong>status penyelesaian</strong> sinyal yang terdeteksi. "Moderate" berarti ada isu material yang sebagian sudah menunjukkan progres penyelesaian (kontrak, divestasi), namun sebagian lain masih berlangsung (pemulihan pascalongsor, isu lingkungan historis).</div>
+     </div>`;
+  } else {
+    if(ovEl&&_waskitaOverviewCache!==null)ovEl.innerHTML=_waskitaOverviewCache;
+    if(stEl&&_waskitaStructCache!==null)stEl.innerHTML=_waskitaStructCache;
+    if(caEl&&_waskitaCorpActionCache!==null)caEl.innerHTML=_waskitaCorpActionCache;
+    if(caCountEl)caCountEl.textContent='6 aksi korporasi';
+    if(hlEl&&_waskitaHeaderLeftCache!==null)hlEl.innerHTML=_waskitaHeaderLeftCache;
+    if(haEl&&_waskitaHeaderAttnCache!==null)haEl.innerHTML=_waskitaHeaderAttnCache;
+  }
+
+  // Reset KG force-graph state so it rebuilds with the new entity's dataset
+  _kgInited=false;
+  const kgSvg=document.getElementById('kg-force-svg');
+  if(kgSvg&&typeof d3!=='undefined')d3.select('#kg-force-svg').selectAll('*').remove();
+  kgClearSelection();
+
+  // Reset Issues & Track Record list + Overview topic cards + Sources for new entity
+  renderOverviewTopicCards();
+  renderTopicList();
+  closeTopicDetail();
+  const srcTbody=document.getElementById('sources-table-body');
+  if(srcTbody)srcTbody.innerHTML='';
+  renderSources();
+  updateSourceTopicFilterOptions();
+
+  P('ps');showSV('ps','result');
+  pstab('overview');
+  const ctEl=document.querySelector('.ct');if(ctEl)ctEl.scrollTop=0;
+}
+function updateSourceTopicFilterOptions(){
+  const sel=document.getElementById('src-topic');if(!sel)return;
+  const order=getTopicOrder();
+  sel.innerHTML='<option value="">Semua Topik</option>'+order.map(k=>`<option value="${k}">${topicLabel2[k]||k}</option>`).join('');
+}
+
 // ── Sources library ──
-const sourcesData=[
+const WASKITA_SOURCES=[
  {title:'Waskita Karya Hadapi Restrukturisasi Utang Jumbo',pub:'Tempo.co',date:'12 Apr 2025',type:'Tempo Archive',topic:'debt',verif:'Verified',excerpt:'Proses restrukturisasi utang Waskita senilai Rp84 triliun memasuki tahap kritis pada kuartal pertama 2025.',ev:'financial'},
  {title:'Beban Utang BUMN Karya Jadi Sorotan Investor',pub:'Majalah Tempo',date:'14 Sep 2022',type:'Tempo Archive',topic:'debt',verif:'Verified',excerpt:'Debt-to-equity ratio Waskita Karya dinilai berada pada level mengkhawatirkan oleh analis pasar modal.',ev:'financial'},
  {title:'Lima Bank Finalisasi Skema Sindikasi Kredit Waskita',pub:'Koran Tempo',date:'Jan 2025',type:'News Article',topic:'debt',verif:'Partially Verified',excerpt:'Lima bank menyelesaikan skema sindikasi kredit sebagai bagian dari restrukturisasi.',ev:null},
@@ -5032,16 +5987,17 @@ const sourcesData=[
 ];
 function verifBadgeClass(v){const m={'Verified':'verified','Partially Verified':'partial','Conflicting Sources':'conflict','Needs Further Validation':'needsval','Insufficient Evidence':'insuff'};return m[v]||'needsval';}
 function verifBadgeIcon(v){const m={'Verified':'✓','Partially Verified':'◐','Conflicting Sources':'⚠','Needs Further Validation':'⚑','Insufficient Evidence':'—'};return m[v]||'⚑';}
+function getCurrentSources(){return _currentEntity==='freeport'?FREEPORT_SOURCES:WASKITA_SOURCES;}
 function renderSources(){
   const tbody=document.getElementById('sources-table-body');if(!tbody)return;
   if(tbody.children.length)return; // already rendered
-  tbody.innerHTML=sourcesData.map((s,i)=>`<tr data-idx="${i}">
+  tbody.innerHTML=getCurrentSources().map((s,i)=>`<tr data-idx="${i}">
     <td style="max-width:230px;"><div style="font-weight:600;color:var(--n);font-size:12.5px;">${s.title}</div><div style="font-size:11px;color:var(--m);margin-top:2px;">${s.excerpt}</div></td>
     <td>${s.pub}</td><td>${s.date}</td>
     <td><span class="bx bn" style="font-size:10.5px;">${s.type}</span></td>
     <td><span class="bx blm" style="font-size:10.5px;cursor:pointer;" onclick="pstab('issues');openTopic('${s.topic}')">🧩 ${topicLabel2[s.topic]||s.topic}</span></td>
     <td><span class="vbadge ${verifBadgeClass(s.verif)}">${verifBadgeIcon(s.verif)} ${s.verif}</span></td>
-    <td>${s.ev?`<button class="bev" onclick="openEv('${s.ev}')">Buka →</button>`:`<span style="font-size:11px;color:var(--s);">Arsip internal</span>`}</td>
+    <td>${s.url?`<button class="bev" onclick="window.open('${s.url}','_blank')">Buka Artikel →</button>`:(s.ev?`<button class="bev" onclick="openEv('${s.ev}')">Buka →</button>`:`<span style="font-size:11px;color:var(--s);">Arsip internal</span>`)}</td>
   </tr>`).join('');
   filterSources();
 }
@@ -5050,8 +6006,9 @@ function filterSources(){
   const q=(qEl.value||'').toLowerCase(),type=document.getElementById('src-type').value,topic=document.getElementById('src-topic').value,verif=document.getElementById('src-verif').value;
   const rows=[...document.querySelectorAll('#sources-table-body tr')];
   let any=false;
+  const src=getCurrentSources();
   rows.forEach(r=>{
-    const s=sourcesData[+r.dataset.idx];
+    const s=src[+r.dataset.idx];
     const matchQ=!q||s.title.toLowerCase().includes(q)||s.pub.toLowerCase().includes(q);
     const matchType=!type||s.type===type;
     const matchTopic=!topic||s.topic===topic;
@@ -5154,7 +6111,7 @@ const aiResp={
   main:'PT Waskita Karya Tbk adalah <strong>BUMN konstruksi Indonesia</strong> yang berdiri sejak 1961, terdaftar di BEI (IDX: WSKT). Perusahaan ini mengerjakan infrastruktur berskala nasional — jalan tol, jembatan, gedung, dan kawasan — dengan Kementerian BUMN sebagai pemegang saham mayoritas (60.5%).',
   fi:['Berdiri 1961 · Listed di BEI sebagai WSKT · ~40.000 karyawan · Berbasis di Jakarta.','Anak usaha utama: Waskita Beton Precast (WSBP, listed) dan Waskita Karya Realty.','Dikenal sebagai salah satu kontraktor terbesar yang mengerjakan proyek Tol Trans-Jawa dan proyek IKN Nusantara.','Per 2024–2025, sedang dalam proses restrukturisasi utang dan pergantian manajemen. Termasuk anggota BUMN Karya Group bersama WIKA, PTPP, dan Adhi Karya.'],
   srcs:['SRC-001 · Tempo.co · Apr 2025 · Profil perusahaan','SRC-005 · Majalah Tempo · 2024 · Governance & Ownership','SRC-010 · Koran Tempo · 2023 · BUMN Karya comparison'],
-  conf:'Tinggi — Data perusahaan bersumber dari 42 artikel Tempo 2018–2025. Untuk pemahaman relasi entitas dan jejak media lengkap, gunakan Profile Risk Assessment.',
+  conf:'Tinggi — Data perusahaan bersumber dari 42 artikel Tempo 2018–2025. Untuk pemahaman relasi entitas dan jejak media lengkap, gunakan Investigative Profile.',
   fu:['Apa anak perusahaan Waskita Karya?','Siapa saja yang pernah menjadi direksi Waskita?','Proyek besar apa yang dikerjakan Waskita?'],
   next:[{icon:'👤',label:'Lihat Profil Lengkap',action:"P('ps');showSV('ps','result')"},{icon:'📡',label:'Start Monitoring',action:"startMonitoring('PT Waskita Karya')"},{icon:'📋',label:'Generate Brief',action:"saveRep('PT Waskita Karya · Ask Tempo')"}]
 },
@@ -5197,7 +6154,7 @@ const defResp={
   srcs:[],
   conf:'N/A — Dataset terbatas di prototype ini.',
   fu:['Siapa PT Waskita Karya?','Apa risiko utama Waskita untuk partnership?','Regulasi OJK fintech terbaru?'],
-  next:[{icon:'👤',label:'Coba Profile Risk Assessment',action:"P('ps');showSV('ps','search')"},{icon:'📡',label:'Coba Signal Monitor',action:"P('mon')"}]
+  next:[{icon:'👤',label:'Coba Investigative Profile',action:"P('ps');showSV('ps','search')"},{icon:'📡',label:'Coba Signal Monitor',action:"P('mon')"}]
 };
 // Pre-loaded conversation histories
 const chatHistories={
