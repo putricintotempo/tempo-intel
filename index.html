@@ -843,6 +843,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
   #dd-kg-container{height:230px!important;}
   #ent-table{font-size:12px!important;}
 
+  /* Investigative Profile — Key Facts rows: stack label above value instead of cramped side-by-side */
+  .fi-row{flex-direction:column!important;gap:3px!important;padding:8px 0!important;}
+  .fi-k{width:100%!important;}
+  .fi-meta{flex-wrap:wrap!important;gap:6px!important;}
+
+  /* Attention pill tooltip — :hover doesn't work reliably on touch, so make it tap-toggleable and keep it on-screen */
+  .attn-tip{width:min(78vw,260px)!important;right:auto!important;left:50%!important;transform:translateX(-50%)!important;top:calc(100% + 10px)!important;}
+  .attn-pill.tap-open .attn-tip{display:block!important;}
+  .prof-hd{position:relative;}
+
+  /* Company Structure — relationship map graph: shorter on mobile, hide desktop-only mouse hint */
+  #kg-force-container{height:280px!important;}
+  #kg-force-container>div[style*="Scroll = zoom"]{display:none!important;}
+  #td-kg-container{height:200px!important;}
+  .struct-toggle{font-size:11px!important;}
+
+  /* Watchlist — expandable rows */
+  .rd-card{margin-bottom:8px!important;}
+
   /* Generated reports */
   #rep-exec-brief>*,#rep-full-report>*,#rep-risk-summary>*,#rep-home>*{max-width:100%!important;}
   .rep-preview-hd{margin:-13px -13px 14px!important;padding:15px!important;}
@@ -1305,7 +1324,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
    <div class="chips" style="justify-content:center;">
     <div class="chip" onclick="fillPS('PT Waskita Karya')">PT Waskita Karya</div>
     <div class="chip" onclick="fillPS('PT Freeport Indonesia')">PT Freeport Indonesia</div>
-    <div class="chip" onclick="fillPS('Aguan')">Aguan</div>
+    <div class="chip" onclick="fillPS('Tony Wenas')">Tony Wenas</div>
     <div class="chip" onclick="fillPS('IKN Nusantara')">IKN Nusantara</div>
    </div>
   </div>
@@ -1313,7 +1332,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
    <div class="ser m10" style="font-size:14px;font-weight:600;color:var(--n);">Recent Profiles</div>
    <div class="scr-item m8" onclick="loadEntityProfile('waskita')"><div class="si-sc" style="background:var(--r);">⚠</div><div><div class="si-nm">PT Waskita Karya</div><div class="si-mt"><span class="bx bh">Critical Review Required</span><span>Company</span></div></div><div style="font-size:11.5px;color:var(--m);">May 3, 2025</div></div>
    <div class="scr-item m8" onclick="loadEntityProfile('freeport')"><div class="si-sc" style="background:var(--am);">◐</div><div><div class="si-nm">PT Freeport Indonesia</div><div class="si-mt"><span class="bx bm">Moderate Attention</span><span>Company</span></div></div><div style="font-size:11.5px;color:var(--m);">Jul 19, 2026</div></div>
-   <div class="scr-item"><div class="si-sc" style="background:var(--am);">◐</div><div><div class="si-nm">Aguan (Sugianto Kusuma)</div><div class="si-mt"><span class="bx bm">Moderate Attention</span><span>Person</span></div></div><div style="font-size:11.5px;color:var(--m);">Apr 20, 2025</div></div>
+   <div class="scr-item" onclick="loadEntityProfile('tonywenas')"><div class="si-sc" style="background:var(--bl);">🔵</div><div><div class="si-nm">Tony Wenas</div><div class="si-mt"><span class="bx blm">Standard Monitoring</span><span>Person</span></div></div><div style="font-size:11.5px;color:var(--m);">Jul 22, 2026</div></div>
   </div>
  </div>
 
@@ -1326,8 +1345,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
  <!-- ═══════════ RESULT ═══════════ -->
  <div class="sv" id="ps-result">
 
-  <!-- ═══ ENTITY HEADER ═══ -->
-  <div style="border-radius:12px;border:1px solid var(--b);margin-bottom:16px;">
+  <!-- ═══ ENTITY HEADER (standalone card, non-sticky) ═══ -->
+  <div style="border-radius:12px;border:1px solid var(--b);margin-bottom:16px;overflow:hidden;">
    <div class="prof-hd" style="flex-wrap:wrap;gap:16px;">
     <div style="flex:1;min-width:260px;" id="prof-left">
      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
@@ -1343,7 +1362,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0;">
      <div id="prof-attn">
-     <div class="attn-pill attn-critical">🔴 Critical Review Required <span class="attn-info">ⓘ</span>
+     <div class="attn-pill attn-critical" onclick="this.classList.toggle('tap-open')">🔴 Critical Review Required <span class="attn-info">ⓘ</span>
       <div class="attn-tip">Attention level dihitung dari <strong>materialitas</strong>, <strong>recency</strong>, <strong>kredibilitas sumber</strong>, dan <strong>status penyelesaian</strong> sinyal yang terdeteksi — bukan skor risiko tunggal. "Critical" berarti ada isu material yang masih belum terselesaikan dan memerlukan tinjauan lebih lanjut sebelum keputusan bisnis diambil.</div>
      </div>
      </div>
@@ -1354,17 +1373,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
      </div>
     </div>
    </div>
+  </div>
 
-   <!-- ═══ 5 MAIN TABS ═══ -->
-   <div style="background:#fff;border-top:none;border-radius:0 0 12px 12px;">
-    <div class="tabs-bar" id="ps-tabs">
+  <!-- ═══ 5 MAIN TABS (sticky, direct sibling — not nested in a separate wrapper) ═══ -->
+  <div class="tabs-bar" id="ps-tabs">
      <div class="tab on" onclick="pstab('overview')">Overview</div>
      <div class="tab" onclick="pstab('issues')">Issues &amp; Track Record</div>
-     <div class="tab" onclick="pstab('structure')">Company Structure</div>
+     <div class="tab" onclick="pstab('structure')"><span id="tab-structure-label">Company Structure</span></div>
      <div class="tab" onclick="pstab('lenses')">Specialized Lenses</div>
      <div class="tab" onclick="pstab('sources')">Sources</div>
-    </div>
+  </div>
 
+  <div style="background:#fff;border-radius:0 0 12px 12px;overflow:hidden;margin-bottom:16px;">
     <!-- ═════════════════════ TAB 1 — OVERVIEW ═════════════════════ -->
     <div class="tc on cp" id="pst-overview">
      <div id="pst-overview-inner">
@@ -1579,6 +1599,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
 
     <!-- ═════════════════════ TAB 3 — COMPANY STRUCTURE ═════════════════════ -->
     <div class="tc cp" id="pst-structure">
+     <div id="pst-structure-inner">
 
      <!-- A. Ownership & Leadership Map -->
      <div class="card cp m14">
@@ -1752,6 +1773,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
       </div>
      </div>
 
+     </div>
     </div><!-- end pst-structure -->
 
     <!-- ═════════════════════ TAB 4 — SPECIALIZED LENSES ═════════════════════ -->
@@ -1797,8 +1819,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
      <div id="sources-empty" class="lens-empty" style="display:none;margin-top:10px;"><div style="font-size:28px;margin-bottom:8px;">📭</div><div style="font-size:13px;color:var(--m);">Tidak ada sumber yang cocok dengan filter ini.</div></div>
     </div><!-- end pst-sources -->
 
-   </div><!-- end tabs body -->
-  </div><!-- end profile card wrapper -->
+  </div><!-- end tab content wrapper -->
  </div><!-- end ps-result -->
 </div><!-- end page-ps -->
 <!-- SIGNAL MONITOR -->
@@ -1969,9 +1990,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
    <div class="wiz-step on" id="wst1"><div class="wiz-step-c">1</div><div class="wiz-step-l">Deskripsi</div></div><div class="wiz-arr2"></div>
    <div class="wiz-step" id="wst2"><div class="wiz-step-c">2</div><div class="wiz-step-l">Definisi</div></div><div class="wiz-arr2"></div>
    <div class="wiz-step" id="wst3"><div class="wiz-step-c">3</div><div class="wiz-step-l">Kata Kunci</div></div><div class="wiz-arr2"></div>
-   <div class="wiz-step" id="wst4"><div class="wiz-step-c">4</div><div class="wiz-step-l">Entitas</div></div><div class="wiz-arr2"></div>
-   <div class="wiz-step" id="wst5"><div class="wiz-step-c">5</div><div class="wiz-step-l">Pengecualian</div></div><div class="wiz-arr2"></div>
-   <div class="wiz-step" id="wst6"><div class="wiz-step-c">6</div><div class="wiz-step-l">Review</div></div>
+   <div class="wiz-step" id="wst4"><div class="wiz-step-c">4</div><div class="wiz-step-l">Pengecualian</div></div><div class="wiz-arr2"></div>
+   <div class="wiz-step" id="wst5"><div class="wiz-step-c">5</div><div class="wiz-step-l">Review</div></div>
   </div>
 
   <!-- STEP 1 — Describe the issue -->
@@ -1997,20 +2017,6 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
    <div class="fg m12"><label class="lbl">Nama signal</label><input class="fi fw" id="wiz-name" value="Astra EV Policy and Market Monitor" style="font-weight:700;"></div>
    <div class="fg m12"><label class="lbl">Tujuan monitoring</label><textarea class="fi fw" id="wiz-obj-text" rows="2" style="resize:vertical;">Mendeteksi perkembangan kebijakan, pasar, kompetitor, infrastruktur, dan lingkungan yang mungkin mengharuskan Astra mempercepat atau menyeimbangkan ulang strategi elektrifikasi otomotifnya.</textarea></div>
    <div class="fg m14"><label class="lbl">Pertanyaan inti</label><textarea class="fi fw" id="wiz-core-q" rows="2" style="resize:vertical;">Apakah pasar kendaraan penumpang Indonesia bergeser ke BEV dan PHEV lebih cepat dari portofolio dan strategi investasi Astra saat ini?</textarea></div>
-   <div class="fg m14"><label class="lbl">Area keputusan <span style="font-weight:400;color:var(--s);">(chip bisa diubah)</span></label>
-    <div class="kw-chips" id="wiz-decision-areas">
-     <span class="kw-chip">Portofolio produk<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Manufaktur lokal<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Komponen otomotif<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Ekosistem pengisian daya<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Pembiayaan kendaraan<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Elektrifikasi armada<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Nilai jual kendaraan bekas<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Hubungan pemerintah<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-chip">Positioning lingkungan<span class="kw-chip-x" onclick="this.parentElement.remove()">✕</span></span>
-     <span class="kw-add-btn" onclick="addChip('wiz-decision-areas')">+ Tambah area</span>
-    </div>
-   </div>
    <div class="g2">
     <div class="fg"><label class="lbl">Geografi</label><input class="fi fw" value="Indonesia"></div>
     <div class="fg"><label class="lbl">Periode historis</label><input class="fi fw" value="2019–Sekarang"></div>
@@ -2032,34 +2038,26 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
    <div class="snav"><button class="btn bgh" onclick="wizGoStep(2)">← Kembali</button><button class="btn bp" onclick="wizGoStep(4)">Lanjut →</button></div>
   </div>
 
-  <!-- STEP 4 — Entity and alias recommendations -->
+  <!-- STEP 4 — Exclusion recommendations -->
   <div class="card cp" id="wiz-s4" style="display:none;">
-   <div class="sh m10"><div><div class="ttl" style="font-size:16px;">Entitas &amp; Alias</div><div style="font-size:12.5px;color:var(--m);">Aktor yang dipantau, dikelompokkan berdasarkan peran. Klik baris untuk melihat resolusi alias.</div></div></div>
-   <div id="entity-groups"><!-- populated by JS: renderEntityGroups() --></div>
-   <button class="btn bo bsm m10" onclick="toast('Tambah entitas — demo prototype')">+ Tambah entitas</button>
-   <div class="snav"><button class="btn bgh" onclick="wizGoStep(3)">← Kembali</button><button class="btn bp" onclick="wizGoStep(5)">Lanjut →</button></div>
-  </div>
-
-  <!-- STEP 5 — Exclusion recommendations -->
-  <div class="card cp" id="wiz-s5" style="display:none;">
    <div class="sh m10"><div><div class="ttl" style="font-size:16px;">Pengecualian</div><div style="font-size:12.5px;color:var(--m);">Konten yang sengaja dikeluarkan dari cakupan untuk mengurangi noise.</div></div></div>
    <div id="excl-list"><!-- populated by JS: renderExclusions() --></div>
    <div style="margin-top:9px;"><input class="fi" id="excl-new-input" placeholder="Tambahkan istilah pengecualian..." style="width:260px;display:inline-block;"> <button class="btn bo bsm" onclick="addExclusion()">+ Tambah</button></div>
-   <div class="snav"><button class="btn bgh" onclick="wizGoStep(4)">← Kembali</button><button class="btn bp" onclick="wizGoStep(6)">Lanjut →</button></div>
+   <div class="snav"><button class="btn bgh" onclick="wizGoStep(3)">← Kembali</button><button class="btn bp" onclick="wizGoStep(5)">Lanjut →</button></div>
   </div>
 
-  <!-- STEP 6 — Review monitoring scope -->
-  <div class="card cp" id="wiz-s6" style="display:none;">
+  <!-- STEP 5 — Review monitoring scope -->
+  <div class="card cp" id="wiz-s5" style="display:none;">
    <div class="ttl m4" style="font-size:16px;">Review Cakupan Monitoring</div>
    <div style="background:var(--bg);border-radius:8px;padding:14px;margin-bottom:14px;">
     <div style="display:flex;flex-direction:column;gap:9px;">
      <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Nama signal</div><div style="font-weight:700;color:var(--n);" id="rev-name">Astra EV Policy and Market Monitor</div></div>
      <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Tujuan</div><div style="color:var(--n);">Menilai apakah Astra perlu mempercepat atau menyeimbangkan ulang strategi elektrifikasi kendaraan penumpangnya.</div></div>
      <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Kelompok kata kunci</div><div style="color:var(--n);" id="rev-clusters">6 kelompok dan 83 istilah aktif</div></div>
-     <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Entitas</div><div style="color:var(--n);" id="rev-entities">31 entitas dipantau dan 74 alias</div></div>
      <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Geografi</div><div style="color:var(--n);">Indonesia</div></div>
      <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Konteks historis</div><div style="color:var(--n);">2019–Sekarang</div></div>
      <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Penemuan sumber</div><div style="color:var(--n);">Otomatis di seluruh sumber relevan yang tersedia</div></div>
+     <div style="display:flex;gap:9px;font-size:13px;"><div style="width:150px;color:var(--m);flex-shrink:0;">Entitas &amp; aktor</div><div style="color:var(--n);">Terdeteksi otomatis dari kelompok kata kunci — tidak perlu dikonfigurasi manual</div></div>
     </div>
    </div>
    <div style="background:var(--bll);border-radius:7px;padding:11px 13px;font-size:12.5px;color:var(--bl);margin-bottom:14px;line-height:1.6;">ℹ️ Tempo Intelligence akan secara otomatis mencari, mengurutkan, menghapus duplikasi, dan menganalisis sumber relevan berdasarkan cakupan monitoring Anda. Cakupan sumber dan sitasi akan ditampilkan bersama insight yang dihasilkan.</div>
@@ -2069,7 +2067,7 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
     <div style="background:var(--bg);border-radius:7px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--m);font-weight:700;text-transform:uppercase;margin-bottom:3px;">Tingkat Noise</div><div style="font-size:13px;font-weight:700;color:var(--am);">Sedang</div></div>
     <div style="background:var(--bg);border-radius:7px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--m);font-weight:700;text-transform:uppercase;margin-bottom:3px;">Est. Waktu Proses</div><div style="font-size:13px;font-weight:700;color:var(--n);">1–3 mnt</div></div>
    </div>
-   <div class="snav"><button class="btn bgh" onclick="wizGoStep(5)">← Kembali Ubah</button><div class="flex g8"><button class="btn bo" onclick="toast('Disimpan sebagai draft')">Simpan sebagai Draft</button><button class="btn bp" onclick="runSignalAnalysis()" style="padding:10px 22px;">▶ Jalankan Analisis Awal</button></div></div>
+   <div class="snav"><button class="btn bgh" onclick="wizGoStep(4)">← Kembali Ubah</button><div class="flex g8"><button class="btn bo" onclick="toast('Disimpan sebagai draft')">Simpan sebagai Draft</button><button class="btn bp" onclick="runSignalAnalysis()" style="padding:10px 22px;">▶ Jalankan Analisis Awal</button></div></div>
   </div>
  </div>
 
@@ -2996,10 +2994,14 @@ function selDA(el,bid){document.getElementById(bid).querySelectorAll('.daopt').f
 function chkPS(v){const el=document.getElementById('ps-da');if(el)el.style.display=v.toLowerCase().includes('waskita')?'block':'none';}
 function runPS(){
   const v=document.getElementById('ps-in').value.trim()||'PT Waskita Karya';
-  const isFreeport=v.toLowerCase().includes('freeport');
+  const vl=v.toLowerCase();
+  const isFreeport=vl.includes('freeport');
+  const isTonyWenas=vl.includes('tony wenas')||vl.includes('tomy wenas')||vl.includes('tonywenas');
+  let targetId='waskita';
+  if(isTonyWenas)targetId='tonywenas';else if(isFreeport)targetId='freeport';
   document.getElementById('ps-lt').textContent='Menyusun profil untuk '+v;
   showSV('ps','loading');
-  animLD('pls',5,[0,700,1400,2100,2800],[20,40,60,80,96],'ps-pct',()=>loadEntityProfile(isFreeport?'freeport':'waskita'));
+  animLD('pls',5,[0,700,1400,2100,2800],[20,40,60,80,96],'ps-pct',()=>loadEntityProfile(targetId));
 }
 // PS tabs
 // Loading animation
@@ -3506,11 +3508,69 @@ const FREEPORT_KGL = [
 ];
 
 // ════════════════════════════════════════════════════════════
+// TONY WENAS (Person) — affiliation & influence network
+// Sumber: ringkasan riset arsip Tempo (lihat catatan metodologis di Sources)
+// ════════════════════════════════════════════════════════════
+const TONYWENAS_KGN = [
+  {id:'tw-main',name:'Tony Wenas',fullName:'Tony Wenas',color:'#CC1F2D',r:42,weight:40,type:'main',
+   role:'Presiden Direktur (Direktur Utama) PT Freeport Indonesia',mentions:60,risk:'Governance, Reputasi, Kebijakan Investasi',
+   rel:'Subjek utama profil ini',
+   why:'Tony Wenas adalah juru bicara korporat utama PTFI untuk hampir seluruh isu strategis perusahaan sejak 2020 — mulai dari pembangunan smelter, kinerja keuangan, hingga negosiasi kontrak dengan pemerintah.',
+   prop:'Pernyataan publik dan komitmen Tony Wenas menjadi rujukan utama untuk menilai kredibilitas dan arah strategis PTFI ke depan.'},
+
+  {id:'tw-ptfi',name:'PT Freeport\nIndonesia',fullName:'PT Freeport Indonesia (PTFI)',color:'#7C3AED',r:36,weight:20,type:'group',
+   role:'Perusahaan yang Dipimpin',mentions:60,risk:'Governance, Operasional',
+   rel:'Tony Wenas menjabat Presiden Direktur PTFI secara konsisten di seluruh periode pemberitaan yang tersedia (2020–2026)',
+   why:'PTFI adalah entitas utama tempat Tony Wenas menjabat dan menjadi rujukan seluruh pernyataan publiknya.',
+   prop:'Lihat juga profil terpisah PT Freeport Indonesia untuk analisis perusahaan secara penuh.'},
+
+  {id:'tw-fcx',name:'Freeport-\nMcMoRan',fullName:'Freeport-McMoRan Inc. (FCX)',color:'#0891B2',r:26,weight:9,type:'group',
+   role:'Induk Usaha PTFI',mentions:8,risk:'Governance',
+   rel:'Tony Wenas berkoordinasi dengan manajemen FCX (termasuk CEO Kathleen Quirk) dalam negosiasi kontrak dan divestasi saham',
+   why:'FCX adalah induk usaha PTFI yang turut menandatangani MoU perpanjangan IUPK bersama Tony Wenas.',
+   prop:'Hubungan kerja dengan FCX menentukan posisi tawar Tony Wenas dalam negosiasi kepemilikan saham dengan pemerintah Indonesia.'},
+
+  {id:'tw-quirk',name:'Kathleen\nQuirk',fullName:'Kathleen Quirk (Presiden & CEO Freeport-McMoRan)',color:'#0891B2',r:20,weight:5,type:'peer',
+   role:'Counterpart di Induk Usaha',mentions:3,risk:'Governance',
+   rel:'Menandatangani MoU perpanjangan IUPK bersama Tony Wenas pada Februari 2026',
+   why:'Kathleen Quirk adalah counterpart utama Tony Wenas di pihak Freeport-McMoRan dalam proses negosiasi kontrak.',
+   prop:'Kehadiran bersama dalam penandatanganan MoU menunjukkan tingkat otoritas Tony Wenas dalam representasi PTFI di tingkat korporasi global.'},
+
+  {id:'tw-investasi',name:'Kementerian\nInvestasi/BKPM',fullName:'Kementerian Investasi dan Hilirisasi / BKPM',color:'#2563EB',r:26,weight:8,type:'governance',
+   role:'Regulator & Counterpart Negosiasi',mentions:10,risk:'Governance, Kebijakan',
+   rel:'Berkomunikasi intens dengan Tony Wenas soal investasi, perpanjangan kontrak, dan divestasi saham',
+   why:'Kementerian Investasi adalah pihak pemerintah yang paling sering berinteraksi langsung dengan Tony Wenas dalam pemberitaan yang tersedia.',
+   prop:'Kualitas hubungan ini mempengaruhi kecepatan dan hasil negosiasi kontrak jangka panjang PTFI.'},
+
+  {id:'tw-dpr',name:'Komisi XII\nDPR',fullName:'Komisi XII Dewan Perwakilan Rakyat RI',color:'#1E3A5F',r:22,weight:6,type:'governance',
+   role:'Lembaga Pengawas — Penerima Paparan Resmi',mentions:5,risk:'Governance, Akuntabilitas Publik',
+   rel:'Tony Wenas memberikan keterangan resmi ke Komisi XII DPR soal kapasitas smelter dan riwayat insiden operasional',
+   why:'Forum DPR menjadi salah satu saluran akuntabilitas publik utama bagi pernyataan resmi Tony Wenas mewakili PTFI.',
+   prop:'Konsistensi keterangan yang disampaikan di forum resmi seperti ini menjadi indikator kredibilitas pernyataan publiknya.'},
+
+  {id:'tw-stania',name:'STANIA',fullName:'STANIA (anak usaha grup Hashim Djojohadikusumo)',color:'#64748B',r:18,weight:4,type:'peer',
+   role:'Mitra Pasokan/Perdagangan Hilir',mentions:2,risk:'Governance',
+   rel:'Disebut dalam konteks pasokan/perdagangan tembaga-perak dari smelter PTFI',
+   why:'Disebutkan sebagai salah satu mitra industri lokal terkait pasokan hasil hilirisasi smelter.',
+   prop:'Relasi dengan mitra hilirisasi swasta menjadi bagian dari ekosistem bisnis yang lebih luas di sekitar operasional PTFI.'}
+];
+const TONYWENAS_KGL = [
+  {source:'tw-main',target:'tw-ptfi',label:'Presiden Direktur',weight:9,color:'#7C3AED',width:3,type:'group'},
+  {source:'tw-ptfi',target:'tw-fcx',label:'anak usaha dari',weight:7,color:'#0891B2',width:2.5,type:'group'},
+  {source:'tw-main',target:'tw-quirk',label:'rekan penandatangan MoU',weight:6,color:'#0891B2',width:2,type:'peer'},
+  {source:'tw-main',target:'tw-investasi',label:'negosiasi kontrak & divestasi',weight:7,color:'#2563EB',width:2.5,type:'governance'},
+  {source:'tw-main',target:'tw-dpr',label:'memberi keterangan resmi',weight:5,color:'#1E3A5F',width:2,type:'governance'},
+  {source:'tw-ptfi',target:'tw-stania',label:'mitra pasokan hilir',weight:3,color:'#64748B',width:1.5,type:'peer',dashed:true}
+];
+
+// ════════════════════════════════════════════════════════════
 // ENTITY SWITCHING — Investigative Profile multi-entity support
 // ════════════════════════════════════════════════════════════
 let _currentEntity='waskita';
-function getCurrentKGN(){return _currentEntity==='freeport'?FREEPORT_KGN:WASKITA_KGN;}
-function getCurrentKGL(){return _currentEntity==='freeport'?FREEPORT_KGL:WASKITA_KGL;}
+const ENTITY_TYPE={waskita:'company',freeport:'company',tonywenas:'person'};
+function getCurrentEntityType(){return ENTITY_TYPE[_currentEntity]||'company';}
+function getCurrentKGN(){if(_currentEntity==='freeport')return FREEPORT_KGN;if(_currentEntity==='tonywenas')return TONYWENAS_KGN;return WASKITA_KGN;}
+function getCurrentKGL(){if(_currentEntity==='freeport')return FREEPORT_KGL;if(_currentEntity==='tonywenas')return TONYWENAS_KGL;return WASKITA_KGL;}
 function getMainEntityId(){const n=getCurrentKGN().find(x=>x.type==='main');return n?n.id:'waskita';}
 
 let _kgInited=false,_kgSvg,_kgG,_kgZoom,_kgSim,_kgNodeSel,_kgLinkSel,_kgLabelSel,_kgNodes,_kgLinks,_kgSelId=null;
@@ -3911,14 +3971,17 @@ function toggleAcc(id){const el=document.getElementById(id);if(el)el.classList.t
 // INVESTIGATIVE PROFILE — Issues & Track Record data model
 // ============================================================
 const topicColor={debt:'#CC1F2D',legal:'#D97706',governance:'#0F1A2E',reputation:'#7C3AED',project:'#2563EB',
-  'fp-longsor':'#CC1F2D','fp-kontrak':'#0F1A2E','fp-smelter':'#D97706','fp-lingkungan':'#16A34A','fp-fiskal':'#7C3AED','fp-keamanan':'#374151'};
+  'fp-longsor':'#CC1F2D','fp-kontrak':'#0F1A2E','fp-smelter':'#D97706','fp-lingkungan':'#16A34A','fp-fiskal':'#7C3AED','fp-keamanan':'#374151',
+  'tw-smelter':'#D97706','tw-kontrak':'#0F1A2E'};
 const topicOrderByEntity={
   waskita:['debt','legal','governance','reputation','project'],
-  freeport:['fp-longsor','fp-kontrak','fp-smelter','fp-lingkungan','fp-fiskal','fp-keamanan']
+  freeport:['fp-longsor','fp-kontrak','fp-smelter','fp-lingkungan','fp-fiskal','fp-keamanan'],
+  tonywenas:['tw-smelter','tw-kontrak']
 };
 function getTopicOrder(){return topicOrderByEntity[_currentEntity]||topicOrderByEntity.waskita;}
 const topicLabel2={debt:'Debt Restructuring',legal:'Legal & Corruption',governance:'Governance',reputation:'Reputation',project:'Project Delivery',
-  'fp-longsor':'Longsor Tambang Grasberg','fp-kontrak':'Kontrak & Divestasi','fp-smelter':'Hilirisasi & Smelter','fp-lingkungan':'Isu Lingkungan','fp-fiskal':'Kontribusi Fiskal','fp-keamanan':'Insiden Keamanan'};
+  'fp-longsor':'Longsor Tambang Grasberg','fp-kontrak':'Kontrak & Divestasi','fp-smelter':'Hilirisasi & Smelter','fp-lingkungan':'Isu Lingkungan','fp-fiskal':'Kontribusi Fiskal','fp-keamanan':'Insiden Keamanan',
+  'tw-smelter':'Smelter Gresik','tw-kontrak':'Kontrak & Divestasi (Pernyataan)'};
 
 const topicData={
  debt:{
@@ -4516,7 +4579,6 @@ function topicDetailHTML(key){
   <div class="td-tabs" id="td-tabs">
    <div class="td-tab on" onclick="tdtab(this,'ov')">Overview</div>
    <div class="td-tab" onclick="tdtab(this,'chrono')">Chronology</div>
-   <div class="td-tab" onclick="tdtab(this,'map')">Relationships</div>
    <div class="td-tab" onclick="tdtab(this,'cov')">Coverage &amp; Tone</div>
    <div class="td-tab" onclick="tdtab(this,'actors')">Actors &amp; Evidence</div>
    <div class="td-tab" onclick="tdtab(this,'dec')">Decision</div>
@@ -4554,18 +4616,6 @@ function topicDetailHTML(key){
    </div>
   </div>
 
-  <!-- Relationships -->
-  <div class="td-tc" id="tdtc-map">
-   <div class="card cp m4">
-    <div class="sh m8"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Topic-Specific Relationship &amp; Affiliation Map</div><div class="flex g6"><span class="bx bn">${(topicEntityMap[key]||[]).length} aktor relevan</span><button class="kg-btn" onclick="tkgZoomIn()">＋</button><button class="kg-btn" onclick="tkgZoomOut()">－</button><button class="kg-btn" onclick="tkgReset()">↺</button></div></div>
-    <div style="font-size:12px;color:var(--m);margin-bottom:8px;">Hanya menampilkan aktor yang relevan terhadap isu ini — berbeda dari peta relasi menyeluruh di tab Company Structure.</div>
-    <div id="td-kg-container" style="position:relative;height:260px;background:#F8FAFC;border:1px solid var(--b);border-radius:8px;overflow:hidden;cursor:grab;">
-     <svg id="td-kg-svg" style="width:100%;height:100%;display:block;"></svg>
-     <div id="td-kg-tip" style="display:none;position:absolute;background:#fff;border:1px solid var(--b);border-radius:7px;padding:9px 11px;max-width:220px;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.1);pointer-events:none;font-size:11px;"></div>
-    </div>
-   </div>
-  </div>
-
   <!-- Coverage & Tone -->
   <div class="td-tc" id="tdtc-cov">
    <div class="card cp m14">
@@ -4589,7 +4639,26 @@ function topicDetailHTML(key){
   <div class="td-tc" id="tdtc-actors">
    <div class="card cp m14">
     <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Key Actors</div><span class="bx bn">${t.actors.length} aktor utama</span></div>
-    ${t.actors.map(a=>`<div class="ta-i" onclick="openEntN('${a.id}')"><div class="ta-t">${a.name} <span style="font-weight:400;color:var(--m);">— ${a.type}</span></div><div class="ta-m"><span>${a.role}</span><span>Aktivitas: ${a.activity}</span></div><div style="font-size:11.5px;color:var(--m);margin-top:2px;">${a.latest}</div><div style="font-size:11px;color:var(--bl);margin-top:3px;">🔗 Lihat di tab Relationships</div></div>`).join('')}
+    <div style="font-size:12px;color:var(--m);margin-bottom:12px;">Hubungan setiap aktor dengan entitas utama dalam konteks isu ini — klik nama aktor untuk detail lengkap, atau jalankan background check untuk analisis terpisah.</div>
+    ${t.actors.map(a=>{
+      const relLabel=findRelLabel(a.id);
+      const kgn=getCurrentKGN().find(n=>n.id===a.id);
+      const whyText=kgn?kgn.why:null;
+      return `<div class="card cp m10" style="background:var(--bg);border:1px solid var(--b);">
+       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+        <div style="font-size:13.5px;font-weight:700;color:var(--n);cursor:pointer;" onclick="openEntN('${a.id}')">${a.name} <span style="font-weight:400;color:var(--m);font-size:12px;">— ${a.type}</span></div>
+        <span class="bx bn" style="font-size:10.5px;">Aktivitas: ${a.activity}</span>
+       </div>
+       ${relLabel?`<div style="font-size:12px;color:var(--t);margin-bottom:5px;"><strong style="color:var(--n);">Hubungan dengan entitas utama:</strong> ${relLabel}</div>`:''}
+       <div style="font-size:12px;color:var(--m);margin-bottom:5px;"><strong style="color:var(--n);">Peran dalam isu ini:</strong> ${a.role}</div>
+       ${whyText?`<div style="font-size:12px;color:var(--m);margin-bottom:5px;"><strong style="color:var(--n);">Mengapa relevan:</strong> ${whyText}</div>`:''}
+       <div style="font-size:11.5px;color:var(--m);margin-bottom:9px;"><strong style="color:var(--n);">Perkembangan terbaru:</strong> ${a.latest}</div>
+       <div class="flex g6 wrap" style="padding-top:8px;border-top:1px solid var(--b);">
+        <button class="btn bn2 bsm" onclick="openEntN('${a.id}')">🔎 Detail Entitas</button>
+        <button class="btn bp bsm" onclick="runBackgroundCheck('${(kgn?kgn.fullName:a.name).replace(/'/g,"\\'")}')">🔍 Jalankan Background Check →</button>
+       </div>
+      </div>`;
+    }).join('')}
    </div>
    <div class="card cp m4">
     <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Evidence</div><span class="bx bn">${t.evidence.length} sumber</span></div>
@@ -4628,13 +4697,22 @@ function topicDetailHTML(key){
    </div>
   </div>`;
 }
+function findRelLabel(actorId){
+  const mainId=getMainEntityId();
+  const kgl=getCurrentKGL();
+  const edge=kgl.find(l=>(l.source===mainId&&l.target===actorId)||(l.target===mainId&&l.source===actorId));
+  return edge?edge.label:null;
+}
+function runBackgroundCheck(name){
+  P('ps');showSV('ps','search');
+  fillPS(name);
+}
 function tdtab(btn,id){
   const wrap=btn.closest('#topic-detail-body')||document;
   wrap.querySelectorAll('.td-tab').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   wrap.querySelectorAll('.td-tc').forEach(c=>c.classList.remove('on'));
   const el=wrap.querySelector('#tdtc-'+id);if(el)el.classList.add('on');
-  if(id==='map')setTimeout(()=>initTopicKG(_currentTopic),50);
 }
 function openTopic(key){
   const t=topicData[key];if(!t)return;
@@ -4689,7 +4767,9 @@ const topicEntityMap={
   'fp-smelter':['fp-ptfi','fp-smelting','fp-investasi','fp-antam'],
   'fp-lingkungan':['fp-ptfi','fp-bpk','fp-esdm'],
   'fp-fiskal':['fp-ptfi','fp-mindid','fp-investasi','fp-esdm'],
-  'fp-keamanan':['fp-ptfi','fp-polda']
+  'fp-keamanan':['fp-ptfi','fp-polda'],
+  'tw-smelter':['tw-ptfi','tw-fcx'],
+  'tw-kontrak':['tw-investasi','tw-quirk']
 };
 let _tkgSvg,_tkgG,_tkgZoom,_tkgSim,_tkgNodeSel,_tkgLinkSel,_tkgNodes,_tkgLinks,_tkgSelId=null;
 function initTopicKG(key){
@@ -5200,11 +5280,10 @@ let _currentSignalOrigin='custom';
 
 // ── Custom Signal wizard ──
 function wizGoStep(n){
- for(let i=1;i<=6;i++){const d=document.getElementById('wiz-s'+i);if(d)d.style.display=i===n?'block':'none';}
- for(let i=1;i<=6;i++){const s=document.getElementById('wst'+i);if(!s)continue;s.classList.remove('on','done');if(i<n)s.classList.add('done');else if(i===n)s.classList.add('on');}
+ for(let i=1;i<=5;i++){const d=document.getElementById('wiz-s'+i);if(d)d.style.display=i===n?'block':'none';}
+ for(let i=1;i<=5;i++){const s=document.getElementById('wst'+i);if(!s)continue;s.classList.remove('on','done');if(i<n)s.classList.add('done');else if(i===n)s.classList.add('on');}
  if(n===3){renderClusters();}
- if(n===4){renderEntityGroups();}
- if(n===5){renderExclusions();}
+ if(n===4){renderExclusions();}
  const ctEl=document.querySelector('.ct');if(ctEl)ctEl.scrollTop=0;
 }
 function wizGenerateScope(){
@@ -5891,13 +5970,26 @@ const FREEPORT_KG_ARTICLES={
 };
 // Merge into shared KG_ARTICLES lookup (keys are globally unique — 'fp-' prefix avoids collision with Waskita ids)
 Object.assign(KG_ARTICLES, FREEPORT_KG_ARTICLES);
+const TONYWENAS_KG_ARTICLES={
+ 'tw-ptfi':[
+  {id:'TW001',title:'Kapasitas gabungan smelter capai 3 juta ton konsentrat/tahun',src:'Tempo — ringkasan riset',date:'14 Jul 2026',type:'Ringkasan Riset',sent:'Positive',mentions:5,summary:'Tony Wenas memberi keterangan di Komisi XII DPR soal fasilitas PMR dan riwayat kebakaran GCP Oktober 2024.'}
+ ],
+ 'tw-investasi':[
+  {id:'TW101',title:'Draf perjanjian divestasi saham 12% diserahkan ke pemerintah',src:'Tempo — ringkasan riset',date:'18 Jun 2026',type:'Ringkasan Riset',sent:'Positive',mentions:4,summary:'Tindak lanjut MoU perpanjangan IUPK yang ditandatangani Februari 2026.'}
+ ],
+ 'tw-quirk':[
+  {id:'TW201',title:'MoU perpanjangan IUPK ditandatangani bersama CEO Freeport-McMoRan',src:'Tempo — ringkasan riset',date:'18 Feb 2026',type:'Ringkasan Riset',sent:'Positive',mentions:3,summary:'Kathleen Quirk turut menandatangani MoU bersama Tony Wenas dan Menteri Investasi.'}
+ ]
+};
+Object.assign(KG_ARTICLES, TONYWENAS_KG_ARTICLES);
 
 // ════════════════════════════════════════════════════════════
 // loadEntityProfile — master entity switch for Investigative Profile
 // ════════════════════════════════════════════════════════════
-let _waskitaOverviewCache=null,_waskitaStructCache=null,_waskitaCorpActionCache=null,_waskitaHeaderLeftCache=null,_waskitaHeaderAttnCache=null;
+let _waskitaOverviewCache=null,_waskitaStructCache=null,_waskitaCorpActionCache=null,_waskitaHeaderLeftCache=null,_waskitaHeaderAttnCache=null,_waskitaStructureInnerCache=null,_waskitaLensesGridCache=null;
 function loadEntityProfile(id){
-  _currentEntity=(id==='freeport')?'freeport':'waskita';
+  _currentEntity=(id==='freeport')?'freeport':(id==='tonywenas')?'tonywenas':'waskita';
+  const entType=getCurrentEntityType();
   // Cache Waskita's original DOM content on first switch away from it
   if(_waskitaOverviewCache===null){
     const ov=document.getElementById('pst-overview-inner');if(ov)_waskitaOverviewCache=ov.innerHTML;
@@ -5905,6 +5997,8 @@ function loadEntityProfile(id){
     const ca=document.getElementById('corp-action-inner');if(ca)_waskitaCorpActionCache=ca.innerHTML;
     const hl=document.getElementById('prof-left');if(hl)_waskitaHeaderLeftCache=hl.innerHTML;
     const ha=document.getElementById('prof-attn');if(ha)_waskitaHeaderAttnCache=ha.innerHTML;
+    const si=document.getElementById('pst-structure-inner');if(si)_waskitaStructureInnerCache=si.innerHTML;
+    const lg=document.getElementById('pst-lenses-grid');if(lg)_waskitaLensesGridCache=lg.innerHTML;
   }
   const ovEl=document.getElementById('pst-overview-inner');
   const stEl=document.getElementById('struct-inner');
@@ -5912,11 +6006,22 @@ function loadEntityProfile(id){
   const hlEl=document.getElementById('prof-left');
   const haEl=document.getElementById('prof-attn');
   const caCountEl=document.getElementById('corp-action-count');
+  const siEl=document.getElementById('pst-structure-inner');
+  const lgEl=document.getElementById('pst-lenses-grid');
+  const structLabelEl=document.getElementById('tab-structure-label');
+
+  // Step 1: always restore the base (Waskita) structure-inner + lenses-grid first,
+  // so company-type entities (waskita/freeport) can apply their granular swaps on top.
+  if(siEl&&_waskitaStructureInnerCache!==null)siEl.innerHTML=_waskitaStructureInnerCache;
+  if(lgEl&&_waskitaLensesGridCache!==null)lgEl.innerHTML=_waskitaLensesGridCache;
+  if(structLabelEl)structLabelEl.textContent='Company Structure';
 
   if(_currentEntity==='freeport'){
     if(ovEl)ovEl.innerHTML=FREEPORT_OVERVIEW_HTML;
-    if(stEl)stEl.innerHTML=FREEPORT_STRUCT_HTML;
-    if(caEl)caEl.innerHTML=FREEPORT_CORPACTION_HTML;
+    // struct-inner/corp-action-inner exist again after the base restore above
+    const stEl2=document.getElementById('struct-inner'),caEl2=document.getElementById('corp-action-inner');
+    if(stEl2)stEl2.innerHTML=FREEPORT_STRUCT_HTML;
+    if(caEl2)caEl2.innerHTML=FREEPORT_CORPACTION_HTML;
     if(caCountEl)caCountEl.textContent='6 aksi korporasi';
     if(hlEl)hlEl.innerHTML=`
      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
@@ -5930,13 +6035,31 @@ function loadEntityProfile(id){
       <span class="bx" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);">📰 31 sumber Tempo</span>
      </div>`;
     if(haEl)haEl.innerHTML=`
-     <div class="attn-pill attn-high">🟠 Moderate Attention Required <span class="attn-info">ⓘ</span>
+     <div class="attn-pill attn-high" onclick="this.classList.toggle('tap-open')">🟠 Moderate Attention Required <span class="attn-info">ⓘ</span>
       <div class="attn-tip">Attention level dihitung dari <strong>materialitas</strong>, <strong>recency</strong>, <strong>kredibilitas sumber</strong>, dan <strong>status penyelesaian</strong> sinyal yang terdeteksi. "Moderate" berarti ada isu material yang sebagian sudah menunjukkan progres penyelesaian (kontrak, divestasi), namun sebagian lain masih berlangsung (pemulihan pascalongsor, isu lingkungan historis).</div>
+     </div>`;
+  } else if(_currentEntity==='tonywenas'){
+    if(ovEl)ovEl.innerHTML=TONYWENAS_OVERVIEW_HTML;
+    if(siEl)siEl.innerHTML=TONYWENAS_CAREER_HTML;
+    if(lgEl)lgEl.innerHTML=TONYWENAS_LENSES_GRID_HTML;
+    if(structLabelEl)structLabelEl.textContent='Career & Affiliations';
+    if(hlEl)hlEl.innerHTML=`
+     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+      <div class="prof-nm" style="margin-bottom:0;">Tony Wenas</div>
+      <span class="bx" style="background:rgba(255,255,255,.15);color:#fff;">Person</span>
+     </div>
+     <div class="prof-mt" style="margin-bottom:8px;">Jabatan: <strong style="color:rgba(255,255,255,.7);">Presiden Direktur, PT Freeport Indonesia</strong> · Afiliasi: PT Freeport Indonesia (PTFI)</div>
+     <div class="flex g6 wrap">
+      <span class="bx" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);">📅 Diperbarui 22 Jul 2026</span>
+      <span class="bx" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);">🗂️ Cakupan data 2020–2026</span>
+      <span class="bx" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);">📰 11 sumber Tempo</span>
+     </div>`;
+    if(haEl)haEl.innerHTML=`
+     <div class="attn-pill attn-moderate" onclick="this.classList.toggle('tap-open')">🔵 Standard Monitoring <span class="attn-info">ⓘ</span>
+      <div class="attn-tip">Attention level dihitung dari <strong>materialitas</strong>, <strong>recency</strong>, <strong>kredibilitas sumber</strong>, dan <strong>status penyelesaian</strong> sinyal yang terdeteksi. "Standard" berarti tidak ditemukan isu material yang belum terselesaikan atau berisiko tinggi — pemantauan rutin tetap disarankan mengingat data yang tersedia berbasis ringkasan riset, bukan artikel penuh.</div>
      </div>`;
   } else {
     if(ovEl&&_waskitaOverviewCache!==null)ovEl.innerHTML=_waskitaOverviewCache;
-    if(stEl&&_waskitaStructCache!==null)stEl.innerHTML=_waskitaStructCache;
-    if(caEl&&_waskitaCorpActionCache!==null)caEl.innerHTML=_waskitaCorpActionCache;
     if(caCountEl)caCountEl.textContent='6 aksi korporasi';
     if(hlEl&&_waskitaHeaderLeftCache!==null)hlEl.innerHTML=_waskitaHeaderLeftCache;
     if(haEl&&_waskitaHeaderAttnCache!==null)haEl.innerHTML=_waskitaHeaderAttnCache;
@@ -5947,6 +6070,7 @@ function loadEntityProfile(id){
   const kgSvg=document.getElementById('kg-force-svg');
   if(kgSvg&&typeof d3!=='undefined')d3.select('#kg-force-svg').selectAll('*').remove();
   kgClearSelection();
+  lensClose();
 
   // Reset Issues & Track Record list + Overview topic cards + Sources for new entity
   renderOverviewTopicCards();
@@ -5987,7 +6111,7 @@ const WASKITA_SOURCES=[
 ];
 function verifBadgeClass(v){const m={'Verified':'verified','Partially Verified':'partial','Conflicting Sources':'conflict','Needs Further Validation':'needsval','Insufficient Evidence':'insuff'};return m[v]||'needsval';}
 function verifBadgeIcon(v){const m={'Verified':'✓','Partially Verified':'◐','Conflicting Sources':'⚠','Needs Further Validation':'⚑','Insufficient Evidence':'—'};return m[v]||'⚑';}
-function getCurrentSources(){return _currentEntity==='freeport'?FREEPORT_SOURCES:WASKITA_SOURCES;}
+function getCurrentSources(){if(_currentEntity==='freeport')return FREEPORT_SOURCES;if(_currentEntity==='tonywenas')return TONYWENAS_SOURCES;return WASKITA_SOURCES;}
 function renderSources(){
   const tbody=document.getElementById('sources-table-body');if(!tbody)return;
   if(tbody.children.length)return; // already rendered
@@ -6210,6 +6334,419 @@ function scrollC(){const w=document.getElementById('chat-win');w.scrollTop=w.scr
 document.addEventListener('keydown',e=>{const f=document.getElementById('ask-f');if(f&&document.activeElement===f&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAsk();}const af=document.getElementById('aip-f');if(af&&document.activeElement===af&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAIPmsg(af.value);}});
 // init
 P('home');
+
+// ════════════════════════════════════════════════════════════
+// TONY WENAS — topic clusters (lighter than company-level topics;
+// framed around his public statements, cross-referencing the
+// separate PT Freeport Indonesia company profile for full depth)
+// ════════════════════════════════════════════════════════════
+const TONYWENAS_TOPICS = {
+ 'tw-smelter':{
+  key:'tw-smelter',title:'Smelter Gresik: Peringatan Biaya hingga Commissioning',category:'Operational',riskLevel:'Medium',status:'Partially Resolved',
+  firstDetected:'2020',latestUpdate:'2024',coverageVol:6,tone:'Mixed-Improving',actorsShort:'PT Freeport Indonesia, Freeport-McMoRan',
+  summary:'Tony Wenas mengeluarkan peringatan awal soal risiko biaya besar pembangunan smelter Gresik (2020), lalu secara konsisten melaporkan progres pembangunan hingga smelter mulai beroperasi pada pertengahan 2024 — sedikit meleset dari target awal namun secara substansial tercapai.',
+  why:'Konsistensi antara peringatan risiko awal dan pelaporan progres yang transparan menjadi indikator kredibilitas komunikasi publik Tony Wenas sebagai representasi PTFI.',
+  relatedDecision:'Evaluasi kredibilitas juru bicara korporat, kajian sebelum kemitraan strategis',
+  findings:[
+   {stmt:'28 April 2020, Tony menyatakan cashflow Freeport negatif akibat investasi tambang bawah tanah dan mempertimbangkan penundaan pembangunan smelter, namun menjamin tidak ada PHK.',materiality:'Medium',sources:1,conf:'Medium'},
+   {stmt:'4 September 2020, Tony memperingatkan proyek smelter Gresik berpotensi merugikan Freeport hingga hampir US$10 miliar jika treatment charges tidak membaik.',materiality:'High',sources:1,conf:'Medium'},
+   {stmt:'26 September 2023, Tony melaporkan progres smelter Gresik telah mencapai 76%, dengan target rampung Mei 2024.',materiality:'Medium',sources:1,conf:'Medium'},
+   {stmt:'10 April 2024, Tony menyebut progres smelter sudah mencapai sekitar 94%, dengan rencana commissioning Juni 2024 dan target keluarnya katoda tembaga Agustus 2024.',materiality:'Medium',sources:1,conf:'Medium'},
+   {stmt:'13–16 Juni 2024, Freeport mengirim konsentrat perdana dari Amamapare ke smelter Gresik (22.000 ton) — Tony menyebutnya momen penting hilirisasi.',materiality:'Medium',sources:1,conf:'Medium'}
+  ],
+  chrono:[
+   {date:'28 Apr 2020',type:'Financial',title:'Peringatan cashflow negatif, jamin tidak ada PHK',desc:'Tony menyatakan investasi tambang bawah tanah menekan cashflow perusahaan; smelter berpotensi ditunda namun tanpa PHK karyawan.',actors:'Tony Wenas',src:'Ringkasan riset arsip Tempo — ref [25][41]'},
+   {date:'4 Sep 2020',type:'Financial',title:'Peringatan risiko biaya smelter hingga US$10 miliar',desc:'Jika treatment charges (biaya pengolahan) tidak membaik, Tony memperingatkan proyek smelter berpotensi merugikan Freeport dalam skala besar.',actors:'Tony Wenas',src:'Ringkasan riset arsip Tempo — ref [23]'},
+   {date:'26 Sep 2023',type:'Operational',title:'Progres smelter 76%, target rampung Mei 2024',desc:'Tony memaparkan rincian kapasitas precious metal refinery (PMR) dan output yang direncanakan.',actors:'Tony Wenas',src:'Ringkasan riset arsip Tempo — ref [21]'},
+   {date:'10 Apr 2024',type:'Operational',title:'Progres smelter capai 94%',desc:'Commissioning direncanakan Juni 2024, dengan katoda tembaga pertama ditargetkan keluar Agustus 2024.',actors:'Tony Wenas',src:'Ringkasan riset arsip Tempo — ref [22]'},
+   {date:'13–16 Jun 2024',type:'Corporate Action',title:'Pengiriman konsentrat perdana ke smelter Gresik',desc:'22.000 ton konsentrat dikirim dari Amamapare — Tony menyebutnya sebagai momen penting program hilirisasi PTFI.',actors:'Tony Wenas',src:'Ringkasan riset arsip Tempo — ref [11]'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:0},{l:'Sel',v:1},{l:'Rab',v:0},{l:'Kam',v:0},{l:'Jum',v:1},{l:'Sab',v:0},{l:'Min',v:0}],
+   weekly:[{l:'M1',v:1},{l:'M2',v:1},{l:'M3',v:0},{l:'M4',v:1},{l:'M5',v:1},{l:'M6',v:0}],
+   monthly:[{l:'2020',v:2},{l:'2023',v:1},{l:'2024',v:2}]
+  },
+  coverageNote:'Pernyataan publik Tony Wenas soal smelter cenderung muncul di momen-momen kunci (peringatan risiko awal, laporan milestone progres) — bukan liputan rutin bulanan.',
+  tone2:[
+   {label:'Transparansi Risiko Awal',pct:35,sentiment:'Negatif',color:'#D97706',desc:'Peringatan jujur soal potensi kerugian besar di tahap awal proyek (2020).'},
+   {label:'Pelaporan Progres Konsisten',pct:65,sentiment:'Positif',color:'#16A34A',desc:'Update milestone yang teratur dan dapat diverifikasi hingga smelter beroperasi.'}
+  ],
+  toneNote:'Pola komunikasi Tony Wenas soal smelter bergerak dari nada waspada (2020) menjadi progresif-positif (2023–2024) seiring proyek mendekati penyelesaian — pola ini konsisten dengan hasil akhir yang terverifikasi (smelter beroperasi pertengahan 2024).',
+  actors:[
+   {name:'PT Freeport Indonesia',type:'Perusahaan yang Dipimpin',role:'Entitas yang membangun dan mengoperasikan smelter Gresik',activity:'Tinggi',latest:'Kapasitas gabungan smelter capai 3 juta ton/tahun (2026)',id:'tw-ptfi'},
+   {name:'Freeport-McMoRan',type:'Induk Usaha',role:'Menanggung sebagian risiko investasi smelter',activity:'Sedang',latest:'Turut dalam evaluasi biaya treatment charges',id:'tw-fcx'}
+  ],
+  evidence:[
+   {title:'Peringatan risiko biaya smelter (ref [23])',pub:'Tempo — ringkasan riset',date:'4 Sep 2020',type:'Ringkasan Riset',relevance:'High',verif:'partial'},
+   {title:'Laporan progres smelter 76% (ref [21])',pub:'Tempo — ringkasan riset',date:'26 Sep 2023',type:'Ringkasan Riset',relevance:'Medium',verif:'partial'},
+   {title:'Laporan progres smelter 94% (ref [22])',pub:'Tempo — ringkasan riset',date:'10 Apr 2024',type:'Ringkasan Riset',relevance:'Medium',verif:'partial'},
+   {title:'Pengiriman konsentrat perdana (ref [11])',pub:'Tempo — ringkasan riset',date:'16 Jun 2024',type:'Ringkasan Riset',relevance:'Medium',verif:'partial'}
+  ],
+  decision:{
+   current:'Pernyataan Tony Wenas soal smelter menunjukkan pola transparansi yang konsisten — peringatan risiko di awal, diikuti pelaporan progres yang secara umum terverifikasi oleh hasil akhir proyek.',
+   unresolved:['Rincian pasti apakah target katoda Agustus 2024 tercapai persis sesuai jadwal tidak terkonfirmasi secara eksplisit dalam ringkasan riset yang tersedia — lihat topic cluster Hilirisasi &amp; Smelter di profil PT Freeport Indonesia untuk data operasional lebih lanjut.'],
+   change:'Konfirmasi independen atas tanggal persis milestone produksi akan memperkuat penilaian akurasi pelaporan publik Tony Wenas.',
+   trigger:'Bandingkan dengan data operasional resmi di topic cluster perusahaan PT Freeport Indonesia.'
+  }
+ },
+ 'tw-kontrak':{
+  key:'tw-kontrak',title:'Perpanjangan Kontrak & Divestasi Saham — Pernyataan Publik',category:'Governance',riskLevel:'Medium',status:'Ongoing',
+  firstDetected:'2025',latestUpdate:'2026',coverageVol:3,tone:'Positive-Consistent',actorsShort:'Kementerian Investasi, Freeport-McMoRan, Kathleen Quirk',
+  summary:'Sejak pertengahan 2025, Tony Wenas secara konsisten melaporkan perkembangan negosiasi perpanjangan kontrak PTFI hingga 2061, yang berujung pada penandatanganan MoU Februari 2026 dan pengajuan draf perjanjian divestasi saham pada Juni 2026.',
+  why:'Konsistensi pernyataan Tony Wenas dari tahap "masih didiskusikan" hingga MoU resmi ditandatangani menjadi indikator penting keandalan informasi yang ia sampaikan ke publik soal arah strategis PTFI.',
+  relatedDecision:'Evaluasi kredibilitas representasi korporat dalam negosiasi jangka panjang',
+  findings:[
+   {stmt:'14 Juli 2025, Tony menyatakan kemungkinan perpanjangan kontrak Freeport hingga 2061 masih didiskusikan, dan menyebut kondisi perusahaan baik dengan smelter yang sudah beroperasi kembali sejak Juni 2025.',materiality:'Medium',sources:1,conf:'Medium'},
+   {stmt:'18 Februari 2026, MoU perpanjangan IUPK ditandatangani oleh Menteri Investasi, CEO Freeport-McMoRan Kathleen Quirk, dan Tony Wenas.',materiality:'High',sources:1,conf:'High'},
+   {stmt:'18 Juni 2026, PTFI melalui Tony Wenas menyerahkan draf perjanjian divestasi saham 12% ke pemerintah sebagai tindak lanjut MoU.',materiality:'High',sources:1,conf:'High'}
+  ],
+  chrono:[
+   {date:'14 Jul 2025',type:'Corporate Action',title:'Perpanjangan kontrak "masih didiskusikan"',desc:'Tony menyebut kondisi perusahaan baik; smelter kembali beroperasi sejak Juni 2025 setelah perbaikan pascakebakaran 2024.',actors:'Tony Wenas',src:'Ringkasan riset arsip Tempo — ref [27]'},
+   {date:'18 Feb 2026',type:'Regulatory',title:'MoU perpanjangan IUPK ditandatangani',desc:'Penandatanganan dilakukan bersama Menteri Investasi dan CEO Freeport-McMoRan Kathleen Quirk — janji "masih didiskusikan" dari Juli 2025 terealisasi menjadi kesepakatan formal.',actors:'Tony Wenas, Kathleen Quirk, Menteri Investasi',src:'Ringkasan riset arsip Tempo — ref [36]'},
+   {date:'18 Jun 2026',type:'Corporate Action',title:'Draf perjanjian divestasi saham 12% diserahkan',desc:'Sebagai tindak lanjut MoU, PTFI menyerahkan draf perjanjian pengalihan 12% saham kepada pemerintah.',actors:'Tony Wenas',src:'Ringkasan riset arsip Tempo — ref [36]'}
+  ],
+  coverage:{
+   daily:[{l:'Sen',v:0},{l:'Sel',v:0},{l:'Rab',v:1},{l:'Kam',v:0},{l:'Jum',v:0},{l:'Sab',v:0},{l:'Min',v:0}],
+   weekly:[{l:'M1',v:1},{l:'M2',v:0},{l:'M3',v:0},{l:'M4',v:0},{l:'M5',v:0},{l:'M6',v:1}],
+   monthly:[{l:'2025',v:1},{l:'2026',v:2}]
+  },
+  coverageNote:'Cakupan tipis namun berpola jelas — tiga pernyataan pada rentang 12 bulan yang secara berurutan menunjukkan progres nyata dari diskusi menjadi kesepakatan formal.',
+  tone2:[
+   {label:'Kepastian Bisnis Jangka Panjang',pct:70,sentiment:'Positif',color:'#16A34A',desc:'Framing dominan soal tercapainya kepastian operasi jangka panjang bagi PTFI.'},
+   {label:'Proses Negosiasi Bertahap',pct:30,sentiment:'Mixed',color:'#2563EB',desc:'Pengakuan bahwa proses ini berlangsung bertahap dan memerlukan waktu.'}
+  ],
+  toneNote:'Pola pernyataan Tony Wenas soal topik ini menunjukkan realisasi konsisten — apa yang disebut "masih didiskusikan" pada Juli 2025 benar-benar terwujud sebagai MoU resmi tujuh bulan kemudian, menunjukkan pernyataannya dapat diandalkan sebagai indikator arah kebijakan PTFI.',
+  actors:[
+   {name:'Kementerian Investasi/BKPM',type:'Regulator',role:'Pihak pemerintah dalam negosiasi dan penandatanganan MoU',activity:'Tinggi',latest:'Menandatangani MoU perpanjangan IUPK — Feb 2026',id:'tw-investasi'},
+   {name:'Kathleen Quirk',type:'Counterpart Korporat',role:'CEO Freeport-McMoRan, rekan penandatangan MoU',activity:'Sedang',latest:'Turut menandatangani MoU — Feb 2026',id:'tw-quirk'}
+  ],
+  evidence:[
+   {title:'Pernyataan perpanjangan kontrak "masih didiskusikan" (ref [27])',pub:'Tempo — ringkasan riset',date:'14 Jul 2025',type:'Ringkasan Riset',relevance:'Medium',verif:'partial'},
+   {title:'MoU perpanjangan IUPK ditandatangani (ref [36])',pub:'Tempo — ringkasan riset',date:'18 Feb 2026',type:'Ringkasan Riset',relevance:'High',verif:'partial'},
+   {title:'Draf perjanjian divestasi saham diserahkan (ref [36])',pub:'Tempo — ringkasan riset',date:'18 Jun 2026',type:'Ringkasan Riset',relevance:'High',verif:'partial'}
+  ],
+  decision:{
+   current:'Realisasi janji "masih didiskusikan" (Jul 2025) menjadi MoU resmi (Feb 2026) dalam tujuh bulan menunjukkan pernyataan Tony Wenas soal topik ini secara historis dapat diandalkan.',
+   unresolved:['Penandatanganan final perjanjian transfer 12% saham belum dikonfirmasi rampung per ringkasan riset yang tersedia (masih berupa draf per Juni 2026).'],
+   change:'Konfirmasi penandatanganan final perjanjian divestasi akan melengkapi rekam jejak realisasi janji ini.',
+   trigger:'Lihat topic cluster "Perpanjangan Kontrak & Divestasi Saham" di profil PT Freeport Indonesia untuk perkembangan korporat lebih lengkap.'
+  }
+ }
+};
+Object.assign(topicData, TONYWENAS_TOPICS);
+
+
+// ════════════════════════════════════════════════════════════
+// TONY WENAS — Overview / Career & Affiliations / Lenses / Sources
+// ════════════════════════════════════════════════════════════
+
+const TONYWENAS_OVERVIEW_HTML = `
+     <!-- A. Executive Snapshot -->
+     <div class="card cp m14" style="border-left:4px solid var(--am);">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Executive Snapshot</div><span class="bx bn">Evidence: Moderate · 11 sumber Tempo</span></div>
+      <div style="font-size:13.5px;color:var(--t);line-height:1.6;margin-bottom:12px;font-weight:600;">Tony Wenas adalah juru bicara korporat utama PT Freeport Indonesia sejak sedikitnya 2020, secara konsisten menyampaikan pernyataan publik soal pembangunan smelter, kinerja keuangan, dan negosiasi kontrak — dengan rekam jejak realisasi janji yang secara umum dapat diverifikasi.</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+       <div class="rss-sig"><span class="bx bm" style="font-size:10.5px;flex-shrink:0;">Sedang</span><div style="font-size:12.5px;">Peringatan risiko biaya smelter hingga US$10 miliar (2020) — tidak terealisasi sesuai skenario terburuk berdasarkan hasil akhir proyek.</div></div>
+       <div class="rss-sig"><span class="bx bm" style="font-size:10.5px;flex-shrink:0;">Sedang</span><div style="font-size:12.5px;">Sempat melaporkan cashflow negatif (2020) akibat investasi tambang bawah tanah, meski menjamin tidak ada PHK.</div></div>
+       <div class="rss-sig"><span class="bx" style="background:var(--grl);color:var(--gr);font-size:10.5px;flex-shrink:0;">Positif</span><div style="font-size:12.5px;">Realisasi konsisten dari janji "kontrak masih didiskusikan" (Jul 2025) menjadi MoU resmi (Feb 2026) dalam tujuh bulan.</div></div>
+      </div>
+      <div style="border-top:1px solid var(--b);padding-top:10px;display:flex;flex-direction:column;gap:5px;">
+       <div style="font-size:12px;line-height:1.5;"><strong style="color:var(--r);">Belum terselesaikan:</strong> <span style="color:var(--m);">penandatanganan final perjanjian divestasi 12% saham (baru berupa draf per Jun 2026).</span></div>
+       <div style="font-size:12px;line-height:1.5;"><strong style="color:var(--gr);">Perkembangan positif:</strong> <span style="color:var(--m);">smelter Gresik berhasil commissioning meski sempat meleset tipis dari target awal.</span></div>
+       <div style="font-size:12px;line-height:1.5;"><strong style="color:var(--n);">Perubahan terbaru:</strong> <span style="color:var(--m);">draf perjanjian divestasi saham 12% diserahkan ke pemerintah (Jun 2026).</span></div>
+      </div>
+      <div class="flex g6 wrap" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--b);">
+       <button class="btn bp bsm" onclick="saveRep('Tony Wenas · Investigative Profile')">📋 Generate Report</button>
+       <button class="btn bo bsm" onclick="openWL()">☆ Tambah ke Watchlist</button>
+       <button class="ask-cta bsm" onclick="openAIP('ps')">💬 Ask Tempo</button>
+      </div>
+     </div>
+
+     <!-- C. Overall Risk Signals -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Overall Risk Signals</div><span class="bx bn">3 sinyal utama</span></div>
+      <div style="font-size:12px;color:var(--m);margin-bottom:12px;">Klik sinyal untuk detail; klik "Lihat Topic Cluster" untuk analisis lengkap di tab <strong>Issues &amp; Track Record</strong>.</div>
+
+      <div class="rd-card" id="rrow-tw1" onclick="toggleRRow('tw1')">
+       <div class="rd-hd">
+        <div class="rd-rank r2">1</div>
+        <div class="rd-body">
+         <div class="rd-name">Smelter Gresik: Peringatan Biaya hingga Commissioning</div>
+         <div class="rd-summary">Peringatan risiko biaya besar (2020) diikuti pelaporan progres konsisten hingga smelter beroperasi pertengahan 2024.</div>
+         <div class="rd-meta"><span class="bx bm">Medium</span><span class="bx bn">Operational · Partially Resolved</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Mengapa ini penting:</strong> konsistensi antara peringatan awal dan hasil akhir menjadi indikator kredibilitas komunikasi publik Tony Wenas.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('issues');openTopic('tw-smelter')">🧩 Lihat Topic Cluster →</button>
+       </div>
+      </div>
+
+      <div class="rd-card" id="rrow-tw2" onclick="toggleRRow('tw2')" style="margin-top:8px;">
+       <div class="rd-hd">
+        <div class="rd-rank r3">2</div>
+        <div class="rd-body">
+         <div class="rd-name">Perpanjangan Kontrak & Divestasi Saham</div>
+         <div class="rd-summary">Janji "masih didiskusikan" (Jul 2025) terealisasi menjadi MoU resmi (Feb 2026) dalam tujuh bulan.</div>
+         <div class="rd-meta"><span class="bx bm">Medium</span><span class="bx bn">Governance · Ongoing</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Mengapa ini penting:</strong> menunjukkan pola realisasi janji yang dapat diandalkan sebagai indikator arah kebijakan PTFI.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('issues');openTopic('tw-kontrak')">🧩 Lihat Topic Cluster →</button>
+       </div>
+      </div>
+
+      <div class="rd-card" id="rrow-tw3" onclick="toggleRRow('tw3')" style="margin-top:8px;">
+       <div class="rd-hd">
+        <div class="rd-rank r3">3</div>
+        <div class="rd-body">
+         <div class="rd-name">Tidak Ada Catatan Hukum Personal</div>
+         <div class="rd-summary">Tidak ditemukan catatan hukum pidana atau tuntutan pribadi terhadap Tony Wenas dalam arsip yang tersedia.</div>
+         <div class="rd-meta"><span class="bx bn">Insufficient Evidence</span><span class="bx bn">Legal · Tidak Ada Temuan</span></div>
+        </div>
+        <div class="rd-chevron"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg></div>
+       </div>
+       <div class="rd-detail">
+        <div style="font-size:12.5px;color:var(--m);line-height:1.6;margin-bottom:9px;"><strong>Catatan:</strong> isu hukum yang muncul dalam pemberitaan bersifat korporat/kontraktual (negosiasi IUPK dan divestasi saham), bukan perkara pidana personal.</div>
+        <button class="btn bn2 bsm" onclick="event.stopPropagation();pstab('lenses');lensOpen('controversy')">🔍 Lihat Controversy &amp; Legal Record →</button>
+       </div>
+      </div>
+     </div>
+
+     <!-- F. Top Topic Clusters -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Top Topic Clusters</div><span class="bx bn">2 cluster</span></div>
+      <div style="display:flex;flex-direction:column;gap:9px;" id="ov-topic-cards"><!-- populated by JS: renderOverviewTopicCards() --></div>
+     </div>
+
+     <!-- G. Decision Implications -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Decision Implications</div><span class="bx bn">Bahasa netral — bukan rekomendasi langsung</span></div>
+      <div class="sig-split" style="margin-bottom:10px;">
+       <div class="sig-col recovery">
+        <div style="font-size:11.5px;font-weight:700;color:var(--gr);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">✓ Yang Mendukung Keputusan</div>
+        <div class="sig-item">Rekam jejak realisasi janji yang konsisten (kontrak, milestone smelter) berdasarkan ringkasan riset yang tersedia.</div>
+        <div class="sig-item">Tidak ditemukan catatan hukum personal yang material di arsip Tempo yang tersedia.</div>
+       </div>
+       <div class="sig-col risk">
+        <div style="font-size:11.5px;font-weight:700;color:var(--r);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">⚠ Yang Meningkatkan Risiko</div>
+        <div class="sig-item">Data yang tersedia terbatas pada ringkasan riset (bukan artikel penuh dengan tautan langsung) — verifikasi independen tetap disarankan.</div>
+        <div class="sig-item">Riwayat karier sebelum 2020 dan latar belakang pribadi tidak ditemukan di arsip yang tersedia.</div>
+       </div>
+      </div>
+      <div class="mit-group">
+       <div class="mit-group-title">◐ Belum Terselesaikan / Perlu Diverifikasi</div>
+       <div class="mit-item">Material uncertainty remains — penandatanganan final perjanjian divestasi 12% saham (baru draf per Jun 2026).</div>
+       <div class="mit-item">Requires further validation — akses ke artikel sumber asli (bukan hanya ringkasan riset) untuk konfirmasi independen.</div>
+      </div>
+      <div class="mit-group" style="margin-bottom:0;">
+       <div class="mit-group-title">📡 Prioritas Monitoring yang Disarankan</div>
+       <div class="mit-item">Monitor before commitment — konfirmasi penandatanganan final perjanjian divestasi saham.</div>
+       <div class="mit-item">Pantau pernyataan publik lanjutan terkait kapasitas produksi dan target hilirisasi berikutnya.</div>
+      </div>
+     </div>
+
+     <!-- B. Key Facts (collapsed by default) -->
+     <div class="acc" id="acc-keyfacts">
+      <div class="acc-hd" onclick="toggleAcc('acc-keyfacts')"><div class="acc-ttl">📋 Key Facts <span class="bx bn" style="font-weight:500;font-size:11px;">8 fakta</span></div><div class="acc-chevron">▸</div></div>
+      <div class="acc-body">
+       <div class="fi-row"><div class="fi-k">Nama</div><div class="fi-v">Tony Wenas</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Jabatan</div><div class="fi-v">Presiden Direktur (Direktur Utama), PT Freeport Indonesia</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Afiliasi Utama</div><div class="fi-v">PT Freeport Indonesia (PTFI)</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span><span class="fi-asof" onclick="pstab('structure')" style="cursor:pointer;color:var(--bl);">🔗 lihat afiliasi</span></div></div>
+       <div class="fi-row"><div class="fi-k">Organisasi Terkait</div><div class="fi-v">Freeport-McMoRan Inc. (induk usaha PTFI)</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Rentang Cakupan Arsip</div><div class="fi-v">2020–2026</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Peran Publik</div><div class="fi-v">Juru bicara korporat utama PTFI untuk isu strategis (smelter, produksi, kontrak, dekarbonisasi)</div><div class="fi-meta"><span class="vbadge verified">✓ Verified</span></div></div>
+       <div class="fi-row"><div class="fi-k">Riwayat Karier Sebelum 2020</div><div class="fi-v">Tidak ditemukan di arsip Tempo yang tersedia</div><div class="fi-meta"><span class="vbadge insuff">— Insufficient Evidence</span></div></div>
+       <div class="fi-row" style="border-bottom:none;"><div class="fi-k">Latar Belakang Pribadi</div><div class="fi-v">Usia, pendidikan, dan riwayat pribadi lain tidak ditemukan di arsip yang tersedia</div><div class="fi-meta"><span class="vbadge insuff">— Insufficient Evidence</span></div></div>
+      </div>
+     </div>
+
+     <!-- D. Risk Lens (collapsed by default) -->
+     <div class="acc" id="acc-risklens">
+      <div class="acc-hd" onclick="toggleAcc('acc-risklens')"><div class="acc-ttl">🧭 Risk Lens <span class="bx bn" style="font-weight:500;font-size:11px;">5 dimensi</span></div><div class="acc-chevron">▸</div></div>
+      <div class="acc-body">
+       <div style="font-size:12px;color:var(--m);margin-bottom:12px;">Bukan skor tunggal — setiap dimensi dinilai statusnya secara kualitatif berdasarkan pola pemberitaan yang tersedia.</div>
+       <div class="g2" style="gap:9px;">
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Kredibilitas Pernyataan Publik</div><div style="font-size:11px;color:var(--m);">Rekam jejak realisasi janji yang konsisten</div></div><span class="dim-pill dim-improving">Improving</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Governance &amp; Otoritas</div><div style="font-size:11px;color:var(--m);">Terlibat langsung dalam negosiasi kontrak tingkat tinggi</div></div><span class="dim-pill dim-improving">Improving</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Eksposur Hukum Personal</div><div style="font-size:11px;color:var(--m);">Tidak ditemukan catatan hukum pidana personal</div></div><span class="dim-pill dim-insuff">Insufficient Evidence</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Risiko Reputasi</div><div style="font-size:11px;color:var(--m);">Framing pemberitaan dominan faktual/korporat</div></div><span class="dim-pill dim-improving">Improving</span></div>
+        <div class="rb" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div style="font-size:12.5px;font-weight:700;color:var(--n);">Kelengkapan Data Latar Belakang</div><div style="font-size:11px;color:var(--m);">Riwayat karier &amp; pribadi sebelum 2020 tidak tersedia</div></div><span class="dim-pill dim-insuff">Insufficient Evidence</span></div>
+       </div>
+      </div>
+     </div>
+
+     <!-- E. Track Record Summary (collapsed by default) -->
+     <div class="acc" id="acc-trackrecord" style="margin-bottom:4px;">
+      <div class="acc-hd" onclick="toggleAcc('acc-trackrecord')"><div class="acc-ttl">📜 Track Record Summary <span class="bx bn" style="font-weight:500;font-size:11px;">2020–2026</span></div><div class="acc-chevron">▸</div></div>
+      <div class="acc-body">
+       <div class="tbl-scroll">
+       <div class="mon-tbl" style="border:none;">
+        <table>
+         <thead><tr><th>Kategori</th><th>Pola</th><th>Arah</th><th>Evidence</th></tr></thead>
+         <tbody>
+          <tr><td><strong>Realisasi Janji Publik</strong></td><td style="font-size:12px;color:var(--m);">Target smelter &amp; kontrak umumnya terealisasi, meski kadang meleset tipis dari jadwal</td><td><span class="trs">↗ Membaik</span></td><td><span class="bx bm">Moderate</span></td></tr>
+          <tr><td><strong>Transparansi Risiko</strong></td><td style="font-size:12px;color:var(--m);">Bersedia mengungkap risiko finansial (cashflow negatif, potensi kerugian smelter) secara terbuka</td><td><span class="tri">→ Konsisten</span></td><td><span class="bx bm">Moderate</span></td></tr>
+          <tr><td><strong>Hubungan dengan Regulator</strong></td><td style="font-size:12px;color:var(--m);">Interaksi rutin dan konstruktif dengan Kementerian Investasi dan DPR</td><td><span class="trs">↗ Membaik</span></td><td><span class="bx bm">Moderate</span></td></tr>
+          <tr><td><strong>Eksposur Hukum Personal</strong></td><td style="font-size:12px;color:var(--m);">Tidak ditemukan catatan hukum pidana personal di arsip yang tersedia</td><td><span class="tri">→ Tidak ada temuan</span></td><td><span class="bx bn">Insufficient</span></td></tr>
+         </tbody>
+        </table>
+       </div>
+       </div>
+      </div>
+     </div>
+`;
+
+const TONYWENAS_CAREER_HTML = `
+     <!-- A. Career Trajectory (replaces Ownership & Leadership Map for person entities) -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Career Trajectory</div><span class="bx bn">2020–2026</span></div>
+      <div style="background:var(--bll);border-radius:6px;padding:8px 11px;font-size:11.5px;color:var(--bl);margin-bottom:13px;line-height:1.6;">ℹ️ Arsip Tempo yang tersedia hanya mengonfirmasi jabatan Tony Wenas sebagai Presiden Direktur PTFI sejak 2020 — riwayat karier atau jabatan sebelumnya tidak ditemukan dan ditampilkan sebagai data kosong di bawah.</div>
+      <div class="tl-w">
+       <div class="tli hl">
+        <div class="tyr">2020–2026 (dikonfirmasi berkelanjutan)</div>
+        <div class="tev">Presiden Direktur (Direktur Utama), PT Freeport Indonesia</div>
+        <div class="tim">Konsisten menjabat sebagai juru bicara korporat utama PTFI di seluruh periode pemberitaan yang tersedia — mencakup isu smelter, kinerja keuangan, negosiasi kontrak, dan strategi dekarbonisasi.</div>
+       </div>
+       <div class="tli" style="margin-bottom:0;opacity:.6;">
+        <div class="tyr">Sebelum 2020</div>
+        <div class="tev">Riwayat jabatan/karier — data tidak tersedia</div>
+        <div class="tim">Tidak ditemukan informasi mengenai posisi atau karier Tony Wenas sebelum periode cakupan arsip Tempo yang tersedia (2020).</div>
+       </div>
+      </div>
+     </div>
+
+     <!-- B. Affiliation & Influence Map (reuses the same relationship-graph component, relabeled) -->
+     <div class="card cp m14">
+      <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Affiliation &amp; Influence Map</div>
+       <span class="bx bn" id="ent-table-count-hd">7 entitas · 11 sumber</span>
+      </div>
+      <div style="font-size:12px;color:var(--m);margin-bottom:9px;">Jejaring afiliasi dan relasi pengaruh Tony Wenas — perusahaan yang dipimpin, induk usaha, regulator, dan counterpart negosiasi utama.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+       <div style="display:flex;gap:5px;align-items:center;">
+        <span style="font-size:10.5px;font-weight:600;color:var(--m);">Scope</span>
+        <button class="kg-scope on" onclick="setKGScope(this,'focused')">Focused</button>
+        <button class="kg-scope" onclick="setKGScope(this,'standard')">Standard</button>
+        <button class="kg-scope" onclick="setKGScope(this,'wide')">Wide</button>
+       </div>
+       <div style="width:1px;height:14px;background:var(--b);flex-shrink:0;"></div>
+       <div style="display:flex;gap:5px;align-items:center;">
+        <span style="font-size:10.5px;font-weight:600;color:var(--m);">Relationship Type</span>
+        <button class="kg-type on" onclick="setKGType(this,null)">All</button>
+        <button class="kg-type" onclick="setKGType(this,['group'])">Perusahaan</button>
+        <button class="kg-type" onclick="setKGType(this,['governance'])">Regulator</button>
+        <button class="kg-type" onclick="setKGType(this,['peer'])">Counterpart</button>
+       </div>
+      </div>
+      <!-- KG Canvas (same ids/JS as company relationship map, different dataset) -->
+      <div id="kg-force-container" style="position:relative;height:380px;background:#F8FAFC;overflow:hidden;margin-top:9px;">
+       <svg id="kg-force-svg" style="width:100%;height:100%;display:block;"></svg>
+       <div id="kg-tip" style="display:none;position:absolute;background:#fff;border:1px solid var(--b);border-radius:8px;padding:11px 13px;max-width:240px;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.1);pointer-events:none;"></div>
+       <div style="position:absolute;bottom:8px;right:10px;font-size:10.5px;color:var(--s);">Scroll = zoom · Drag node = pindah · Klik = highlight relasi</div>
+       <div style="position:absolute;top:8px;right:10px;display:flex;gap:4px;">
+        <button class="kg-btn" onclick="kgZoomIn()" title="Zoom in">＋</button>
+        <button class="kg-btn" onclick="kgZoomOut()" title="Zoom out">－</button>
+        <button class="kg-btn" onclick="kgReset()" title="Reset view">↺</button>
+        <button class="kg-btn" id="kg-unsel-btn" onclick="kgClearSelection()" style="display:none;background:var(--rl);color:var(--r);border-color:var(--r);">✕ Deselect</button>
+       </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:9px 14px;margin-top:9px;font-size:11px;color:var(--m);">
+       <div style="display:flex;align-items:center;gap:4px;"><div style="width:9px;height:9px;border-radius:50%;background:#CC1F2D;"></div>Entitas Utama</div>
+       <div style="display:flex;align-items:center;gap:4px;"><div style="width:9px;height:9px;border-radius:50%;background:#7C3AED;"></div>Perusahaan</div>
+       <div style="display:flex;align-items:center;gap:4px;"><div style="width:9px;height:9px;border-radius:50%;background:#2563EB;"></div>Regulator</div>
+       <div style="display:flex;align-items:center;gap:4px;"><div style="width:9px;height:9px;border-radius:50%;background:#64748B;"></div>Counterpart/Mitra</div>
+      </div>
+      <!-- Entity table -->
+      <div class="tbl-scroll" style="margin-top:13px;">
+       <div class="mon-tbl">
+        <table>
+         <thead><tr>
+          <th style="text-align:left;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--m);">Nama Entitas</th>
+          <th style="text-align:left;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--m);">Tipe</th>
+          <th style="text-align:left;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--m);">Kekuatan Rel.</th>
+          <th style="text-align:center;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--m);">Mention</th>
+          <th style="text-align:center;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--m);">Artikel</th>
+          <th style="text-align:center;padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--m);"></th>
+         </tr></thead>
+         <tbody id="ent-table-body"><!-- populated by JS: buildEntityTable() --></tbody>
+        </table>
+       </div>
+      </div>
+     </div>
+`;
+
+// ── Person-type Specialized Lenses grid (Public Statement Archive / Promise & Follow-up / Controversy & Legal) ──
+const TONYWENAS_LENSES_GRID_HTML = `
+      <div class="lens-card" id="lens-card-statements" onclick="lensOpen('statements')">
+       <div class="lens-ic">💬</div><div class="lens-name">Public Statement Archive</div>
+       <div class="lens-desc">Kronologi pernyataan publik terverifikasi, dengan konteks dan sumber masing-masing.</div>
+      </div>
+      <div class="lens-card" id="lens-card-promises" onclick="lensOpen('promises')">
+       <div class="lens-ic">🎯</div><div class="lens-name">Promise &amp; Follow-up Tracker</div>
+       <div class="lens-desc">Melacak janji/komitmen publik dan status realisasinya berdasarkan pemberitaan lanjutan.</div>
+      </div>
+      <div class="lens-card" id="lens-card-controversy" onclick="lensOpen('controversy')">
+       <div class="lens-ic">⚖️</div><div class="lens-name">Controversy &amp; Legal Record</div>
+       <div class="lens-desc">Catatan hukum, tuntutan, atau kontroversi personal yang terverifikasi di arsip publik.</div>
+      </div>
+`;
+
+// Extend LENS_CONTENT with person-type lens content
+LENS_CONTENT.tonywenas = {
+ statements:{icon:'💬',name:'Public Statement Archive',body:`
+   <div style="font-size:11.5px;background:var(--bll);color:var(--bl);border-radius:6px;padding:8px 11px;margin-bottom:12px;">ℹ️ Kutipan berikut adalah <strong>ringkasan</strong> dari riset arsip Tempo, bukan kutipan verbatim — nomor referensi [ ] mengacu ke ringkasan riset, bukan tautan artikel langsung.</div>
+   <div class="tl-w">
+    <div class="tli hl"><div class="tyr">28 Apr 2020</div><div class="tev">Cashflow negatif akibat investasi tambang bawah tanah</div><div class="tim">Freeport mempertimbangkan penundaan pembangunan smelter namun menjamin tidak ada PHK karyawan. <span style="color:var(--s);">— ref [25][41]</span></div></div>
+    <div class="tli"><div class="tyr">4 Sep 2020</div><div class="tev">Peringatan risiko biaya smelter hingga US$10 miliar</div><div class="tim">Jika treatment charges tidak membaik, proyek smelter Gresik berpotensi merugikan Freeport dalam skala besar. <span style="color:var(--s);">— ref [23]</span></div></div>
+    <div class="tli"><div class="tyr">26 Sep 2023</div><div class="tev">Progres smelter Gresik 76%, target rampung Mei 2024</div><div class="tim">Turut memaparkan rincian kapasitas precious metal refinery (PMR) dan output yang direncanakan. <span style="color:var(--s);">— ref [21]</span></div></div>
+    <div class="tli"><div class="tyr">10 Apr 2024</div><div class="tev">Progres smelter capai 94%</div><div class="tim">Commissioning direncanakan Juni 2024, katoda tembaga pertama ditargetkan Agustus 2024. <span style="color:var(--s);">— ref [22]</span></div></div>
+    <div class="tli"><div class="tyr">13–16 Jun 2024</div><div class="tev">Pengiriman konsentrat perdana ke smelter Gresik</div><div class="tim">22.000 ton konsentrat dari Amamapare — disebut sebagai momen penting hilirisasi PTFI. <span style="color:var(--s);">— ref [11]</span></div></div>
+    <div class="tli"><div class="tyr">17/28 Apr 2024</div><div class="tev">Laporan kinerja 2023</div><div class="tim">Laba bersih PTFI senilai US$3,16 miliar (~Rp48,79 triliun), setoran ke daerah sekitar Rp3,35 triliun. <span style="color:var(--s);">— ref [39]</span></div></div>
+    <div class="tli"><div class="tyr">2023</div><div class="tev">Strategi dekarbonisasi PTFI</div><div class="tim">Target pengurangan emisi gas rumah kaca 30% pada 2030, investasi PLTMG/PLTGU, alat angkut listrik bawah tanah. <span style="color:var(--s);">— ref [26]</span></div></div>
+    <div class="tli"><div class="tyr">14 Jul 2025</div><div class="tev">Perpanjangan kontrak "masih didiskusikan"</div><div class="tim">Kondisi perusahaan baik, smelter kembali beroperasi sejak Juni 2025. <span style="color:var(--s);">— ref [27]</span></div></div>
+    <div class="tli"><div class="tyr">18 Jun 2026</div><div class="tev">Draf perjanjian divestasi saham 12% diserahkan</div><div class="tim">Tindak lanjut MoU perpanjangan IUPK yang ditandatangani 18 Feb 2026. <span style="color:var(--s);">— ref [36]</span></div></div>
+    <div class="tli" style="margin-bottom:0;"><div class="tyr">14 Jul 2026</div><div class="tev">Keterangan kapasitas smelter di Komisi XII DPR</div><div class="tim">Kapasitas gabungan dua smelter capai 3 juta ton konsentrat/tahun; turut menjelaskan riwayat kebakaran GCP Okt 2024. <span style="color:var(--s);">— ref [1]</span></div></div>
+   </div>`},
+ promises:{icon:'🎯',name:'Promise & Follow-up Tracker',body:`
+   <div style="font-size:11.5px;background:var(--bll);color:var(--bl);border-radius:6px;padding:8px 11px;margin-bottom:12px;">ℹ️ Melacak komitmen/target yang disampaikan secara publik, dibandingkan dengan perkembangan yang terkonfirmasi di pemberitaan berikutnya.</div>
+   <div class="flag" style="margin-bottom:10px;">
+    <div class="fhd"><div class="ft">Smelter Gresik rampung Mei 2024</div><div class="flex g6"><span class="bx bm">Sebagian Terpenuhi</span><span class="bx bn">26 Sep 2023</span></div></div>
+    <div class="fbd"><div class="fd"><strong>Janji:</strong> Smelter ditargetkan rampung Mei 2024, saat progres baru 76%.<br><strong>Follow-up:</strong> Pada 10 April 2024 progres baru ~94%; commissioning baru dimulai Juni 2024 — meleset sekitar satu bulan dari target, namun secara substansial tercapai.</div><div class="fm"><div style="font-size:11px;color:var(--m);">ref [21][22]</div><button class="bev" onclick="lensClose();pstab('issues');openTopic('tw-smelter')">Lihat Topic →</button></div></div>
+   </div>
+   <div class="flag" style="margin-bottom:10px;">
+    <div class="fhd"><div class="ft">Operasi smelter Juni 2024, katoda Agustus 2024</div><div class="flex g6"><span class="bx bl">Terpenuhi</span><span class="bx bn">10 Apr 2024</span></div></div>
+    <div class="fbd"><div class="fd"><strong>Janji:</strong> Commissioning Juni 2024, katoda tembaga keluar Agustus 2024.<br><strong>Follow-up:</strong> Pengiriman konsentrat perdana ke smelter terkonfirmasi terjadi 13–16 Juni 2024, sesuai rencana. Tanggal persis keluarnya katoda pertama tidak dikonfirmasi eksplisit di ringkasan riset yang tersedia, namun jadwal awal operasi terpenuhi.</div><div class="fm"><div style="font-size:11px;color:var(--m);">ref [22][11]</div><button class="bev" onclick="lensClose();pstab('issues');openTopic('tw-smelter')">Lihat Topic →</button></div></div>
+   </div>
+   <div class="flag" style="margin-bottom:10px;">
+    <div class="fhd"><div class="ft">Tidak ada PHK meski cashflow negatif</div><div class="flex g6"><span class="bx bn">Tidak Ada Bukti Sebaliknya</span><span class="bx bn">28 Apr 2020</span></div></div>
+    <div class="fbd"><div class="fd"><strong>Janji:</strong> Meski cashflow negatif dan smelter berpotensi ditunda, dijamin tidak ada PHK karyawan.<br><strong>Follow-up:</strong> Tidak ditemukan laporan PHK massal Freeport terkait periode ini dalam arsip yang tersedia — namun ini bukan konfirmasi positif, hanya ketiadaan bukti pelanggaran.</div><div class="fm"><div style="font-size:11px;color:var(--m);">ref [25][41]</div></div></div>
+   </div>
+   <div class="flag" style="margin-bottom:0;">
+    <div class="fhd"><div class="ft">Perpanjangan kontrak hingga 2061</div><div class="flex g6"><span class="bx bl">Terpenuhi</span><span class="bx bn">14 Jul 2025</span></div></div>
+    <div class="fbd"><div class="fd"><strong>Janji:</strong> Kemungkinan perpanjangan kontrak hingga 2061 "masih didiskusikan".<br><strong>Follow-up:</strong> MoU perpanjangan IUPK resmi ditandatangani 18 Februari 2026 — janji terealisasi dalam tujuh bulan. Draf perjanjian divestasi 12% saham diserahkan 18 Juni 2026, meski penandatanganan final masih berproses.</div><div class="fm"><div style="font-size:11px;color:var(--m);">ref [27][36]</div><button class="bev" onclick="lensClose();pstab('issues');openTopic('tw-kontrak')">Lihat Topic →</button></div></div>
+   </div>`},
+ controversy:{icon:'⚖️',name:'Controversy & Legal Record',body:`
+   <div class="lens-empty"><div style="font-size:32px;margin-bottom:10px;">🔍</div><div style="font-size:14px;font-weight:600;color:var(--n);margin-bottom:6px;">No material verified signal identified in the available corpus.</div><div style="font-size:12.5px;color:var(--m);line-height:1.6;max-width:440px;margin:0 auto;">Tidak ditemukan catatan hukum pidana atau tuntutan pribadi terhadap Tony Wenas dalam ringkasan riset arsip Tempo yang tersedia. Isu hukum yang muncul dalam pemberitaan bersifat korporat/kontraktual — negosiasi IUPK dan divestasi saham — bukan perkara pidana personal.</div></div>`}
+};
+
+// ── Tony Wenas sources (research-summary based — no direct article URLs available) ──
+const TONYWENAS_SOURCES=[
+ {title:'Peringatan cashflow negatif & jaminan tanpa PHK',pub:'Tempo — ringkasan riset',date:'28 Apr 2020',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'Cashflow Freeport negatif akibat investasi tambang bawah tanah; smelter berpotensi ditunda, tanpa PHK.'},
+ {title:'Peringatan risiko biaya smelter hingga US$10 miliar',pub:'Tempo — ringkasan riset',date:'4 Sep 2020',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'Proyek smelter Gresik berpotensi merugikan Freeport jika treatment charges tidak membaik.'},
+ {title:'Progres smelter Gresik 76%, target Mei 2024',pub:'Tempo — ringkasan riset',date:'26 Sep 2023',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'Rincian kapasitas PMR dan output yang direncanakan turut dipaparkan.'},
+ {title:'Progres smelter capai 94%',pub:'Tempo — ringkasan riset',date:'10 Apr 2024',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'Commissioning direncanakan Juni 2024, katoda tembaga ditargetkan Agustus 2024.'},
+ {title:'Pengiriman konsentrat perdana ke smelter Gresik',pub:'Tempo — ringkasan riset',date:'16 Jun 2024',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'22.000 ton konsentrat dari Amamapare — momen penting hilirisasi PTFI.'},
+ {title:'Laporan kinerja 2023: laba bersih US$3,16 miliar',pub:'Tempo — ringkasan riset',date:'28 Apr 2024',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'Setoran ke Pemda Papua sekitar Rp3,35 triliun untuk tahun 2023.'},
+ {title:'Strategi dekarbonisasi PTFI',pub:'Tempo — ringkasan riset',date:'2023',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'Target pengurangan emisi gas rumah kaca 30% pada 2030.'},
+ {title:'Perpanjangan kontrak "masih didiskusikan"',pub:'Tempo — ringkasan riset',date:'14 Jul 2025',type:'Ringkasan Riset',topic:'tw-kontrak',verif:'Partially Verified',excerpt:'Kondisi perusahaan baik, smelter kembali beroperasi sejak Juni 2025.'},
+ {title:'MoU perpanjangan IUPK ditandatangani',pub:'Tempo — ringkasan riset',date:'18 Feb 2026',type:'Ringkasan Riset',topic:'tw-kontrak',verif:'Partially Verified',excerpt:'Ditandatangani bersama Menteri Investasi dan CEO Freeport-McMoRan Kathleen Quirk.'},
+ {title:'Draf perjanjian divestasi saham 12% diserahkan',pub:'Tempo — ringkasan riset',date:'18 Jun 2026',type:'Ringkasan Riset',topic:'tw-kontrak',verif:'Partially Verified',excerpt:'Tindak lanjut MoU perpanjangan IUPK ke pemerintah.'},
+ {title:'Keterangan kapasitas smelter di Komisi XII DPR',pub:'Tempo — ringkasan riset',date:'14 Jul 2026',type:'Ringkasan Riset',topic:'tw-smelter',verif:'Partially Verified',excerpt:'Kapasitas gabungan smelter 3 juta ton/tahun, termasuk riwayat kebakaran GCP Okt 2024.'}
+];
+
 </script>
 <!-- ENTITY ARTICLES DRAWER -->
 <div class="drwov" id="ent-art-ov" onclick="closeEntArticles()"></div>
