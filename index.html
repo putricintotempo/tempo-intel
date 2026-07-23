@@ -222,6 +222,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);displa
 .rb-art{font-size:12px;color:var(--bl);cursor:pointer;padding:3px 0;line-height:1.5;}
 .rb-art:hover{text-decoration:underline;}
 .flag{background:#fff;border:1.5px solid var(--b);border-radius:10px;padding:12px 14px;margin-bottom:7px;}
+.stmt-card{background:#fff;border:1px solid var(--b);border-radius:10px;padding:14px 16px 12px;margin-bottom:10px;position:relative;}
+.stmt-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;}
+.stmt-topic{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--bl);background:var(--bll);border-radius:4px;padding:2px 8px;}
+.stmt-date{font-size:11px;font-weight:600;color:var(--m);flex-shrink:0;}
+.stmt-body{display:flex;gap:9px;align-items:flex-start;}
+.stmt-mark{font-family:'Playfair Display',serif;font-size:32px;line-height:.6;color:var(--b2);flex-shrink:0;margin-top:6px;}
+.stmt-text{font-size:13.5px;color:var(--n);line-height:1.55;font-weight:600;flex:1;}
+.stmt-ref{font-size:11px;color:var(--s);margin-top:7px;text-align:right;}
 .flag:hover{border-color:var(--r);}
 .fhd{display:flex;align-items:flex-start;justify-content:space-between;gap:9px;margin-bottom:6px;}
 .ft{font-size:13px;font-weight:700;color:var(--n);line-height:1.3;}
@@ -2125,7 +2133,7 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
    <div class="insight-nav-item" data-sec="ins-sec-velocity" onclick="insNav(this,'ins-sec-velocity')">Velocity</div>
    <div class="insight-nav-item" data-sec="ins-sec-sentiment" onclick="insNav(this,'ins-sec-sentiment')">Sentiment</div>
    <div class="insight-nav-item" data-sec="ins-sec-precedents" onclick="insNav(this,'ins-sec-precedents')">Precedents</div>
-   <div class="insight-nav-item" data-sec="ins-sec-implications" onclick="insNav(this,'ins-sec-implications')">Next Steps</div>
+   <div class="insight-nav-item" data-sec="ins-sec-implications" onclick="insNav(this,'ins-sec-implications')">Outlook &amp; Scenarios</div>
    <div class="insight-nav-item" data-sec="ins-sec-evidence" onclick="insNav(this,'ins-sec-evidence')">Evidence</div>
   </div>
 
@@ -2153,7 +2161,15 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
 
   <!-- ═══ ACTORS ═══ -->
   <div class="insight-section card cp m14" id="ins-sec-actors" style="margin-top:18px;">
-   <div class="sh m8"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Peta Aktor Kunci</div><div class="flex g6"><button class="kg-btn" onclick="actorZoomIn()">＋</button><button class="kg-btn" onclick="actorZoomOut()">－</button><button class="kg-btn" onclick="actorReset()">↺</button></div></div>
+   <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Key Actor Analysis</div><span class="bx bn">6 aktor kunci</span></div>
+   <div class="tbl-scroll">
+   <div class="mon-tbl" style="border:none;margin-bottom:18px;">
+    <table><thead><tr><th>Aktor</th><th>Peran &amp; Kepentingan</th><th>Posisi</th><th>Tindakan Kunci</th><th>Relasi dengan Aktor Lain</th><th>Pengaruh</th><th>Potensi Langkah Berikutnya</th></tr></thead>
+     <tbody id="actor-table-body"><!-- populated by JS: renderActorTable() --></tbody>
+    </table>
+   </div>
+   </div>
+   <div class="sh m8"><div class="ser" style="font-size:14px;font-weight:600;color:var(--n);">Peta Aktor Kunci</div><div class="flex g6"><button class="kg-btn" onclick="actorZoomIn()">＋</button><button class="kg-btn" onclick="actorZoomOut()">－</button><button class="kg-btn" onclick="actorReset()">↺</button></div></div>
    <div id="actor-map-container" style="position:relative;height:400px;background:#F8FAFC;border:1px solid var(--b);border-radius:8px;overflow:hidden;cursor:grab;">
     <svg id="actor-map-svg" style="width:100%;height:100%;display:block;"></svg>
     <div id="actor-map-tip" style="display:none;position:absolute;background:#fff;border:1px solid var(--b);border-radius:7px;padding:9px 11px;max-width:220px;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.1);pointer-events:none;font-size:11px;"></div>
@@ -2186,35 +2202,54 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
 
   <!-- ═══ VELOCITY ═══ -->
   <div class="insight-section card cp m14" id="ins-sec-velocity" style="margin-top:18px;">
-   <div class="sh m8"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Velocity Isu</div><span class="demo-flag" title="Velocity menggabungkan perubahan volume dokumen relevan, keragaman sumber, aktivitas aktor, materialitas kejadian, dan kecepatan munculnya perkembangan baru.">ⓘ Data simulasi prototype</span></div>
-   <div class="vel-gauge-wrap m14">
-    <div><div class="vel-gauge-num">78<span style="font-size:16px;color:var(--m);">/100</span></div><div class="sig-status sig-status-accel" style="margin-top:4px;">Rapidly Rising</div></div>
-    <div style="flex:1;display:flex;flex-wrap:wrap;gap:16px;">
-     <div><div style="font-size:10.5px;color:var(--m);font-weight:700;text-transform:uppercase;">vs 6 Minggu Sebelumnya</div><div style="font-size:16px;font-weight:700;color:var(--r);">+42%</div></div>
-     <div><div style="font-size:10.5px;color:var(--m);font-weight:700;text-transform:uppercase;">Aktor Baru</div><div style="font-size:16px;font-weight:700;color:var(--n);">7</div></div>
-     <div><div style="font-size:10.5px;color:var(--m);font-weight:700;text-transform:uppercase;">Kejadian Material Baru</div><div style="font-size:16px;font-weight:700;color:var(--n);">12</div></div>
-     <div><div style="font-size:10.5px;color:var(--m);font-weight:700;text-transform:uppercase;">Keragaman Sumber</div><div style="font-size:16px;font-weight:700;color:var(--gr);">Tinggi</div></div>
+   <div class="sh m8"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Kecepatan Perkembangan Isu</div></div>
+   <div style="background:var(--bll);border-radius:7px;padding:9px 12px;font-size:12px;color:var(--bl);margin-bottom:16px;line-height:1.6;">ℹ️ Diukur dari <strong>kepadatan peristiwa material</strong> yang tercatat di tab Timeline — bukan jumlah artikel. Volume artikel tidak selalu mencerminkan seberapa cepat isu berkembang: satu peristiwa penting bisa memicu banyak artikel yang mengulang fakta yang sama.</div>
+
+   <!-- Turning Point -->
+   <div style="border-left:4px solid var(--r);background:var(--rl);border-radius:0 8px 8px 0;padding:13px 16px;margin-bottom:14px;" id="turning-point-body"><!-- populated by JS: renderTurningPoint() --></div>
+
+   <!-- Two Peaks -->
+   <div class="g2" style="gap:12px;margin-bottom:16px;">
+    <div style="background:var(--bg);border-radius:8px;padding:13px 15px;">
+     <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:5px;letter-spacing:.4px;">📊 Peak Intensitas</div>
+     <div style="font-size:13px;font-weight:700;color:var(--n);margin-bottom:5px;">18–30 Des 2025 · 3 peristiwa</div>
+     <div style="font-size:11.5px;color:var(--m);line-height:1.55;">Periode dengan peristiwa material paling padat — tiga keputusan kebijakan besar terjadi berdekatan dalam ~2 minggu: kepastian penghentian insentif CBU, komitmen produksi lokal 15 produsen, dan publikasi skema pajak final 2026.</div>
+    </div>
+    <div style="background:var(--bg);border-radius:8px;padding:13px 15px;">
+     <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:5px;letter-spacing:.4px;">⭐ Peak Materialitas</div>
+     <div style="font-size:13px;font-weight:700;color:var(--n);margin-bottom:5px;">19 Des 2025 · Kepastian insentif CBU</div>
+     <div style="font-size:11.5px;color:var(--m);line-height:1.55;">Peristiwa tunggal berdampak paling besar — meski bukan bagian periode paling ramai secara volume, ini menyelesaikan satu ketidakpastian kebijakan paling material di seluruh signal ini.</div>
     </div>
    </div>
-   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:6px;">Volume Dokumen Mingguan</div>
+   <div class="snote m14">💡 Peak Intensitas dan Peak Materialitas bisa jadi periode/peristiwa yang <strong>berbeda</strong> — periode paling "ramai" belum tentu berisi peristiwa paling berdampak, dan sebaliknya.</div>
+
+   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:6px;">Kepadatan Peristiwa Material per Bulan</div>
    <div class="bc-wrap" id="vel-chart" style="height:110px;margin-bottom:6px;"><!-- populated by JS --></div>
-   <div class="snote m14">📈 Lonjakan sejalan dengan: angka industri bulanan baru, pengumuman model EV, diskusi insentif kebijakan, ekspansi perakitan lokal.</div>
-   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:8px;">Pendorong Topik</div>
+   <div class="snote m14">📈 Setelah klaster kebijakan Desember 2025, tidak ada peristiwa material baru selama ~4 minggu, sebelum peluncuran Toyota Veloz Hybrid EV (Jan 2026) — lalu klaster kedua muncul Apr–Jul 2026 seputar volatilitas kompetitor dan isu kualitas produk.</div>
+
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+    <div style="background:var(--bg);border-radius:7px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--m);font-weight:700;text-transform:uppercase;margin-bottom:3px;">Total Peristiwa Material</div><div style="font-size:16px;font-weight:700;color:var(--n);">13</div></div>
+    <div style="background:var(--bg);border-radius:7px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--m);font-weight:700;text-transform:uppercase;margin-bottom:3px;">Jarak Rata-rata Antar Peristiwa</div><div style="font-size:16px;font-weight:700;color:var(--n);">~5 minggu</div></div>
+    <div style="background:var(--bg);border-radius:7px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--m);font-weight:700;text-transform:uppercase;margin-bottom:3px;">Peristiwa 90 Hari Terakhir</div><div style="font-size:16px;font-weight:700;color:var(--r);">4</div></div>
+   </div>
+
+   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:8px;">Komposisi Topik Peristiwa Material</div>
+   <div style="font-size:11.5px;color:var(--m);margin-bottom:8px;">Berdasarkan tema peristiwa material di Timeline — bukan proporsi volume artikel mentah.</div>
    <div style="display:flex;height:14px;border-radius:6px;overflow:hidden;margin-bottom:9px;">
-    <div style="width:32%;background:var(--r);" title="Penjualan & kompetisi BEV 32%"></div><div style="width:24%;background:#D97706;" title="PHEV & perakitan lokal 24%"></div><div style="width:18%;background:var(--bl);" title="Kebijakan & insentif 18%"></div><div style="width:16%;background:var(--pu);" title="Peluncuran model & harga 16%"></div><div style="width:10%;background:#65A30D;" title="Narasi lingkungan 10%"></div>
+    <div style="width:31%;background:var(--r);" title="Kompetisi & volatilitas BEV 31%"></div><div style="width:23%;background:#D97706;" title="Kebijakan insentif & TKDN 23%"></div><div style="width:15%;background:var(--bl);" title="Respons produk Astra/Toyota 15%"></div><div style="width:15%;background:var(--pu);" title="Isu kualitas & reputasi produk 15%"></div><div style="width:16%;background:#65A30D;" title="Infrastruktur pengisian daya 16%"></div>
    </div>
    <div class="flex g10 wrap" style="font-size:11px;color:var(--m);">
-    <div class="flex ic g5"><div style="width:8px;height:8px;background:var(--r);border-radius:2px;"></div>Penjualan &amp; kompetisi BEV (32%)</div>
-    <div class="flex ic g5"><div style="width:8px;height:8px;background:#D97706;border-radius:2px;"></div>PHEV &amp; perakitan lokal (24%)</div>
-    <div class="flex ic g5"><div style="width:8px;height:8px;background:var(--bl);border-radius:2px;"></div>Kebijakan &amp; insentif (18%)</div>
-    <div class="flex ic g5"><div style="width:8px;height:8px;background:var(--pu);border-radius:2px;"></div>Peluncuran model &amp; harga (16%)</div>
-    <div class="flex ic g5"><div style="width:8px;height:8px;background:#65A30D;border-radius:2px;"></div>Narasi lingkungan (10%)</div>
+    <div class="flex ic g5"><div style="width:8px;height:8px;background:var(--r);border-radius:2px;"></div>Kompetisi &amp; volatilitas BEV (31%)</div>
+    <div class="flex ic g5"><div style="width:8px;height:8px;background:#D97706;border-radius:2px;"></div>Kebijakan insentif &amp; TKDN (23%)</div>
+    <div class="flex ic g5"><div style="width:8px;height:8px;background:var(--bl);border-radius:2px;"></div>Respons produk Astra/Toyota (15%)</div>
+    <div class="flex ic g5"><div style="width:8px;height:8px;background:var(--pu);border-radius:2px;"></div>Isu kualitas &amp; reputasi produk (15%)</div>
+    <div class="flex ic g5"><div style="width:8px;height:8px;background:#65A30D;border-radius:2px;"></div>Infrastruktur pengisian daya (16%)</div>
    </div>
   </div>
 
   <!-- ═══ SENTIMENT ═══ -->
   <div class="insight-section card cp m14" id="ins-sec-sentiment" style="margin-top:18px;">
-   <div class="sh m8"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Trajektori Sentimen per Stakeholder</div><span class="demo-flag">ⓘ Analisis simulasi prototype</span></div>
+   <div class="sh m8"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Trajektori Sentimen per Stakeholder</div><span class="bx bn" title="Skor per-stakeholder bersifat indikatif berdasarkan pola pemberitaan, bukan hasil social listening terukur">ⓘ Lihat keterbatasan data di bawah</span></div>
    <div class="flex g6 wrap m14">
     <select class="tf-sel"><option>Semua Teknologi</option><option>BEV</option><option>HEV</option><option>PHEV</option></select>
     <select class="tf-sel"><option>Semua Aktor</option><option>Pemerintah</option><option>Astra</option><option>Kompetitor</option></select>
@@ -2222,7 +2257,17 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
     <select class="tf-sel"><option>6 Minggu Terakhir</option><option>3 Bulan Terakhir</option><option>Sejak Awal Tahun</option></select>
    </div>
    <div id="sentiment-rows"><!-- populated by JS --></div>
-   <div class="snote m10">🧭 Nada pemerintah dan industri tetap suportif karena adopsi EV, manufaktur lokal, dan infrastruktur pengisian daya terus berkembang. Nada lingkungan lebih hati-hati karena manfaat emisi knalpot masih harus dinilai bersamaan dengan emisi pembangkit listrik, dampak pertambangan, limbah baterai, dan penyebab polusi udara perkotaan yang lebih luas.</div>
+   <div class="snote m10">🧭 Nada pemerintah dan industri tetap suportif karena kejelasan kebijakan insentif dan respons produk konkret dari Toyota-Astra. Nada konsumen justru sedikit memburuk seiring munculnya keluhan kualitas produk kompetitor Cina di ruang publik.</div>
+
+   <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin:16px 0 8px;letter-spacing:.5px;">Narasi Dominan</div>
+   <div class="tbl-scroll">
+   <div class="mon-tbl" style="border:none;">
+    <table><thead><tr><th>Narasi</th><th>Evidence</th><th>Kelompok</th><th>Tren</th><th>Potensi Dampak</th></tr></thead>
+     <tbody id="dominant-narratives-body"><!-- populated by JS --></tbody>
+    </table>
+   </div>
+   </div>
+   <div style="background:var(--aml);border-radius:7px;padding:10px 13px;font-size:12px;color:var(--am);margin-top:12px;line-height:1.6;">⚠️ <strong>Keterbatasan data:</strong> <span id="sentiment-limitations"></span></div>
   </div>
 
   <!-- ═══ PRECEDENTS ═══ -->
@@ -2231,17 +2276,39 @@ Pantau insentif fiskal, ketentuan TKDN, penjualan kendaraan penumpang, harga dan
    <div id="precedent-list"><!-- populated by JS --></div>
   </div>
 
-  <!-- ═══ NEXT STEPS ═══ -->
+  <!-- ═══ OUTLOOK & SCENARIOS ═══ -->
   <div class="insight-section card cp m14" id="ins-sec-implications" style="margin-top:18px;">
-   <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Langkah Lanjutan yang Direkomendasikan</div></div>
-   <div style="background:var(--bg);border-radius:8px;padding:12px 14px;margin-bottom:12px;">
-    <div class="flex g8" style="align-items:center;margin-bottom:7px;"><span class="claim-label claim-analysis">AI Analysis</span><span class="bx bn">Confidence: High</span></div>
-    <div style="font-size:13px;color:var(--t);line-height:1.65;">Indonesia berkembang menjadi pasar elektrifikasi multi-teknologi. Astra punya posisi HEV yang kuat, tapi sebagian besar momentum BEV dan PHEV terbaru saat ini dihasilkan oleh kompetitor di luar merek otomotif inti Astra.</div>
+
+   <div class="sh m10"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Emerging Pattern</div></div>
+   <div style="font-size:11.5px;color:var(--m);margin-bottom:12px;">Dipisahkan secara eksplisit antara fakta terverifikasi, interpretasi analis, dan asumsi — sesuai kerangka evidence-based analysis.</div>
+   <div id="emerging-pattern-body"><!-- populated by JS: renderEmergingPattern() --></div>
+
+   <div class="sh m10" style="margin-top:20px;"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Scenario Outlook</div><span class="bx bn">Maks. 3 skenario</span></div>
+   <div style="font-size:11.5px;color:var(--m);margin-bottom:12px;">Confidence level mencerminkan kekuatan evidence yang tersedia, bukan jaminan hasil.</div>
+   <div id="scenario-body"><!-- populated by JS: renderScenarios() --></div>
+
+   <div class="sh m10" style="margin-top:20px;"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">What to Watch Next</div><span class="bx bn">Leading indicators</span></div>
+   <div class="tbl-scroll">
+   <div class="mon-tbl" style="border:none;margin-bottom:16px;">
+    <table><thead><tr><th>Leading Indicator</th><th>Aktor Terkait</th><th>Mengapa Penting</th><th>Skenario Terdampak</th><th>Sumber Pemantauan</th></tr></thead>
+     <tbody id="watch-table-body"><!-- populated by JS: renderWatchV2() --></tbody>
+    </table>
    </div>
-   <div style="font-size:11.5px;color:var(--m);margin-bottom:16px;line-height:1.5;">Ini adalah saran langkah lanjutan untuk analisis lebih dalam menggunakan tools lain Tempo Intelligence — bukan rekomendasi strategi bisnis. Tempo Intelligence tidak tahu prioritas organisasi Anda; tiap saran di bawah menyebutkan pattern spesifik yang memicunya, supaya Anda bisa menilai relevansinya sendiri.</div>
+   </div>
+
+   <div class="sh m10" style="margin-top:20px;"><div class="ser" style="font-size:15px;font-weight:600;color:var(--n);">Langkah Lanjutan di Tempo Intelligence</div></div>
+   <div style="font-size:11.5px;color:var(--m);margin-bottom:16px;line-height:1.5;">Saran untuk analisis lebih dalam menggunakan tools lain Tempo Intelligence — bukan rekomendasi strategi bisnis. Tiap saran menyebutkan pattern spesifik yang memicunya, supaya Anda bisa menilai relevansinya sendiri.</div>
    <div id="impl-nextsteps"><!-- populated by JS --></div>
-   <div style="font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--am);margin:18px 0 9px;">Yang Perlu Dipantau Selanjutnya</div>
-   <div class="mit-group" id="impl-watch" style="margin-bottom:0;"><!-- populated by JS --></div>
+
+   <div style="background:linear-gradient(135deg,var(--n),var(--nl));border-radius:10px;padding:18px 20px;margin-top:20px;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.6);margin-bottom:6px;">Human-Assisted Service</div>
+    <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:7px;font-family:'Playfair Display',serif;">Butuh rekomendasi keputusan yang lebih dalam?</div>
+    <div style="font-size:12.5px;color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:14px;max-width:560px;">Signal Monitor sengaja berhenti di pola dan skenario — bukan rekomendasi keputusan bisnis, karena itu butuh konteks organisasi yang tidak kami miliki dan sebaiknya tidak diserahkan sepenuhnya ke AI. Untuk analisis strategis yang disesuaikan dengan konteks bisnis Anda, tim Analis Tempo Intelligence tersedia secara on-demand.</div>
+    <div class="flex g6 wrap">
+     <button class="btn bp bsm" onclick="toast('Menghubungkan Anda dengan tim Analyst Desk Tempo Intelligence — demo prototype')">📋 Pesan Analyst Brief</button>
+     <button class="btn bo bsm" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.3);" onclick="toast('Menghubungkan Anda dengan tim Analyst Desk Tempo Intelligence — demo prototype')">🧭 Konsultasi Strategic Issue Report</button>
+    </div>
+   </div>
   </div>
 
   <!-- ═══ EVIDENCE ═══ -->
@@ -4874,20 +4941,21 @@ function sigDemoToast(name){
 
 // ── Citations (universal evidence layer) ──
 const SIG_CIT={
- c1:{title:'Struktur Pasar EV Multi-Teknologi Muncul di Indonesia',pub:'Tempo.co',author:'Desk Otomotif',pubDate:'8 Jun 2026',eventDate:'Jun 2026',type:'Tempo Archive',primary:false,excerpt:'Data wholesale Januari–Mei 2026 menunjukkan BEV, HEV, dan PHEV sama-sama tumbuh, dengan kelompok kompetitor berbeda memimpin tiap teknologi.',url:'tempo.co/otomotif/ev-market-structure-2026',accessed:'14 Jul 2026',reliability:'High'},
- c2:{title:'Merek Cina Perluas Keunggulan BEV dan PHEV',pub:'Koran Tempo',author:'—',pubDate:'12 May 2026',eventDate:'May 2026',type:'Tempo Archive',primary:false,excerpt:'BYD, Jaecoo, dan Chery bersama-sama menyumbang mayoritas volume wholesale elektrifikasi non-Toyota pada periode yang diamati.',url:'koran.tempo.co/chinese-ev-lead-2026',accessed:'14 Jul 2026',reliability:'High'},
- c3:{title:'Toyota Pertahankan Kepemimpinan Hybrid di Tengah Persaingan BEV',pub:'Tempo.co',author:'Desk Otomotif',pubDate:'3 Feb 2026',eventDate:'Jan 2026',type:'Tempo Archive',primary:false,excerpt:'Toyota-Astra Motor mempertahankan pangsa dominan volume wholesale HEV meski kompetitor mempercepat peluncuran BEV.',url:'tempo.co/otomotif/toyota-hev-leadership-2026',accessed:'14 Jul 2026',reliability:'High'},
- c4:{title:'Data Wholesale GAIKINDO — Januari–Mei 2026',pub:'GAIKINDO',author:'—',pubDate:'2 Jun 2026',eventDate:'Jan–May 2026',type:'Official Statistics',primary:true,excerpt:'Wholesale BEV mencapai 57.087 unit untuk periode Januari–Mei 2026 di seluruh merek yang melapor.',url:'gaikindo.or.id/wholesale-data-2026',accessed:'14 Jul 2026',reliability:'High'},
- c5:{title:'Laporan Segmen HEV GAIKINDO — Januari–Mei 2026',pub:'GAIKINDO',author:'—',pubDate:'2 Jun 2026',eventDate:'Jan–May 2026',type:'Official Statistics',primary:true,excerpt:'Wholesale HEV mencapai 34.151 unit; Toyota menyumbang 21.604 unit, pangsa segmen 63,3%.',url:'gaikindo.or.id/hev-segment-2026',accessed:'14 Jul 2026',reliability:'High'},
- c6:{title:'Segmen PHEV Tunjukkan Konsentrasi Perakitan Lokal Sejak Dini',pub:'Tempo.co',author:'Desk Otomotif',pubDate:'10 Jun 2026',eventDate:'Jan–May 2026',type:'Tempo Archive',primary:false,excerpt:'Chery memimpin wholesale PHEV dengan 1.490 unit (pangsa 57,3%); sekitar 95% volume segmen dirakit secara lokal.',url:'tempo.co/otomotif/phev-local-assembly-2026',accessed:'14 Jul 2026',reliability:'Medium'},
- c7:{title:'Laporan Infrastruktur Pengisian Daya PLN',pub:'PLN',author:'Komunikasi Korporat',pubDate:'Sep 2025',eventDate:'Sep 2025',type:'Corporate Disclosure',primary:true,excerpt:'PLN mengoperasikan 4.272 unit SPKLU di 2.811 lokasi, didukung lebih dari 57.000 layanan home-charging.',url:'pln.co.id/spklu-report-2025',accessed:'14 Jul 2026',reliability:'High'},
- c8:{title:'Wholesale BEV Cetak Rekor Bulanan di April',pub:'Tempo.co',author:'Desk Otomotif',pubDate:'6 May 2026',eventDate:'Apr 2026',type:'Tempo Archive',primary:false,excerpt:'April 2026 wholesale BEV mencapai 14.825 unit, bulan tertinggi yang tercatat selama periode yang diamati.',url:'tempo.co/otomotif/bev-april-record-2026',accessed:'14 Jul 2026',reliability:'High'},
- c9:{title:'Kelanjutan Insentif EV 2026 Masih Dibahas',pub:'Tempo.co',author:'Desk Ekonomi',pubDate:'2 Jul 2026',eventDate:'Jul 2026',type:'Tempo Archive',primary:false,excerpt:'Pejabat pemerintah mengonfirmasi diskusi soal skema insentif 2026 masih berlangsung, namun regulasi resminya belum diterbitkan.',url:'tempo.co/ekonomi/insentif-ev-2026-belum-final',accessed:'14 Jul 2026',reliability:'Medium'},
- c10:{title:'Peraturan Presiden No. 55 Tahun 2019',pub:'Sekretariat Negara RI',author:'—',pubDate:'8 Aug 2019',eventDate:'8 Aug 2019',type:'Official Regulation',primary:true,excerpt:'Menetapkan program akselerasi adopsi kendaraan listrik jalan berbasis baterai.',url:'peraturan.go.id/perpres-55-2019',accessed:'14 Jul 2026',reliability:'High'},
- c11:{title:'Peraturan Presiden No. 79 Tahun 2023',pub:'Sekretariat Negara RI',author:'—',pubDate:'8 Dec 2023',eventDate:'8 Dec 2023',type:'Official Regulation',primary:true,excerpt:'Mengubah Perpres 55/2019, memperbarui kerangka akselerasi kendaraan listrik.',url:'peraturan.go.id/perpres-79-2023',accessed:'14 Jul 2026',reliability:'High'},
- c12:{title:'PMK tentang Insentif Fiskal BEV dan Hybrid 2025',pub:'Kementerian Keuangan',author:'—',pubDate:'4 Feb 2025',eventDate:'4 Feb 2025',type:'Official Regulation',primary:true,excerpt:'PPN DTP 10% untuk BEV yang memenuhi syarat dengan TKDN ≥40%; PPnBM DTP 3% untuk kendaraan hybrid dan PHEV yang memenuhi syarat, berlaku Januari–Desember 2025.',url:'kemenkeu.go.id/pmk-insentif-ev-2025',accessed:'14 Jul 2026',reliability:'High'},
- c13:{title:'BYD Pimpin Lonjakan Volume BEV 2025',pub:'Majalah Tempo',author:'—',pubDate:'8 Dec 2025',eventDate:'Nov 2025',type:'Tempo Archive',primary:false,excerpt:'Wholesale BEV mencapai 82.525 unit sepanjang tahun berjalan hingga November 2025, dengan BYD menyumbang 40.151 unit.',url:'majalah.tempo.co/byd-2025-surge',accessed:'14 Jul 2026',reliability:'High'},
- c14:{title:'Laporan Hybrid Full-Year 2025 GAIKINDO',pub:'GAIKINDO',author:'—',pubDate:'15 Jan 2026',eventDate:'2025',type:'Official Statistics',primary:true,excerpt:'Penjualan HEV nasional mencapai 65.943 unit di 2025, naik dari 59.903 di 2024; Toyota menyumbang 30.110 unit di 2025.',url:'gaikindo.or.id/full-year-2025-hybrid',accessed:'14 Jul 2026',reliability:'High'}
+ c1:{title:'Electric Vehicle Market in Indonesia',pub:'International Council on Clean Transportation (ICCT)',author:'ICCT Staff',pubDate:'9 Jan 2026',eventDate:'Q2 2025',type:'Research Report',primary:true,excerpt:'Penetrasi EV (BEV+PHEV) melonjak ke 15,2% dari total penjualan mobil penumpang pada Q2 2025, naik dari 10,1% pada Q1 2025; PHEV tumbuh 1.364% quarter-over-quarter meski dari basis kecil.',url:'https://theicct.org/publication/electric-vehicle-market-in-indonesia-dec25/',accessed:'23 Jul 2026',reliability:'High'},
+ c2:{title:'Penjualan mobil merek China di Indonesia naik 73 persen pada H1 2026',pub:'Antara',author:'Antara Otomotif',pubDate:'Jul 2026',eventDate:'H1 2026',type:'Berita',primary:false,excerpt:'Wholesale merek China naik 73,4% YoY jadi 78.662 unit pada H1 2026; pangsa pasar merek China naik dari 12% jadi 18%. BYD tetap pemimpin, Jaecoo jadi merek China terlaris kedua dengan 17.334 unit.',url:'https://otomotif.antaranews.com/berita/5650957/penjualan-mobil-merek-china-di-indonesia-naik-73-persen-pada-h1-2026',accessed:'23 Jul 2026',reliability:'High'},
+ c3:{title:'Daftar Lengkap Penjualan 45 Merek Mobil di Indonesia Q1 2026',pub:'AP Motor',author:'—',pubDate:'9 May 2026',eventDate:'Q1 2026',type:'Data Wholesale GAIKINDO',primary:true,excerpt:'Toyota memimpin dengan 60.584 unit (pangsa 29%), Daihatsu 34.881 unit, Mitsubishi 19.096 unit; BYD di peringkat 6 dengan 12.473 unit, mengungguli Wuling, Chery, dan Geely.',url:'https://www.apmotor.co.id/2026/05/daftar-lengkap-penjualan-45-merek-mobil.html',accessed:'23 Jul 2026',reliability:'Medium'},
+ c4:{title:'Penjualan Mobil Listrik BYD Terkoreksi Mei 2026, Jaecoo hingga Chery Stabil',pub:'Bisnis.com',author:'Desk Otomotif',pubDate:'16 Jul 2026',eventDate:'May 2026',type:'Berita',primary:false,excerpt:'Wholesale BYD anjlok dari 4.625 unit (Apr 2026) menjadi 895 unit (Mei 2026); akumulasi Jan-Mei 2026 sebanyak 17.993 unit, pangsa 5%.',url:'https://otomotif.bisnis.com/read/20260616/46/1981203/penjualan-mobil-listrik-byd-terkoreksi-mei-2026-jaecoo-hingga-chery-stabil',accessed:'23 Jul 2026',reliability:'High'},
+ c5:{title:'Penjualan Mobil Tiongkok pada Juni 2026: BYD Melejit',pub:'Oto Mounture',author:'—',pubDate:'13 Jul 2026',eventDate:'Jun 2026',type:'Data Wholesale GAIKINDO',primary:true,excerpt:'Wholesale BYD melonjak 488,2% MoM menjadi 5.264 unit pada Juni 2026, dari hanya 895 unit di Mei; Jaecoo stabil di atas 3.000 unit, Geely tumbuh konsisten ke 2.011 unit.',url:'https://oto.mounture.com/mobil/penjualan-mobil-tiongkok-pada-juni-2026-byd-melejit-jaecoo-dan-geely-tempel-posisi-teratas/',accessed:'23 Jul 2026',reliability:'High'},
+ c6:{title:'Penjualan Chery di Indonesia Turun 39,1 Persen Semester I 2026',pub:'Oto Mounture',author:'—',pubDate:'20 Jul 2026',eventDate:'H1 2026',type:'Berita',primary:false,excerpt:'Wholesale Chery H1 2026 turun 39,1% YoY jadi 6.264 unit; pangsa pasar turun dari 2,5% (Jan-Mei 2025) jadi 1,5% (Jan-Mei 2026) — berbeda arah dari Jaecoo (sub-brand Chery Group) yang justru tumbuh pesat.',url:'https://oto.mounture.com/mobil/penjualan-chery-di-indonesia-turun-391-persen-semester-i-2026-pangsa-pasar-ikut-menyusut/',accessed:'23 Jul 2026',reliability:'High'},
+ c7:{title:'SPKLU di Indonesia 2026: Infrastruktur EV Semakin Berkembang, Tapi Belum Sepenuhnya Merata',pub:'Sumatera Ekspres',author:'—',pubDate:'12 May 2026',eventDate:'May 2026',type:'Berita',primary:false,excerpt:'SPKLU nasional mencapai 4.892 unit per Mei 2026 (naik dari 3.233 unit Feb 2025), namun distribusinya masih terkonsentrasi di koridor Jawa-Sumatra-Bali; target pemerintah 62.918 unit pada 2030.',url:'https://www.otodream.com/ev/23758-jumlah-spklu-mobil-listrik-di-indonesia-capai-4-892-unit-per-mei-2026',accessed:'23 Jul 2026',reliability:'High'},
+ c8:{title:'Perkuat Komitmen Elektrifikasi, Toyota Resmi Mulai Penjualan New Veloz Hybrid EV di IIMS 2026',pub:'Toyota Pressroom',author:'PT Toyota Astra Motor',pubDate:'2026',eventDate:'Jan 2026',type:'Corporate Disclosure',primary:true,excerpt:'New Veloz Hybrid EV mencatat pre-book sekitar 5.000 unit dalam kurang dari 3 bulan sejak world premiere akhir November 2025 — bagian dari strategi Multi-Pathway Toyota yang memprioritaskan HEV sebagai xEV "paling relevan" untuk Indonesia.',url:'https://pressroom.toyota.astra.co.id/perkuat-komitmen-elektrifikasi-toyota-resmi-mulai-penjualan-new-veloz-hybrid-ev-di-iims-2026',accessed:'23 Jul 2026',reliability:'High'},
+ c9:{title:'Insentif Mobil Listrik Berakhir 2026: Apa Dampaknya?',pub:'Kompas.com',author:'Gilang',pubDate:'30 Dec 2025',eventDate:'Dec 2025',type:'Berita',primary:false,excerpt:'Insentif bea masuk 0% dan PPnBM DTP untuk BEV impor CBU dipastikan tidak diperpanjang ke 2026 (PMK No. 12/2025 mensyaratkan TKDN minimal 40% untuk tetap dapat PPN DTP); model yang sudah dirakit lokal masih berpeluang tetap dapat insentif.',url:'https://otomotif.kompas.com/read/2025/12/30/070200815/insentif-mobil-listrik-berakhir-2026--apa-dampaknya-',accessed:'23 Jul 2026',reliability:'High'},
+ c10:{title:'Manfaat Ekonomi Hingga Rp544 Triliun per Tahun Melayang Akibat Berakhirnya Insentif Kendaraan Listrik',pub:'IESR (Institute for Essential Services Reform)',author:'—',pubDate:'19 Dec 2025',eventDate:'Dec 2025',type:'Analisis Lembaga Riset',primary:true,excerpt:'Menko Perekonomian Airlangga Hartarto menyatakan insentif mobil listrik tidak diperpanjang di 2026, anggaran dialihkan ke program mobil nasional; IESR menilai ini akan mengerek naik harga mobil listrik akibat hilangnya potongan PPN 10% dan bea masuk CBU.',url:'https://iesr.or.id/manfaat-ekonomi-hingga-rp544-triliun-per-tahun-melayang-akibat-berakhirnya-insentif-kendaraan-listrik/',accessed:'23 Jul 2026',reliability:'Medium'},
+ c11:{title:'Panduan Lengkap Pajak Mobil Listrik 2026: Aturan dan Cara Hitung',pub:'Warta Finansial',author:'—',pubDate:'12 May 2026',eventDate:'Jun 2026',type:'Berita',primary:false,excerpt:'Per Juni 2026 pemerintah menerapkan seleksi lebih ketat — insentif PPN DTP (jadi hanya 1% dari 12%) diprioritaskan untuk kendaraan dengan teknologi baterai lokal dan TKDN di atas 40%; BEV murni tetap dapat PPnBM 0% sedangkan hybrid/PHEV mulai mengalami penyesuaian tarif bertahap.',url:'https://wartafinansial.com/detail/799095/panduan-lengkap-pajak-mobil-listrik-2026-aturan-dan-cara-hitung',accessed:'23 Jul 2026',reliability:'Medium'},
+ c12:{title:'Insentif CBU Berakhir, 15 Pabrikan Mobil Listrik Siap Produksi di RI pada 2026',pub:'Kumparan',author:'—',pubDate:'18 Dec 2025',eventDate:'Dec 2025',type:'Berita',primary:false,excerpt:'Produsen dengan kuota impor CBU (termasuk Geely, BYD, VinFast, GWM, AION, VW, XPENG — 72% pangsa pasar gabungan) wajib mulai produksi lokal setara volume impornya sejak 1 Jan 2026 hingga 31 Des 2027, dijamin bank garansi.',url:'https://kumparan.com/kumparanbisnis/insentif-cbu-berakhir-15-pabrikan-mobil-listrik-siap-produksi-di-ri-pada-2026-26SZXOexqBL',accessed:'23 Jul 2026',reliability:'High'},
+ c13:{title:'Konsumen BYD Menjerit, Baru Juga 10 Hari Mobil Sudah Bolak Balik Masuk Bengkel',pub:'INAnews',author:'—',pubDate:'12 May 2026',eventDate:'May 2026',type:'Berita',primary:false,excerpt:'Keluhan viral konsumen BYD Sealion 7 di Indonesia — unit baru masuk bengkel 3 kali dalam 10 hari sejak pengiriman, memicu skeptisisme publik lebih luas soal kesiapan quality control dan purna-jual kendaraan listrik merek Cina di pasar massal.',url:'https://www.inanews.co.id/2026/05/konsumen-byd-menjerit-baru-juga-10-hari-mobil-sudah-bolak-balik-masuk-bengkel/',accessed:'23 Jul 2026',reliability:'Medium'},
+ c14:{title:'BYD Salah Kirim Tahun Produksi Mobil, Siap Ganti Rugi Rp 760 Miliar',pub:'Kompas.com',author:'—',pubDate:'15 Jul 2026',eventDate:'Jul 2026',type:'Berita',primary:false,excerpt:'BYD Australia menawarkan refund penuh ke 1.265 konsumen akibat kesalahan komunikasi tahun perakitan kendaraan — kasus ini bersifat global/Australia, namun berpotensi menambah sorotan skeptis terhadap kredibilitas merek Cina secara regional, termasuk di Indonesia.',url:'https://otomotif.kompas.com/read/2026/07/15/104200815/byd-salah-kirim-tahun-produksi-mobil-siap-ganti-rugi-rp-760-miliar',accessed:'23 Jul 2026',reliability:'High'},
+ c15:{title:'Electric Vehicle Market Trends in Indonesia',pub:'REGlobal',author:'—',pubDate:'2 Feb 2026',eventDate:'2023–2024',type:'Analisis Riset',primary:true,excerpt:'Penjualan motor listrik melonjak selama periode subsidi pemerintah (2023–2024) namun anjlok tajam begitu subsidi dihentikan — menunjukkan sensitivitas tinggi permintaan EV terhadap dukungan kebijakan fiskal.',url:'https://reglobal.org/electric-vehicle-market-in-indonesia/',accessed:'23 Jul 2026',reliability:'High'}
 };
 const CLAIM_LABEL_MAP={fact:['Verified Fact','claim-fact'],analysis:['AI Analysis','claim-analysis'],historical:['Historical Pattern','claim-historical'],scenario:['Scenario','claim-scenario'],unresolved:['Unresolved','claim-unresolved'],awaiting:['Awaiting Official Confirmation','claim-awaiting'],insufficient:['Insufficient Evidence','claim-insufficient']};
 function claimLabelHTML(kind){const m=CLAIM_LABEL_MAP[kind]||CLAIM_LABEL_MAP.fact;return `<span class="claim-label ${m[1]}">${m[0]}</span>`;}
@@ -4964,6 +5032,15 @@ const ACTOR_LINKS=[
  {source:'periklindo',target:'byd',type:'Distribusi',weight:3},
  {source:'ibc',target:'moi',type:'Otoritas kebijakan',weight:4},
  {source:'ibc',target:'aop',type:'Pasokan komponen',weight:3}
+];
+// Curated Key Actor table — richer qualitative fields per the analyst framework (position/stance, key actions, relationships, next move)
+const ACTOR_TABLE=[
+ {id:'tam',name:'Toyota-Astra Motor',roleInterest:'Pemimpin pasar HEV, mitra otomotif inti Astra',position:'Supportive',positionNote:'terhadap elektrifikasi bertahap via HEV',keyActions:'Meluncurkan New Veloz Hybrid EV rakitan lokal (Jan 2026), pre-book ~5.000 unit',relationship:'Bersaing langsung dengan BYD, Chery, Jaecoo, Hyundai di segmen elektrifikasi',influence:'High',nextMove:'Kemungkinan mempercepat peluncuran varian HEV/PHEV baru dalam 2–3 kuartal ke depan',cit:'c8'},
+ {id:'byd',name:'BYD',roleInterest:'Challenger BEV terdepan dari Cina',position:'Shifting',positionNote:'volume wholesale sangat volatil, dari agresif ke tertekan lalu rebound dalam 3 bulan',keyActions:'Wholesale anjlok 80,7% (Apr→Mei), lalu rebound 488% (Mei→Jun); menghadapi insiden kualitas produk',relationship:'Bersaing langsung dengan Toyota-Astra; menerima insentif bersyarat TKDN dari Kemenkeu/Kemenperin',influence:'High',nextMove:'Kemungkinan mempercepat komunikasi publik soal perbaikan kualitas untuk meredam sentimen negatif',cit:'c4'},
+ {id:'chery',name:'Chery (induk)',roleInterest:'Pemain PHEV, merek induk grup Chery',position:'Ambiguous',positionNote:'performa menyusut sementara sub-brand Jaecoo tumbuh pesat',keyActions:'Wholesale turun 39,1% YoY di H1 2026, kontras dengan Jaecoo yang naik jadi merek Cina terlaris kedua',relationship:'Berbagi basis produksi/distribusi dengan Jaecoo namun trayektori pasar berbeda',influence:'Medium',nextMove:'Kemungkinan reposisi produk atau pergeseran fokus investasi ke sub-brand yang lebih laris (Jaecoo)',cit:'c6'},
+ {id:'mof',name:'Kementerian Keuangan',roleInterest:'Regulator insentif fiskal (PPN DTP, PPnBM, bea masuk)',position:'Supportive',positionNote:'terhadap elektrifikasi dengan syarat produksi lokal',keyActions:'Memastikan insentif CBU tidak diperpanjang 2026; mempertahankan PPN DTP selektif untuk kendaraan TKDN ≥40%',relationship:'Berkoordinasi dengan Kemenperin soal kriteria TKDN; berdampak langsung pada kalkulasi harga semua produsen',influence:'High',nextMove:'Kemungkinan meninjau ulang ambang TKDN atau besaran insentif PPN DTP sesuai evaluasi tahunan',cit:'c9'},
+ {id:'moi',name:'Kementerian Perindustrian',roleInterest:'Verifikasi TKDN, kebijakan produksi lokal',position:'Supportive',positionNote:'mendorong lokalisasi produksi kompetitor asing',keyActions:'Mewajibkan 15 produsen pemegang kuota impor CBU memulai produksi lokal 2026–2027 dengan bank garansi',relationship:'Mitra kebijakan Kemenkeu; pengawas kepatuhan TKDN seluruh produsen termasuk Astra',influence:'High',nextMove:'Kemungkinan memverifikasi realisasi komitmen produksi lokal produsen Cina sepanjang 2026–2027',cit:'c12'},
+ {id:'pln',name:'PLN',roleInterest:'Operator utama infrastruktur pengisian daya (SPKLU)',position:'Supportive',positionNote:'terhadap ekspansi adopsi EV',keyActions:'Menambah SPKLU dari 3.233 unit (Feb 2025) menjadi 4.892 unit (Mei 2026)',relationship:'Mitra infrastruktur bagi seluruh produsen EV termasuk Astra dan kompetitor',influence:'Medium',nextMove:'Kemungkinan mempercepat pemerataan SPKLU di luar koridor Jawa-Sumatra-Bali',cit:'c7'}
 ];
 let _actorSvg,_actorG,_actorZoom,_actorSim,_actorNodeSel,_actorLinkSel,_actorNodes,_actorLinks,_actorSelId=null,_actorInited=false;
 function initActorMap(){
@@ -5076,74 +5153,117 @@ function closeActor(){document.getElementById('actor-ov').classList.remove('open
 
 // ── Signal content dataset ──
 const EV_SIGNAL={
- synthesis:`Indonesia's passenger electrification market is accelerating ${citChip('c1')}, but growth is splitting across different technologies and competitor groups. Chinese manufacturers currently lead BEV and PHEV expansion ${citChip('c2')}, while Toyota maintains a strong position in HEV ${citChip('c3')}. For Astra, the core issue is no longer whether electrification will grow, but how quickly its product, manufacturing, component, financing, charging, and after-sales capabilities must be rebalanced across technologies.`,
+ synthesis:`Indonesia's passenger electrification market is accelerating ${citChip('c1')}, but growth is splitting sharply across technologies and competitor groups, and swinging month-to-month for individual challenger brands ${citChip('c4')}. The 2026 fiscal incentive question — the single biggest overhang on this signal — has now been substantially resolved: CBU import incentives ended, while VAT relief continues selectively for locally-assembled, local-battery vehicles ${citChip('c9')}. For Astra, the core issue is no longer whether electrification will grow, but how quickly its product, manufacturing, component, financing, charging, and after-sales capabilities must be rebalanced across technologies — and whether the reliability stumbles now surfacing among Chinese challengers create room for Toyota's hybrid-first approach to hold longer than expected.`,
  snapshot:{
-  assessment:'Pasar EV kendaraan penumpang Indonesia berakselerasi dan terfragmentasi antar teknologi — posisi HEV Astra tetap kuat, tapi momentum BEV dan PHEV saat ini ada di tangan merek-merek challenger.',
+  assessment:'Pasar EV kendaraan penumpang Indonesia terus tumbuh dan makin terfragmentasi antar teknologi — kepastian kebijakan insentif 2026 sudah lebih jelas dari sebelumnya, tapi volatilitas penjualan bulanan kompetitor Cina dan sorotan kualitas produk membuka ruang bagi Toyota-Astra untuk mempertahankan keunggulan HEV lebih lama dari perkiraan.',
   takeaways:[
-   'Struktur pasar multi-teknologi mulai terlihat sejak Juni 2026 — tidak ada satu teknologi atau merek yang memimpin di semua segmen.',
-   'Challenger asal Cina (BYD, Chery, Jaecoo) mendorong pertumbuhan BEV dan PHEV; Toyota-Astra tetap memegang pangsa HEV yang dominan.',
-   'Kelanjutan insentif fiskal EV 2026 masih belum jelas — konfirmasi resmi masih tertunda per Juli 2026.',
-   'Sentimen membaik di sebagian besar kelompok stakeholder kecuali organisasi lingkungan, yang justru makin waspada.'
+   'Kejelasan kebijakan insentif 2026 sudah jauh lebih baik — insentif impor CBU (bea masuk & PPnBM) dipastikan tidak diperpanjang, sementara PPN DTP tetap berlanjut secara selektif untuk kendaraan rakitan lokal dengan TKDN ≥40%.',
+   'BYD mengalami volatilitas penjualan bulanan yang tajam — anjlok dari 4.625 unit (Apr 2026) ke 895 unit (Mei 2026), lalu melonjak 488% ke 5.264 unit (Jun 2026) — pola yang mempersulit proyeksi pangsa pasar jangka pendek.',
+   'Chery (merek induk) justru menyusut 39,1% secara tahunan di H1 2026, kontras dengan Jaecoo (sub-brand Chery Group) yang tumbuh pesat menjadi merek Cina terlaris kedua — menunjukkan performa antar-merek dalam satu grup bisa sangat berbeda.',
+   'Keluhan kualitas produk mulai muncul di ranah publik Indonesia (BYD Sealion 7 masuk bengkel 3x dalam 10 hari) bersamaan dengan skandal refund BYD di Australia — berpotensi menggeser sebagian narasi sentimen dari "kompetisi harga" ke "keandalan produk".',
+   'Toyota-Astra merespons dengan konkret: New Veloz Hybrid EV rakitan lokal TMMIN diluncurkan resmi Januari 2026, mencatat pre-book ~5.000 unit dalam waktu kurang dari 3 bulan sejak world premiere.'
   ],
-  material:'Kelanjutan insentif fiskal EV 2026 — Awaiting Official Confirmation (lihat Apa yang Berubah di bawah)',
-  latest:'Wholesale BEV mencapai puncak bulanan baru 14.825 unit pada April 2026',
-  evidenceNote:'94% cakupan sitasi dari 14 sumber yang dilacak · Diperbarui 14 Juli 2026'
+  material:'Insentif impor CBU (bea masuk, PPnBM) dipastikan berakhir 2026; PPN DTP berlanjut selektif untuk kendaraan lokal TKDN ≥40% — status sudah Verified Fact, bukan lagi Awaiting Confirmation.',
+  latest:'BYD wholesale melonjak 488% MoM ke 5.264 unit pada Juni 2026, rebound tajam usai anjlok ke 895 unit di Mei 2026',
+  evidenceNote:'15 sumber terlacak, termasuk data resmi GAIKINDO/ESDM dan liputan media otomotif · Diperbarui 23 Juli 2026'
  },
  kpis:[
-  {label:'BEV Wholesale',value:'57,087',unit:'units',period:'Jan–May 2026',detail:['April peak: 14,825 units','Leading brand: BYD','BYD volume: 17,993 units'],cit:'c4'},
-  {label:'HEV Wholesale',value:'34,151',unit:'units',period:'Jan–May 2026',detail:['Toyota volume: 21,604 units','Toyota HEV share: 63.3%'],cit:'c5'},
-  {label:'PHEV Wholesale',value:'2,601',unit:'units',period:'Jan–May 2026',detail:['Chery volume: 1,490 units','Chery share: 57.3%','~95% locally assembled'],cit:'c6'},
-  {label:'Charging Infrastructure',value:'4,272',unit:'SPKLU units',period:'Sep 2025',detail:['2,811 locations','57,000+ home-charging services'],cit:'c7'}
+  {label:'BEV Wholesale',value:'57,087',unit:'units',period:'Jan–May 2026',detail:['April peak: 14,825 units','BYD 5-month volume: 17,993 units','May 2026 BYD collapse: 895 units (−80.7% MoM)'],cit:'c4'},
+  {label:'HEV Wholesale',value:'34,151',unit:'units',period:'Jan–May 2026',detail:['Toyota volume: 21,604 units','Toyota HEV share: 63.3%','New Veloz Hybrid EV pre-book: ~5,000 units'],cit:'c8'},
+  {label:'PHEV Wholesale',value:'2,601',unit:'units',period:'Jan–May 2026',detail:['Chery volume: 1,490 units','Chery PHEV share: 57.3%','~95% locally assembled'],cit:'c6'},
+  {label:'Charging Infrastructure',value:'4,892',unit:'SPKLU units',period:'May 2026',detail:['Up from 3,233 units (Feb 2025)','2030 government target: 62,918 units','Still concentrated in Java–Sumatra–Bali corridor'],cit:'c7'}
  ],
  whatChanged:[
-  {date:'Jun 2026',title:'PHEV bergeser dari segmen niche menjadi segmen yang mulai berkembang',desc:'Penjualan PHEV mencapai 2.601 unit selama lima bulan pertama 2026, dengan model rakitan lokal asal Cina mendorong sebagian besar volume.',cit:'c6',claim:'fact'},
-  {date:'Apr 2026',title:'Volume bulanan BEV mencapai puncak baru',desc:'April 2026 mencatat 14.825 unit wholesale BEV, hasil bulanan tertinggi selama periode Januari–Mei.',cit:'c8',claim:'fact'},
-  {date:'Jan 2026',title:'Toyota tetap kuat secara struktural di HEV',desc:'Toyota memegang sekitar 63,3% volume wholesale HEV selama Januari–Mei 2026.',cit:'c5',claim:'fact'},
-  {date:'Jul 2026',title:'Arah kebijakan perlu konfirmasi ulang',desc:'Skema insentif fiskal 2025 yang telah dikonfirmasi hanya berlaku hingga Desember 2025. Setiap proposal insentif 2026 harus diberi label "Awaiting Official Confirmation" sampai regulasi resminya tersedia.',cit:'c9',claim:'awaiting'}
+  {date:'Jun 2026',title:'Kepastian kebijakan insentif 2026 meningkat signifikan',desc:'Pemerintah memastikan insentif impor CBU (bea masuk 0%, PPnBM DTP) tidak diperpanjang ke 2026, sementara PPN DTP tetap berlanjut secara selektif — diprioritaskan untuk kendaraan dengan baterai lokal dan TKDN di atas 40%. Produsen pemegang kuota impor CBU wajib memulai produksi lokal setara volume impor mulai 1 Jan 2026 hingga 31 Des 2027.',cit:'c11',claim:'fact'},
+  {date:'Mei 2026',title:'Penjualan BYD anjlok tajam, lalu rebound drastis di Juni',desc:'Wholesale BYD jatuh dari 4.625 unit (Apr) menjadi hanya 895 unit (Mei 2026) — koreksi 80,7% MoM — sebelum melonjak 488% menjadi 5.264 unit pada Juni 2026. Volatilitas setajam ini lebih besar dari yang terlihat pada kompetitor lain di periode yang sama.',cit:'c4',claim:'fact'},
+  {date:'Mei 2026',title:'Keluhan kualitas produk BYD viral di Indonesia',desc:'Konsumen BYD Sealion 7 melaporkan kendaraannya masuk bengkel tiga kali dalam 10 hari sejak pengiriman, memicu diskusi publik lebih luas soal kesiapan quality control dan purna-jual kendaraan listrik merek Cina di pasar massal Indonesia.',cit:'c13',claim:'fact'},
+  {date:'Jul 2026',title:'Skandal refund BYD di Australia berpotensi berdampak reputasi regional',desc:'BYD Australia menawarkan refund penuh ke 1.265 konsumen akibat kesalahan komunikasi tahun produksi kendaraan (unit 2025 dikirim sebagai unit 2026). Insiden ini terjadi di luar Indonesia, namun berpotensi menambah sorotan skeptis terhadap kredibilitas merek global BYD di kawasan, termasuk Indonesia.',cit:'c14',claim:'fact'},
+  {date:'H1 2026',title:'Performa antar-merek dalam Chery Group berbeda tajam',desc:'Chery (merek induk) mencatat penurunan wholesale 39,1% YoY di H1 2026, sementara Jaecoo (sub-brand yang sama, belum genap 2 tahun di pasar Indonesia) tumbuh menjadi merek Cina terlaris kedua dengan 17.334 unit — menunjukkan strategi portofolio multi-merek bisa punya hasil yang sangat tidak seragam.',cit:'c6',claim:'fact'},
+  {date:'Jan 2026',title:'Toyota luncurkan New Veloz Hybrid EV rakitan lokal',desc:'TMMIN resmi memulai penjualan New Veloz Hybrid EV di IIMS 2026, dengan pre-book sekitar 5.000 unit dalam waktu kurang dari tiga bulan sejak world premiere akhir November 2025 — bagian dari strategi Multi-Pathway Toyota yang memposisikan HEV sebagai xEV paling relevan untuk kondisi pasar Indonesia saat ini.',cit:'c8',claim:'fact'}
  ],
  timeline:[
-  {date:'8 Ags 2019',title:'Fondasi Kebijakan Akselerasi EV',desc:'Perpres 55/2019 menetapkan kerangka akselerasi kendaraan listrik berbasis baterai untuk transportasi jalan.',type:'Policy',actor:'Pemerintah',cit:'c10'},
-  {date:'8 Des 2023',title:'Kerangka Kebijakan EV Diperbarui',desc:'Perpres 79/2023 mengubah kerangka akselerasi kendaraan listrik sebelumnya.',type:'Policy',actor:'Pemerintah',cit:'c11'},
-  {date:'4 Feb 2025',title:'Dukungan Fiskal untuk Kendaraan BEV dan Hybrid',desc:'PPN DTP 10% untuk BEV roda-4 yang memenuhi syarat dengan TKDN ≥40%; PPnBM DTP 3% untuk kendaraan full hybrid, mild hybrid, dan PHEV yang memenuhi syarat. Berlaku Januari–Desember 2025.',type:'Policy',actor:'Kementerian Keuangan',cit:'c12'},
-  {date:'Sep 2025',title:'Ekspansi Jaringan Pengisian Daya',desc:'PLN melaporkan 4.272 unit SPKLU di 2.811 lokasi, ditambah lebih dari 57.000 layanan home-charging.',type:'Infrastructure',actor:'PLN',cit:'c7'},
-  {date:'Nov 2025',title:'Volume BEV Mencapai 82.525 Unit Sepanjang Tahun Berjalan',desc:'BYD menyumbang 40.151 unit selama Januari–November 2025.',type:'Market',actor:'Kompetitor',cit:'c13'},
-  {date:'Jan 2026',title:'Kinerja Hybrid Full-Year 2025 Dipublikasikan',desc:'Penjualan HEV nasional mencapai 65.943 unit di 2025 (59.903 unit di 2024); Toyota menyumbang 30.110 unit di 2025.',type:'Market',actor:'Astra',cit:'c14'},
-  {date:'Apr 2026',title:'Volume Bulanan BEV Mencapai Puncak Baru',desc:'Wholesale BEV mencapai 14.825 unit selama April 2026.',type:'Market',actor:'Kompetitor',cit:'c8'},
-  {date:'Jun 2026',title:'Struktur Pasar Multi-Teknologi Mulai Terlihat',desc:'Data pasar Januari–Mei menunjukkan BEV 57.087 unit, HEV 34.151 unit, dan PHEV 2.601 unit.',type:'Market',actor:'Astra',cit:'c4'}
+  {date:'8 Ags 2019',title:'Fondasi Kebijakan Akselerasi EV',desc:'Perpres 55/2019 menetapkan kerangka akselerasi kendaraan listrik berbasis baterai untuk transportasi jalan.',type:'Policy',actor:'Pemerintah',cit:'c9'},
+  {date:'Q1 2025',title:'Penetrasi EV Nasional Mencapai 10,1%',desc:'BEV dan PHEV bersama-sama mencapai 10,1% dari total penjualan mobil penumpang pada Q1 2025.',type:'Market',actor:'Pemerintah',cit:'c1'},
+  {date:'Q2 2025',title:'Penetrasi EV Melonjak ke 15,2%',desc:'PHEV tumbuh 1.364% quarter-over-quarter (dari basis kecil); total stok EV nasional lampaui 100.000 unit.',type:'Market',actor:'Kompetitor',cit:'c1'},
+  {date:'19 Des 2025',title:'Pemerintah Konfirmasi Insentif CBU Tidak Diperpanjang',desc:'Menko Perekonomian Airlangga Hartarto menyatakan insentif kendaraan listrik CBU tidak akan diperpanjang di 2026; anggaran dialihkan ke program mobil nasional.',type:'Policy',actor:'Pemerintah',cit:'c10'},
+  {date:'18 Des 2025',title:'15 Produsen Berkomitmen Produksi Lokal 2026',desc:'Produsen pemegang kuota impor CBU (termasuk BYD, Geely, VinFast, GWM, XPENG — 72% pangsa pasar gabungan) wajib memulai produksi lokal setara volume impor sejak Jan 2026, dijamin bank garansi.',type:'Policy',actor:'Kompetitor',cit:'c12'},
+  {date:'30 Des 2025',title:'Kejelasan Skema Pajak 2026 Dipublikasikan',desc:'Insentif bea masuk dan PPnBM DTP untuk BEV impor CBU dipastikan berakhir; kendaraan rakitan lokal dengan TKDN ≥40% masih berpeluang tetap dapat PPN DTP.',type:'Policy',actor:'Pemerintah',cit:'c9'},
+  {date:'Jan 2026',title:'Toyota Luncurkan New Veloz Hybrid EV',desc:'TMMIN resmi memulai penjualan Veloz Hybrid EV rakitan lokal di IIMS 2026, pre-book ~5.000 unit dalam <3 bulan.',type:'Corporate Action',actor:'Astra',cit:'c8'},
+  {date:'Q1 2026',title:'Toyota Pimpin Pasar, BYD Masuk Top 6',desc:'Toyota 60.584 unit (pangsa 29%); BYD 12.473 unit di peringkat 6, mengungguli Wuling, Chery, dan Geely.',type:'Market',actor:'Astra',cit:'c3'},
+  {date:'Apr 2026',title:'Volume Bulanan BEV Mencapai Puncak Baru',desc:'Wholesale BEV nasional mencapai 14.825 unit pada April 2026, tertinggi dalam periode yang diamati.',type:'Market',actor:'Kompetitor',cit:'c4'},
+  {date:'Mei 2026',title:'BYD Anjlok Tajam, Keluhan Kualitas Mencuat',desc:'Wholesale BYD jatuh ke 895 unit (−80,7% MoM); bersamaan dengan itu, keluhan viral konsumen BYD Sealion 7 (3x masuk bengkel dalam 10 hari) beredar luas di media sosial.',type:'Market',actor:'Kompetitor',cit:'c13'},
+  {date:'Mei 2026',title:'SPKLU Nasional Capai 4.892 Unit',desc:'Kementerian ESDM melaporkan jaringan SPKLU tumbuh ke 4.892 unit, dengan target 62.918 unit pada 2030.',type:'Infrastructure',actor:'Pemerintah',cit:'c7'},
+  {date:'Jun 2026',title:'BYD Rebound 488%, Pangsa Merek Cina Naik ke 18%',desc:'Wholesale BYD melonjak ke 5.264 unit; pangsa pasar gabungan merek Cina naik dari 12% (2025) ke 18% (2026) di H1 2026.',type:'Market',actor:'Kompetitor',cit:'c5'},
+  {date:'Jul 2026',title:'Skandal Refund BYD di Australia Mencuat ke Publik',desc:'BYD Australia menawarkan refund penuh ke 1.265 konsumen akibat kesalahan tahun produksi kendaraan — berpotensi berdampak pada persepsi merek secara regional.',type:'Market',actor:'Kompetitor',cit:'c14'}
  ],
- velocityWeekly:[{l:'M1',v:42},{l:'M2',v:48},{l:'M3',v:54},{l:'M4',v:68},{l:'M5',v:89},{l:'M6',v:121}],
+ eventDensityMonthly:[{l:'Sep 25',v:0},{l:'Okt 25',v:0},{l:'Nov 25',v:0},{l:'Des 25',v:3},{l:'Jan 26',v:2},{l:'Feb 26',v:0},{l:'Mar 26',v:0},{l:'Apr 26',v:1},{l:'Mei 26',v:2},{l:'Jun 26',v:1},{l:'Jul 26',v:1}],
  sentiment:[
-  {group:'Pemerintah',before:58,after:72,note:'Sangat suportif'},
-  {group:'Industri Otomotif',before:41,after:55,note:'Positif tapi persaingan ketat'},
-  {group:'Konsumen',before:18,after:29,note:'Membaik tapi sensitif harga'},
-  {group:'Investor',before:34,after:48,note:'Positif terhadap pertumbuhan dan lokalisasi'},
-  {group:'Organisasi Lingkungan',before:8,after:-6,note:'Makin waspada'},
-  {group:'Media Umum',before:22,after:37,note:'Pemberitaan lebih positif'}
+  {group:'Pemerintah',before:58,after:68,note:'Suportif — kejelasan kebijakan insentif dinilai positif meski ada penyesuaian ke bawah'},
+  {group:'Industri Otomotif (Astra/Toyota)',before:41,after:57,note:'Positif — respons produk konkret (Veloz Hybrid EV) direspons pasar dengan baik'},
+  {group:'Konsumen',before:18,after:12,note:'Memburuk — kekhawatiran kualitas produk EV merek Cina mulai muncul di ruang publik'},
+  {group:'Investor',before:34,after:44,note:'Positif terhadap kejelasan kebijakan, namun waspada terhadap volatilitas penjualan bulanan kompetitor'},
+  {group:'Organisasi Lingkungan',before:8,after:-6,note:'Makin waspada — isu emisi pembangkit dan limbah baterai belum terjawab'},
+  {group:'Media Umum',before:22,after:34,note:'Pemberitaan lebih ramai, dengan narasi bercabang antara pencapaian pasar dan sorotan kualitas produk'}
  ],
+ dominantNarratives:[
+  {narrative:'Kepastian kebijakan meningkat, tapi insentif menyusut',evidence:'Konfirmasi resmi penghentian insentif CBU (Des 2025) dan skema PPN DTP selektif (Jun 2026)',groups:'Pemerintah, industri, media ekonomi',trend:'Stabil',impact:'Mendukung produsen yang sudah/berencana produksi lokal; menekan model impor CBU murni',cit:'c9'},
+  {narrative:'Skeptisisme kualitas produk EV merek Cina mulai terbentuk',evidence:'Keluhan viral BYD Sealion 7 (Indonesia, Mei 2026); skandal refund BYD Australia (Jul 2026); keluhan purna-jual Wuling di forum konsumen',groups:'Konsumen individu, komunitas otomotif online',trend:'Meningkat',impact:'Berpotensi memperlambat konversi minat menjadi pembelian untuk merek yang belum punya rekam jejak purna-jual kuat di Indonesia',cit:'c13'},
+  {narrative:'Toyota-Astra dianggap "aman" dan konsisten di tengah gejolak kompetitor',evidence:'Pre-book ~5.000 unit Veloz Hybrid EV dalam <3 bulan; pangsa HEV 63,3% yang bertahan',groups:'Media otomotif, sebagian konsumen mainstream',trend:'Stabil-positif',impact:'Memperkuat posisi Toyota sebagai pilihan "rendah risiko" selama masa transisi teknologi',cit:'c8'}
+ ],
+ sentimentLimitations:'Analisis sentimen di atas disusun dari pola pemberitaan media otomotif dan komentar publik yang terekam di artikel yang diakses (bukan hasil social listening formal atau survei terstruktur). Skor per-stakeholder bersifat indikatif untuk menunjukkan arah, bukan hasil pengukuran kuantitatif tervalidasi. Data tidak mencakup analisis representatif dari seluruh populasi konsumen Indonesia, dan tidak boleh disamakan dengan hasil polling.',
  precedents:[
-  {title:'Insentif Fiskal sebagai Akselerator Adopsi',period:'2023–2025',pattern:'Pemerintah berulang kali menggunakan insentif fiskal untuk menurunkan harga efektif EV dan kendaraan rendah emisi yang memenuhi syarat.',relevance:'Kelanjutan, perubahan desain, atau penghentian insentif yang dikonfirmasi dapat memengaruhi harga dan adopsi secara material.',diff:'Skema 2025 punya tanggal berakhir yang jelas. Kelanjutan di 2026 tidak boleh diasumsikan tanpa konfirmasi resmi.',score:88,cit:'c12'},
-  {title:'Merek Cina Mengubah Masuknya Produk Menjadi Kepemimpinan Volume',period:'2025–2026',pattern:'Hingga November 2025, wholesale BEV mencapai 82.525 unit dengan BYD menyumbang 40.151 unit. Selama Jan–Mei 2026, BYD tetap menjadi merek BEV individu terbesar; Jaecoo dan Geely juga mencatat volume signifikan.',relevance:'Persaingan bergerak dari sekadar masuk pasar menuju skala, harga, perakitan lokal, keluasan portofolio, dan distribusi.',diff:'',score:91,cit:'c13'},
-  {title:'Hybrid sebagai Teknologi Transisi',period:'2024–2026',pattern:'Penjualan HEV mencapai 59.903 unit di 2024 dan 65.943 di 2025; Toyota memegang sekitar 63,3% pangsa HEV selama Jan–Mei 2026.',relevance:'Astra tetap punya keunggulan sebagai incumbent, tapi kepemimpinan HEV tidak boleh dianggap sebagai jawaban lengkap atas pertumbuhan BEV dan PHEV.',diff:'',score:84,cit:'c14'},
-  {title:'Ekspansi Infrastruktur Mengikuti Adopsi',period:'2025',pattern:'Ketersediaan SPKLU berkembang menjadi 4.272 unit di 2.811 lokasi pada September 2025.',relevance:'Infrastruktur pengisian daya berpotensi menjadi enabler adopsi sekaligus peluang bisnis tersendiri untuk otomotif, komponen, properti, armada, dan energi.',diff:'',score:76,cit:'c7'}
+  {title:'Penghentian Subsidi Motor Listrik (2023–2024)',period:'2023–2024',pattern:'Penjualan motor listrik melonjak signifikan selama periode subsidi pemerintah berlangsung (2023–2024), namun anjlok tajam segera setelah subsidi dihentikan.',similarity:'High',similarityBasis:'Pola respons permintaan terhadap keberadaan/ketiadaan insentif fiskal pemerintah untuk kendaraan listrik — mekanisme insentifnya berbeda kendaraan (motor vs mobil) tapi sensitivitas pasarnya sebanding.',diff:'Skema mobil BEV/PHEV 2026 mempertahankan sebagian insentif (PPN DTP selektif) alih-alih penghentian total seperti motor listrik — dampaknya kemungkinan lebih terkendali dibanding preseden motor.',actors:'Kementerian Perindustrian, Kementerian ESDM, produsen motor listrik',publicResponse:'Minim protes terbuka, namun penurunan penjualan mencerminkan sensitivitas konsumen terhadap harga efektif',outcome:'Pasar motor listrik menyusut signifikan pasca-subsidi, menunjukkan permintaan belum sepenuhnya organik tanpa dukungan fiskal',relevance:'Sinyal peringatan bahwa permintaan BEV/PHEV mobil penumpang juga berisiko melambat jika insentif tersisa (PPN DTP) turut disesuaikan turun di masa depan',score:82,cit:'c9'},
+  {title:'Merek Cina Mengubah Masuknya Produk Menjadi Kepemimpinan Volume',period:'2025–2026',pattern:'Wholesale merek Cina naik 73,4% YoY di H1 2026 menjadi 78.662 unit, pangsa pasar naik dari 12% ke 18%; BYD konsisten memimpin meski dengan volatilitas bulanan tajam.',similarity:'High',similarityBasis:'Pola percepatan pangsa pasar pendatang baru melalui harga agresif dan ekspansi model cepat, sebanding dengan pola masuknya merek Korea (Hyundai/Kia) ke pasar Indonesia satu dekade sebelumnya.',diff:'Skala percepatan pangsa pasar merek Cina (12%→18% dalam satu tahun) jauh lebih cepat dibanding preseden merek Korea.',actors:'BYD, Jaecoo, Geely, Chery, GAIKINDO',publicResponse:'Minat konsumen tinggi di awal, mulai diiringi keluhan kualitas produk pada 2026',outcome:'Pangsa pasar terus naik meski disertai insiden reputasi individual merek (BYD)',relevance:'Menunjukkan bahwa momentum pangsa pasar dapat terus naik jangka pendek meski ada insiden reputasi — tapi insiden berulang berisiko membalik tren ini',score:79,cit:'c2'},
+  {title:'Hybrid sebagai Teknologi Transisi Dominan',period:'2022–2026',pattern:'Penjualan HEV Toyota terus tumbuh meski tanpa subsidi pemerintah, mempertahankan pangsa dominan (63,3%) bahkan saat BEV/PHEV tumbuh pesat.',similarity:'Medium',similarityBasis:'Preferensi konsumen terhadap teknologi yang tidak memerlukan perubahan kebiasaan (tanpa charging) sebanding dengan pola adopsi teknologi transisi di pasar otomotif lain yang punya infrastruktur charging terbatas.',diff:'Berbeda dengan pasar lain, HEV Indonesia tumbuh tanpa insentif fiskal khusus, murni didorong preferensi konsumen dan kesiapan infrastruktur.',actors:'Toyota-Astra Motor, TMMIN, konsumen mainstream',publicResponse:'Minim kontroversi, penerimaan pasar konsisten positif',outcome:'HEV mempertahankan posisi sebagai xEV paling populer di Indonesia hingga pertengahan 2026',relevance:'Menunjukkan keunggulan HEV Astra kemungkinan bertahan sebagai strategi jangka menengah yang solid, selama BEV belum mengatasi range anxiety dan keterbatasan charging',score:74,cit:'c8'}
+ ],
+ emergingPattern:{
+  facts:[
+   'Insentif impor CBU dipastikan berakhir 2026, PPN DTP berlanjut selektif untuk kendaraan lokal TKDN ≥40% (regulasi resmi telah terbit).',
+   'BYD mencatat volatilitas wholesale bulanan yang tajam (Apr→Mei→Jun 2026: 4.625→895→5.264 unit).',
+   'Chery (induk) turun 39,1% YoY di H1 2026 sementara Jaecoo (sub-brand yang sama) naik jadi merek Cina terlaris kedua.',
+   'Keluhan kualitas produk BYD Sealion 7 viral di Indonesia (Mei 2026); BYD Australia menjalankan refund massal 1.265 konsumen (Jul 2026).',
+   'Toyota meluncurkan Veloz Hybrid EV rakitan lokal dengan pre-book ~5.000 unit dalam <3 bulan.'
+  ],
+  interpretations:[
+   'Volatilitas penjualan BYD kemungkinan mencerminkan kombinasi faktor supply/logistik dan sensitivitas permintaan jangka pendek, bukan semata perubahan preferensi konsumen — pola serupa belum terlihat pada kompetitor lain di periode yang sama.',
+   'Divergensi performa Chery vs Jaecoo mengindikasikan bahwa strategi portofolio multi-merek dari grup otomotif Cina dapat menghasilkan hasil yang sangat berbeda tergantung positioning produk dan model spesifik, bukan semata kekuatan merek induk.',
+   'Rangkaian insiden kualitas (Sealion 7 Indonesia, refund Australia) berpotensi mulai membentuk narasi "kompetisi harga vs keandalan produk" yang sebelumnya belum menonjol dalam pemberitaan EV Indonesia.'
+  ],
+  assumptions:[
+   'Insiden reputasi BYD di Australia diasumsikan dapat memengaruhi persepsi konsumen Indonesia melalui spillover media regional/global — asumsi ini belum didukung data langsung soal perubahan sentimen konsumen Indonesia terhadap BYD secara spesifik.',
+   'Pre-book Veloz Hybrid EV (~5.000 unit) diasumsikan akan terkonversi menjadi penjualan aktual dalam proporsi tinggi — data konversi pre-book ke penjualan riil belum tersedia di sumber yang diakses.'
+  ]
+ },
+ scenarios:[
+  {name:'Most Likely',title:'Fragmentasi Bertahan, Toyota Pertahankan HEV, Kompetitor Cina Konsolidasi Bertahap',desc:'Pasar tetap terbagi tiga teknologi tanpa satu pemenang tunggal; Toyota mempertahankan pangsa HEV dominan melalui produk seperti Veloz Hybrid EV, sementara merek Cina mengalami konsolidasi bertahap — merek dengan quality control lebih baik (Jaecoo, BYD pasca-perbaikan) tumbuh, yang lemah (Chery non-Jaecoo) tertekan.',actors:'Toyota-Astra, BYD, Jaecoo, Chery, Kemenperin',evidence:'Pola performa Q1–H1 2026 yang sudah menunjukkan divergensi antar-merek Cina; respons produk konkret Toyota',publicSentiment:'Sentimen konsumen tetap terbelah antara harga (mendukung merek Cina) dan keandalan (mendukung Toyota)',impact:'Astra perlu mempercepat portofolio HEV/PHEV tanpa buru-buru all-in ke BEV murni',timeframe:'6–12 bulan',confidence:'Medium',signal:'Stabilisasi wholesale BYD di atas 3.000 unit/bulan selama 2+ bulan berturut-turut'},
+  {name:'Upside',title:'Insiden Kualitas Kompetitor Mempercepat Preferensi ke Toyota/Astra',desc:'Rangkaian insiden kualitas produk (Sealion 7, refund Australia) berkembang menjadi persepsi luas bahwa merek Cina belum siap purna-jual di pasar massal, mempercepat perpindahan konsumen kelas menengah ke produk Toyota-Astra yang dianggap lebih teruji.',actors:'Toyota-Astra, konsumen kelas menengah, media otomotif',evidence:'Sentimen konsumen sudah mulai memburuk (skor sentimen turun dari 18 ke 12) bersamaan insiden kualitas',publicSentiment:'Narasi "keandalan mengalahkan harga" menguat di kalangan pembeli mobil keluarga',impact:'Peluang bagi Astra memperluas pangsa HEV/PHEV lebih cepat dari proyeksi dasar',timeframe:'3–9 bulan',confidence:'Low',signal:'Lonjakan volume pencarian/pemberitaan negatif tentang purna-jual merek Cina tertentu, diikuti penurunan wholesale merek tersebut 2 bulan berturut-turut'},
+  {name:'Downside',title:'Insentif PPN DTP Selektif Justru Mempercepat Lokalisasi Kompetitor',desc:'Syarat TKDN ≥40% untuk tetap mendapat PPN DTP mendorong 15 produsen Cina mempercepat investasi produksi lokal (sesuai komitmen bank garansi 2026–2027), memperkuat basis biaya rendah mereka dan mempersempit keunggulan harga relatif Toyota-Astra dalam 2–3 tahun ke depan.',actors:'BYD, Geely, VinFast, GWM, XPENG, Kemenperin',evidence:'Komitmen produksi lokal 15 pabrikan sudah tercatat resmi dengan tenggat 2027',publicSentiment:'Pemerintah dan sebagian publik mendukung positif langkah lokalisasi sebagai capaian industrialisasi',impact:'Tekanan margin dan pangsa pasar bagi Astra dalam 2–3 tahun jika lokalisasi kompetitor berjalan sesuai jadwal',timeframe:'18–36 bulan',confidence:'Medium',signal:'Pengumuman resmi groundbreaking/commissioning pabrik oleh BYD, Geely, atau VinFast di Indonesia'}
+ ],
+ watchV2:[
+  {indicator:'Wholesale bulanan BYD 3 bulan berturut-turut',actor:'BYD',why:'Menentukan apakah volatilitas Apr–Jun 2026 adalah anomali atau pola baru yang berulang',scenario:'Most Likely & Upside',source:'Data wholesale GAIKINDO bulanan'},
+  {indicator:'Publikasi resmi hasil investigasi/klarifikasi insiden kualitas BYD',actor:'BYD, konsumen, media',why:'Menentukan apakah narasi keandalan produk mereda atau justru meluas',scenario:'Upside',source:'Media otomotif nasional, media sosial'},
+  {indicator:'Realisasi investasi pabrik lokal oleh produsen pemegang komitmen 2026–2027',actor:'BYD, Geely, VinFast, GWM, XPENG',why:'Konfirmasi apakah lokalisasi kompetitor berjalan sesuai jadwal atau tertunda',scenario:'Downside',source:'Kemenperin, siaran pers korporat'},
+  {indicator:'Perubahan lebih lanjut pada syarat TKDN untuk insentif PPN DTP',actor:'Kementerian Keuangan, Kementerian Perindustrian',why:'Perubahan ambang TKDN dapat mengubah kalkulus biaya semua pemain, termasuk Astra',scenario:'Semua skenario',source:'Peraturan Menteri Keuangan, siaran pers Kemenkeu'},
+  {indicator:'Konversi pre-book ke penjualan aktual Veloz Hybrid EV',actor:'Toyota-Astra Motor, TMMIN',why:'Menunjukkan apakah minat awal yang tinggi benar-benar terkonversi menjadi permintaan riil',scenario:'Most Likely',source:'Laporan wholesale GAIKINDO, siaran pers TAM'},
+  {indicator:'Pertumbuhan/penurunan SPKLU di luar koridor Jawa-Sumatra-Bali',actor:'PLN, Kementerian ESDM',why:'Pemerataan infrastruktur charging di luar koridor utama adalah prasyarat adopsi BEV massal',scenario:'Most Likely & Downside',source:'PLN, Kementerian ESDM'},
+  {indicator:'Laporan konsumen/purna-jual baru untuk merek Cina lain (Wuling, Geely, Jaecoo)',actor:'Konsumen, komunitas otomotif online',why:'Menentukan apakah isu kualitas terbatas pada BYD atau meluas ke merek Cina lain',scenario:'Upside',source:'Media sosial, forum konsumen, media otomotif'}
  ],
  nextSteps:[
-  {icon:'🕰️',title:'Jalankan Precedent Analysis pada pattern policy discontinuity',trigger:'Hasil insentif 2026 saat ini belum jelas, dan skema 2025 punya tanggal berakhir tetap yang mirip dengan pattern historis (88% kemiripan — lihat Precedent #1). Meninjau bagaimana transisi insentif fiskal serupa terselesaikan bisa mempertajam ekspektasi soal apa yang akan terjadi berikutnya.',cta:'Lihat Precedent #1 →',action:"insNavTo('ins-sec-precedents')"},
-  {icon:'🔍',title:'Jalankan Investigative Profile pada BYD atau Chery',trigger:'Dua aktor ini saat ini paling cepat mendorong kenaikan pangsa di BEV dan PHEV. Investigative Profile akan menampilkan konteks kepemilikan, hukum, dan keuangan yang tidak tercakup di signal ini.',cta:'Jalankan Investigative Profile →',action:"P('ps');showSV('ps','search')"},
-  {icon:'🔔',title:'Atur alert untuk konfirmasi resmi insentif 2026',trigger:'Claim ini saat ini berlabel Awaiting Official Confirmation — sampai regulasi resminya terbit, asumsi apa pun soal insentif 2026 masih spekulatif.',cta:'Atur Alert →',action:'openWatchlistModal()'},
+  {icon:'🕰️',title:'Jalankan Precedent Analysis pada pola penghentian subsidi motor listrik',trigger:'Preseden ini punya tingkat kemiripan tinggi (82%) dengan risiko penyesuaian insentif BEV/PHEV mobil ke depan — lihat Precedent #1 untuk detail lengkap.',cta:'Lihat Precedent #1 →',action:"insNavTo('ins-sec-precedents')"},
+  {icon:'🔍',title:'Jalankan Investigative Profile pada BYD',trigger:'BYD saat ini adalah aktor dengan volatilitas dan sorotan reputasi tertinggi di signal ini. Investigative Profile akan menampilkan konteks kepemilikan, hukum, dan keuangan yang tidak tercakup di signal ini.',cta:'Jalankan Investigative Profile →',action:"P('ps');showSV('ps','search')"},
+  {icon:'🔔',title:'Atur alert untuk realisasi investasi lokal kompetitor',trigger:'15 produsen berkomitmen produksi lokal 2026–2027 — realisasinya adalah leading indicator penting untuk tekanan biaya jangka menengah.',cta:'Atur Alert →',action:'openWatchlistModal()'},
   {icon:'🧭',title:'Pantau signal Ekspansi Otomotif Cina di Indonesia',trigger:'Signal terkait ini melacak kelompok kompetitor yang sama tapi dari sisi manufaktur dan distribusi, bukan dari sisi kebijakan/pasar — keduanya saling melengkapi cakupannya.',cta:'Lihat Signal Terkait →',action:"sigDemoToast('Ekspansi Otomotif Cina di Indonesia')"}
  ],
  watch:[
-  'Publikasi resmi instrumen insentif EV 2026',
-  'Pangsa teknologi BEV, HEV, dan PHEV bulanan',
-  'Ekspansi perakitan lokal BYD, Jaecoo, Chery, Geely, Wuling, dan Hyundai',
-  'Perubahan produk BEV dan PHEV Toyota',
-  'Penurunan harga EV melebihi 5%',
-  'Utilisasi pengisian daya, bukan sekadar jumlah charger',
-  'Regulasi daur ulang baterai dan perubahan kebijakan lingkungan',
-  'Kebijakan elektrifikasi armada pemerintah',
-  'Lonjakan narasi negatif lingkungan'
+  'Wholesale bulanan BYD tiga bulan berturut-turut',
+  'Publikasi resmi hasil investigasi insiden kualitas BYD',
+  'Realisasi investasi pabrik lokal produsen Cina (2026–2027)',
+  'Perubahan ambang TKDN untuk insentif PPN DTP',
+  'Konversi pre-book Veloz Hybrid EV menjadi penjualan aktual',
+  'Pemerataan SPKLU di luar koridor Jawa-Sumatra-Bali',
+  'Laporan purna-jual baru untuk merek Cina lain'
  ],
- evidence:['c4','c5','c6','c7','c1','c2','c3','c8','c9','c10','c11','c12','c13','c14']
+ evidence:['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14','c15']
 };
 
 const TIMELINE_TYPE_ID={Policy:'Kebijakan',Market:'Pasar','Corporate Action':'Aksi Korporasi',Infrastructure:'Infrastruktur',Environment:'Lingkungan'};
@@ -5196,14 +5316,32 @@ function renderSentiment(){
    </div>`;
  }).join('');
 }
+function renderDominantNarratives(){
+ const el=document.getElementById('dominant-narratives-body');if(!el)return;
+ el.innerHTML=(EV_SIGNAL.dominantNarratives||[]).map(n=>`<tr>
+   <td style="font-weight:600;color:var(--n);max-width:180px;">${n.narrative}</td>
+   <td style="max-width:200px;">${n.evidence} ${citChip(n.cit)}</td>
+   <td style="max-width:140px;">${n.groups}</td>
+   <td><span class="bx ${n.trend==='Meningkat'?'bh':n.trend==='Menurun'?'bl':'bn'}" style="font-size:10.5px;">${n.trend}</span></td>
+   <td style="max-width:200px;">${n.impact}</td>
+  </tr>`).join('');
+ const lim=document.getElementById('sentiment-limitations');if(lim)lim.textContent=EV_SIGNAL.sentimentLimitations||'';
+}
 function renderPrecedents(){
  const el=document.getElementById('precedent-list');if(!el)return;
+ const simClass=s=>s==='High'?'bh':s==='Medium'?'bm':'bl';
  el.innerHTML=EV_SIGNAL.precedents.map(p=>`<div class="prec-card">
-   <div class="prec-hd"><div style="font-size:14px;font-weight:700;color:var(--n);">${p.title}</div><div class="sim-score"><span style="font-size:11px;color:var(--m);">Similarity</span><div class="sim-score-bar"><div style="width:${p.score}%;height:100%;background:var(--n);"></div></div><span style="font-size:12px;font-weight:700;color:var(--n);">${p.score}%</span></div></div>
+   <div class="prec-hd"><div style="font-size:14px;font-weight:700;color:var(--n);">${p.title}</div><span class="bx ${simClass(p.similarity)}" style="font-size:11px;flex-shrink:0;">${p.similarity} Similarity</span></div>
    <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--m);margin-bottom:4px;">${p.period}</div>
    <div style="font-size:12.5px;color:var(--t);line-height:1.6;margin-bottom:8px;">${p.pattern} ${citChip(p.cit)}</div>
-   <div style="background:var(--bg);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--m);margin-bottom:${p.diff?'6px':'0'};line-height:1.55;"><strong style="color:var(--n);">Relevance to Astra:</strong> ${p.relevance}</div>
-   ${p.diff?`<div style="background:var(--aml);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--am);line-height:1.55;"><strong>Important difference:</strong> ${p.diff}</div>`:''}
+   <div class="g2" style="gap:8px;margin-bottom:8px;">
+    <div style="background:var(--bg);border-radius:6px;padding:8px 10px;font-size:11.5px;color:var(--m);"><strong style="color:var(--n);">Aktor terlibat:</strong> ${p.actors||'—'}</div>
+    <div style="background:var(--bg);border-radius:6px;padding:8px 10px;font-size:11.5px;color:var(--m);"><strong style="color:var(--n);">Respons publik:</strong> ${p.publicResponse||'—'}</div>
+   </div>
+   <div style="background:var(--bg);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--m);margin-bottom:6px;line-height:1.55;"><strong style="color:var(--n);">Dasar kemiripan:</strong> ${p.similarityBasis||'—'}</div>
+   <div style="background:var(--bg);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--m);margin-bottom:${p.diff?'6px':'6px'};line-height:1.55;"><strong style="color:var(--n);">Bagaimana berkembang &amp; outcome:</strong> ${p.outcome||'—'}</div>
+   <div style="background:var(--bg);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--m);margin-bottom:${p.diff?'6px':'0'};line-height:1.55;"><strong style="color:var(--n);">Relevansi untuk Astra:</strong> ${p.relevance}</div>
+   ${p.diff?`<div style="background:var(--aml);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--am);line-height:1.55;"><strong>Perbedaan penting:</strong> ${p.diff}</div>`:''}
   </div>`).join('');
 }
 function renderNextSteps(){
@@ -5214,9 +5352,75 @@ function renderNextSteps(){
    <button class="btn bn2 bsm" onclick="${n.action}">${n.cta}</button>
   </div>`).join('');
 }
-function renderWatch(){
- const el=document.getElementById('impl-watch');if(!el)return;
- el.innerHTML=`<div class="mit-group-title">📡 Signals to Track</div>`+EV_SIGNAL.watch.map(w=>`<div class="mit-item">${w}</div>`).join('');
+function renderActorTable(){
+ const el=document.getElementById('actor-table-body');if(!el)return;
+ const posClass=p=>({Supportive:'bl',Opposing:'bh',Neutral:'bn',Ambiguous:'bm',Shifting:'bm'})[p]||'bn';
+ const infClass=i=>i==='High'?'bh':i==='Medium'?'bm':'bn';
+ el.innerHTML=ACTOR_TABLE.map(a=>`<tr style="cursor:pointer;" onclick="openActor('${a.id}')">
+   <td style="font-weight:700;color:var(--n);max-width:120px;">${a.name}</td>
+   <td style="max-width:160px;font-size:12px;">${a.roleInterest}</td>
+   <td style="max-width:130px;"><span class="bx ${posClass(a.position)}" style="font-size:10.5px;">${a.position}</span><div style="font-size:10.5px;color:var(--s);margin-top:3px;">${a.positionNote}</div></td>
+   <td style="max-width:200px;font-size:12px;">${a.keyActions} ${citChip(a.cit)}</td>
+   <td style="max-width:180px;font-size:12px;">${a.relationship}</td>
+   <td><span class="bx ${infClass(a.influence)}" style="font-size:10.5px;">${a.influence}</span></td>
+   <td style="max-width:190px;font-size:12px;">${a.nextMove}</td>
+  </tr>`).join('');
+}
+function renderTurningPoint(){
+ const el=document.getElementById('turning-point-body');if(!el)return;
+ el.innerHTML=`
+  <div class="flex g8" style="align-items:center;margin-bottom:6px;flex-wrap:wrap;">
+   <span class="claim-label claim-analysis">AI Interpretation</span>
+   <span style="font-size:11px;font-weight:700;color:var(--m);">🔀 Turning Point · 19 Des 2025</span>
+  </div>
+  <div style="font-size:13.5px;font-weight:700;color:var(--n);margin-bottom:6px;">Kepastian Kebijakan Insentif CBU</div>
+  <div style="font-size:12px;color:var(--t);line-height:1.6;margin-bottom:6px;"><strong>Sebelum:</strong> arah kebijakan insentif EV 2026 tidak jelas — status "Awaiting Official Confirmation" bertahan berbulan-bulan, membuat semua pemain (termasuk Astra) menunda kalkulasi biaya pasti.</div>
+  <div style="font-size:12px;color:var(--t);line-height:1.6;margin-bottom:8px;"><strong>Sesudah:</strong> narasi bergeser total — insentif CBU dipastikan berakhir, produsen diwajibkan mulai produksi lokal. Ini mengubah kalkulus strategis seluruh pemain di signal ini. ${citChip('c10')}</div>
+  <div style="font-size:11px;color:var(--s);font-style:italic;">Penentuan turning point ini adalah interpretasi AI berdasarkan pergeseran nada pemberitaan sebelum/sesudah tanggal tersebut — bukan fakta tunggal yang bisa diverifikasi independen, dan tetap perlu ditinjau ulang oleh pengguna.</div>`;
+}
+function renderEmergingPattern(){
+ const el=document.getElementById('emerging-pattern-body');if(!el)return;
+ const ep=EV_SIGNAL.emergingPattern;if(!ep)return;
+ el.innerHTML=`
+  <div style="margin-bottom:12px;">
+   <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--gr);margin-bottom:7px;letter-spacing:.4px;">✓ Verified Facts</div>
+   ${ep.facts.map(f=>`<div class="rss-sig"><span class="bx bl" style="font-size:10px;flex-shrink:0;">Fact</span><div style="font-size:12.5px;">${f}</div></div>`).join('')}
+  </div>
+  <div style="margin-bottom:12px;">
+   <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--bl);margin-bottom:7px;letter-spacing:.4px;">◐ AI Interpretation</div>
+   ${ep.interpretations.map(f=>`<div class="rss-sig"><span class="bx blm" style="font-size:10px;flex-shrink:0;">Interp.</span><div style="font-size:12.5px;">${f}</div></div>`).join('')}
+  </div>
+  <div>
+   <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--am);margin-bottom:7px;letter-spacing:.4px;">⚠ Assumptions</div>
+   ${ep.assumptions.map(f=>`<div class="rss-sig"><span class="bx bm" style="font-size:10px;flex-shrink:0;">Assum.</span><div style="font-size:12.5px;">${f}</div></div>`).join('')}
+  </div>`;
+}
+function renderScenarios(){
+ const el=document.getElementById('scenario-body');if(!el)return;
+ const confClass=c=>c==='High'?'bl':c==='Medium'?'bm':'bn';
+ const nameClass=n=>n==='Most Likely'?'bn':n==='Upside'?'bl':'bh';
+ el.innerHTML=(EV_SIGNAL.scenarios||[]).map(s=>`<div class="prec-card">
+   <div class="prec-hd"><div class="flex g8" style="align-items:center;"><span class="bx ${nameClass(s.name)}" style="font-size:10.5px;">${s.name}</span><div style="font-size:14px;font-weight:700;color:var(--n);">${s.title}</div></div><span class="bx ${confClass(s.confidence)}" style="font-size:11px;flex-shrink:0;">${s.confidence} Confidence</span></div>
+   <div style="font-size:12.5px;color:var(--t);line-height:1.6;margin-bottom:8px;">${s.desc}</div>
+   <div class="g2" style="gap:8px;margin-bottom:6px;">
+    <div style="background:var(--bg);border-radius:6px;padding:8px 10px;font-size:11.5px;color:var(--m);"><strong style="color:var(--n);">Aktor berperan:</strong> ${s.actors}</div>
+    <div style="background:var(--bg);border-radius:6px;padding:8px 10px;font-size:11.5px;color:var(--m);"><strong style="color:var(--n);">Timeframe:</strong> ${s.timeframe}</div>
+   </div>
+   <div style="background:var(--bg);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--m);margin-bottom:6px;line-height:1.55;"><strong style="color:var(--n);">Supporting evidence:</strong> ${s.evidence}</div>
+   <div style="background:var(--bg);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--m);margin-bottom:6px;line-height:1.55;"><strong style="color:var(--n);">Dinamika sentimen publik:</strong> ${s.publicSentiment}</div>
+   <div style="background:var(--bg);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--m);margin-bottom:6px;line-height:1.55;"><strong style="color:var(--n);">Potensi dampak:</strong> ${s.impact}</div>
+   <div style="background:var(--bll);border-radius:6px;padding:9px 11px;font-size:12px;color:var(--bl);line-height:1.55;"><strong>Signal penanda skenario ini mulai terjadi:</strong> ${s.signal}</div>
+  </div>`).join('');
+}
+function renderWatchV2(){
+ const el=document.getElementById('watch-table-body');if(!el)return;
+ el.innerHTML=(EV_SIGNAL.watchV2||[]).map(w=>`<tr>
+   <td style="font-weight:600;color:var(--n);max-width:180px;">${w.indicator}</td>
+   <td style="max-width:130px;">${w.actor}</td>
+   <td style="max-width:200px;">${w.why}</td>
+   <td><span class="bx bn" style="font-size:10.5px;">${w.scenario}</span></td>
+   <td style="max-width:150px;font-size:11.5px;color:var(--m);">${w.source}</td>
+  </tr>`).join('');
 }
 function renderEvidenceTable(){
  const tbody=document.getElementById('evidence-table-body');if(!tbody)return;
@@ -5234,9 +5438,9 @@ function renderEvidenceTable(){
 }
 function renderVelocityChart(){
  const el=document.getElementById('vel-chart');if(!el)return;
- const data=EV_SIGNAL.velocityWeekly;
- const max=Math.max(...data.map(d=>d.v));
- el.innerHTML=`<div class="bc-wrap">${data.map(d=>`<div class="bc-col"><div class="bc-val">${d.v}</div><div class="bc-bar" style="height:${Math.round((d.v/max)*90)}px;background:var(--r);"></div><div class="bc-lbl">${d.l}</div></div>`).join('')}</div>`;
+ const data=EV_SIGNAL.eventDensityMonthly;
+ const max=Math.max(...data.map(d=>d.v),1);
+ el.innerHTML=`<div class="bc-wrap">${data.map(d=>`<div class="bc-col"><div class="bc-val">${d.v}</div><div class="bc-bar" style="height:${Math.max(Math.round((d.v/max)*90),2)}px;background:${d.v>=3?'var(--r)':d.v===0?'var(--b2)':'var(--am)'};"></div><div class="bc-lbl">${d.l}</div></div>`).join('')}</div>`;
 }
 
 // Real tab switching for the Signal Insight Page — each nav item shows exactly one section
@@ -5272,7 +5476,7 @@ function openSignal(origin){
   document.getElementById('watch-modal-signal').textContent='Astra EV Policy and Market Monitor';
  }
  _currentSignalOrigin=origin;
- renderSnapshot();renderWhatChanged();renderTimeline();renderVelocityChart();renderSentiment();renderPrecedents();renderNextSteps();renderWatch();renderEvidenceTable();
+ renderSnapshot();renderWhatChanged();renderActorTable();renderTimeline();renderVelocityChart();renderTurningPoint();renderSentiment();renderDominantNarratives();renderPrecedents();renderEmergingPattern();renderScenarios();renderWatchV2();renderNextSteps();renderEvidenceTable();
  insNavTo('ins-sec-overview');
  const ctEl=document.querySelector('.ct');if(ctEl)ctEl.scrollTop=0;
 }
@@ -6697,18 +6901,66 @@ const TONYWENAS_LENSES_GRID_HTML = `
 // Extend LENS_CONTENT with person-type lens content
 LENS_CONTENT.tonywenas = {
  statements:{icon:'💬',name:'Public Statement Archive',body:`
-   <div style="font-size:11.5px;background:var(--bll);color:var(--bl);border-radius:6px;padding:8px 11px;margin-bottom:12px;">ℹ️ Kutipan berikut adalah <strong>ringkasan</strong> dari riset arsip Tempo, bukan kutipan verbatim — nomor referensi [ ] mengacu ke ringkasan riset, bukan tautan artikel langsung.</div>
-   <div class="tl-w">
-    <div class="tli hl"><div class="tyr">28 Apr 2020</div><div class="tev">Cashflow negatif akibat investasi tambang bawah tanah</div><div class="tim">Freeport mempertimbangkan penundaan pembangunan smelter namun menjamin tidak ada PHK karyawan. <span style="color:var(--s);">— ref [25][41]</span></div></div>
-    <div class="tli"><div class="tyr">4 Sep 2020</div><div class="tev">Peringatan risiko biaya smelter hingga US$10 miliar</div><div class="tim">Jika treatment charges tidak membaik, proyek smelter Gresik berpotensi merugikan Freeport dalam skala besar. <span style="color:var(--s);">— ref [23]</span></div></div>
-    <div class="tli"><div class="tyr">26 Sep 2023</div><div class="tev">Progres smelter Gresik 76%, target rampung Mei 2024</div><div class="tim">Turut memaparkan rincian kapasitas precious metal refinery (PMR) dan output yang direncanakan. <span style="color:var(--s);">— ref [21]</span></div></div>
-    <div class="tli"><div class="tyr">10 Apr 2024</div><div class="tev">Progres smelter capai 94%</div><div class="tim">Commissioning direncanakan Juni 2024, katoda tembaga pertama ditargetkan Agustus 2024. <span style="color:var(--s);">— ref [22]</span></div></div>
-    <div class="tli"><div class="tyr">13–16 Jun 2024</div><div class="tev">Pengiriman konsentrat perdana ke smelter Gresik</div><div class="tim">22.000 ton konsentrat dari Amamapare — disebut sebagai momen penting hilirisasi PTFI. <span style="color:var(--s);">— ref [11]</span></div></div>
-    <div class="tli"><div class="tyr">17/28 Apr 2024</div><div class="tev">Laporan kinerja 2023</div><div class="tim">Laba bersih PTFI senilai US$3,16 miliar (~Rp48,79 triliun), setoran ke daerah sekitar Rp3,35 triliun. <span style="color:var(--s);">— ref [39]</span></div></div>
-    <div class="tli"><div class="tyr">2023</div><div class="tev">Strategi dekarbonisasi PTFI</div><div class="tim">Target pengurangan emisi gas rumah kaca 30% pada 2030, investasi PLTMG/PLTGU, alat angkut listrik bawah tanah. <span style="color:var(--s);">— ref [26]</span></div></div>
-    <div class="tli"><div class="tyr">14 Jul 2025</div><div class="tev">Perpanjangan kontrak "masih didiskusikan"</div><div class="tim">Kondisi perusahaan baik, smelter kembali beroperasi sejak Juni 2025. <span style="color:var(--s);">— ref [27]</span></div></div>
-    <div class="tli"><div class="tyr">18 Jun 2026</div><div class="tev">Draf perjanjian divestasi saham 12% diserahkan</div><div class="tim">Tindak lanjut MoU perpanjangan IUPK yang ditandatangani 18 Feb 2026. <span style="color:var(--s);">— ref [36]</span></div></div>
-    <div class="tli" style="margin-bottom:0;"><div class="tyr">14 Jul 2026</div><div class="tev">Keterangan kapasitas smelter di Komisi XII DPR</div><div class="tim">Kapasitas gabungan dua smelter capai 3 juta ton konsentrat/tahun; turut menjelaskan riwayat kebakaran GCP Okt 2024. <span style="color:var(--s);">— ref [1]</span></div></div>
+   <div style="font-size:11.5px;background:var(--bll);color:var(--bl);border-radius:6px;padding:8px 11px;margin-bottom:14px;">ℹ️ Pernyataan berikut adalah <strong>ringkasan</strong> dari riset arsip Tempo, bukan kutipan verbatim — nomor referensi [ ] mengacu ke ringkasan riset, bukan tautan artikel langsung.</div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Kinerja Keuangan</span><span class="stmt-date">28 Apr 2020</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Cashflow Freeport negatif akibat investasi tambang bawah tanah — mempertimbangkan penundaan pembangunan smelter, namun menjamin tidak ada PHK karyawan.</div></div>
+    <div class="stmt-ref">— ref [25][41]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Smelter Gresik</span><span class="stmt-date">4 Sep 2020</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Jika treatment charges tidak membaik, proyek smelter Gresik berpotensi merugikan Freeport hingga hampir US$10 miliar.</div></div>
+    <div class="stmt-ref">— ref [23]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Smelter Gresik</span><span class="stmt-date">26 Sep 2023</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Progres smelter Gresik telah mencapai 76%, dengan target rampung Mei 2024 — turut memaparkan rincian kapasitas precious metal refinery (PMR) dan output yang direncanakan.</div></div>
+    <div class="stmt-ref">— ref [21]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Smelter Gresik</span><span class="stmt-date">10 Apr 2024</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Progres smelter sudah mencapai sekitar 94% — commissioning direncanakan Juni 2024, katoda tembaga pertama ditargetkan keluar Agustus 2024.</div></div>
+    <div class="stmt-ref">— ref [22]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Hilirisasi</span><span class="stmt-date">13–16 Jun 2024</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Pengiriman 22.000 ton konsentrat perdana dari Amamapare ke smelter Gresik — disebut sebagai momen penting program hilirisasi PTFI.</div></div>
+    <div class="stmt-ref">— ref [11]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Kinerja Keuangan</span><span class="stmt-date">17/28 Apr 2024</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Melaporkan kinerja 2023: laba bersih PTFI senilai US$3,16 miliar (~Rp48,79 triliun), dengan setoran ke daerah sekitar Rp3,35 triliun.</div></div>
+    <div class="stmt-ref">— ref [39]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Lingkungan/ESG</span><span class="stmt-date">2023</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Memaparkan strategi dekarbonisasi PTFI — target pengurangan emisi gas rumah kaca 30% pada 2030, investasi PLTMG/PLTGU, dan alat angkut listrik bawah tanah.</div></div>
+    <div class="stmt-ref">— ref [26]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Kontrak & Divestasi</span><span class="stmt-date">14 Jul 2025</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Kemungkinan perpanjangan kontrak Freeport hingga 2061 masih didiskusikan — kondisi perusahaan baik, smelter kembali beroperasi sejak Juni 2025.</div></div>
+    <div class="stmt-ref">— ref [27]</div>
+   </div>
+
+   <div class="stmt-card">
+    <div class="stmt-hd"><span class="stmt-topic">Kontrak & Divestasi</span><span class="stmt-date">18 Jun 2026</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">PTFI menyerahkan draf perjanjian divestasi saham 12% ke pemerintah — tindak lanjut MoU perpanjangan IUPK yang ditandatangani 18 Februari 2026.</div></div>
+    <div class="stmt-ref">— ref [36]</div>
+   </div>
+
+   <div class="stmt-card" style="margin-bottom:0;">
+    <div class="stmt-hd"><span class="stmt-topic">Smelter Gresik</span><span class="stmt-date">14 Jul 2026</span></div>
+    <div class="stmt-body"><div class="stmt-mark">"</div><div class="stmt-text">Memberi keterangan di Komisi XII DPR: kapasitas gabungan dua smelter PTFI capai 3 juta ton konsentrat/tahun, termasuk menjelaskan riwayat kebakaran GCP Oktober 2024.</div></div>
+    <div class="stmt-ref">— ref [1]</div>
    </div>`},
  promises:{icon:'🎯',name:'Promise & Follow-up Tracker',body:`
    <div style="font-size:11.5px;background:var(--bll);color:var(--bl);border-radius:6px;padding:8px 11px;margin-bottom:12px;">ℹ️ Melacak komitmen/target yang disampaikan secara publik, dibandingkan dengan perkembangan yang terkonfirmasi di pemberitaan berikutnya.</div>
